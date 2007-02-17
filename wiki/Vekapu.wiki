@@ -1,0 +1,15 @@
+#summary One-sentence summary of this page.
+
+= Vekapu =
+
+Toistaiseksi [http://www.vekapu.net Vekapu] lähdekoodi on [http://kooditakomo.cs.tut.fi/projects/vekapu/ Kooditakomossa] ja [http://wikihost.org/wikis/vekapu/wiki/start wiki täällä].
+
+Pitäisköhän siirtää kaikki romut tänne ??
+
+Ainakin toi Kooditakomo tuntuu aika väsyneeltä. Mutkin projektit on siirtäneet kamansa pois sieltä.
+
+
+
+
+
+
