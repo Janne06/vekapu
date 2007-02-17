@@ -1,4 +1,4 @@
-#Ohjelman yleis esittely
+# Ohjelman yleisesittely
 
 = Vekapu =
 
@@ -7,7 +7,6 @@ Toistaiseksi [http://www.vekapu.net Vekapu] lähdekoodi on [http://kooditakomo.c
 Pitäisköhän siirtää kaikki romut tänne ??
 
 Ainakin toi Kooditakomo tuntuu aika väsyneeltä. Mutkin projektit on siirtäneet kamansa pois sieltä.
-
 
 
 
