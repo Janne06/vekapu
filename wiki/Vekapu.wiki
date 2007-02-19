@@ -5,10 +5,13 @@
 Toistaiseksi [http://www.vekapu.net Vekapu] lähdekoodi on [http://kooditakomo.cs.tut.fi/projects/vekapu/ Kooditakomossa] ja [http://wikihost.org/wikis/vekapu/wiki/start wiki täällä].
 
 Pitäisköhän siirtää kaikki romut tänne ??
+Toi kyssäri on sitten lähinnä retorinen.
+Eli ilmeisesti tänne kandee siirtää vanha kehitys. 
 
 Ainakin toi Kooditakomo tuntuu aika väsyneeltä. Mutkin projektit on siirtäneet kamansa pois sieltä.
 
+Kooditakomo on tosiaankin lopussa ja mitään ylimääräsia wiki-saitteja ei jaksa alkaa ihmetteleen, etenkin jos kaikki onnistuu täällä.
 
-
+Kokomukset Googlesta ja GMailista on sen verran hyviä että tähän viittii alkaaa.
 
 
