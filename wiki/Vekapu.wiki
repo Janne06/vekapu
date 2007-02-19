@@ -14,4 +14,4 @@ Kooditakomo on tosiaankin lopussa ja mitään ylimääräsia wiki-saitteja ei ja
 
 Kokomukset Googlesta ja GMailista on sen verran hyviä että tähän viittii alkaaa.
 
-
+$Revision: $ $Date: $
