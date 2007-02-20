@@ -1,0 +1,194 @@
+<!--
+   Build file for Vekapu.
+
+   More info:
+      http://ant.apache.org/
+
+   $Id$
+   $Rev$
+-->
+<project name="vekapu 1.7.3" default="usage" basedir="." >
+
+<!--
+ =================================================================
+   Default target
+ =================================================================
+-->
+
+  <target name="usage">
+    <echo>
+
+    These are the targets supported by this ANT build scpript $Rev$
+
+    clean,cl  - delete directoryes.
+
+    compile,c - compile all project files.
+
+    javadoc   - build project javadoc files.
+
+    jar,j     - build vekapu.jar file.
+    zip       - build *.zip files for web release.
+
+    </echo>
+  </target>
+
+<!--
+ ==================================================================
+  Initialization of all property settings
+ ==================================================================
+-->
+  <target name="init">
+
+    <!-- Build properties -->
+    <property name="java.source.dir" value="../src"/>
+    <property name="java.build.dir" value="./build"/>
+    <property name="jar.lib.dir" value="../lib"/>
+
+    <property file="${java.source.dir}/net/vekapu/util/Constant.java"/>
+
+    <property name="name" value="vekapu"/>
+    <property name="build.dir" value="build"/>
+    <property name="build.jar" value="${build.dir}/vekapu.jar" />
+    <property name="javac.dest" value="build"/>
+
+    <property name="zip.dir" value="${name}-${versio}"/>
+
+    <property name="dist.dir" value="../dist"/>
+    <property name="javadoc.dir" value="../javadoc"/>
+    <property name="lib.dir" value="lib"/>
+
+  </target>
+
+<!--
+ ==================================================================
+   Makes sure the needed directory structure is in place
+ ==================================================================
+-->
+
+  <target name="cl" depends="clean" description="Shortcut to clean"/>
+  <target name="clean" depends="init">
+    <delete dir="${javac.dest}"/>
+  </target>
+
+
+  <target name="prepare" depends="init">
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${javac.dest}"/>
+    <mkdir dir="${dist.dir}"/>
+  </target>
+
+  <target name="c" depends="compile" description="Shortcut to compile"/>
+  <target name="compile" depends="prepare">
+    <path id="libpath">
+      <fileset dir="${jar.lib.dir}">
+        <include name="activation.jar"/>
+        <include name="mail.jar"/>
+        <include name="log4j.jar"/>
+      </fileset>
+    </path>
+
+    <javac
+      srcdir="${java.source.dir}"
+      classpathref="libpath"
+      destdir="${javac.dest}"
+      deprecation="${deprecation}"
+      debug="on"
+      source="1.3"
+      target="1.3">
+    </javac>
+
+  </target>
+
+  <target name="j" depends="jar" description="Shortcut to jar"/>
+  <target name="jar" depends="compile" description="Assemble source code and images into jar file">
+    <jar jarfile="${build.jar}"
+         basedir="${build.dir}"
+         compress="true">
+
+      <include name="net/**"/>
+      <manifest>
+        <section name="Vekapu">
+          <attribute name="Vekapu-Version" value="${versio}"/>
+        </section>
+      </manifest>
+
+    </jar>
+
+    <propertyfile file="../version.txt"
+                  comment="Vekapun versio numero">
+       <entry  key="version"
+               type="string"
+               operation="="
+               value="${versio}"/>
+    </propertyfile>
+
+    <copy file="${build.jar}" todir="../lib"/>
+  </target>
+
+  <target name="zip_jar" depends="jar" description="Binarys into zip file">
+    <zip destfile="${dist.dir}/vekapu-bin-${versio}.zip">
+      <zipfileset dir="${jar.lib.dir}"
+                  includes="**/*.jar"
+                  excludes="**/junit.jar"
+                  prefix="${zip.dir}/${lib.dir}"/>
+      <zipfileset dir="../."
+                  includes="**/*.properties,**/*.xml,**/*.sh,**/*.bat,**/info.txt,**/*.log4j,**/version.txt"
+                  excludes="group/**/*.properties,**/build.xml"
+                  prefix="${zip.dir}"/>
+
+    </zip>
+  </target>
+
+  <target name="zip_src" depends="jar" description="Sources into zip file">
+    <zip destfile="${dist.dir}/vekapu-src-${versio}.zip">
+      <zipfileset dir="${jar.lib.dir}"
+                  includes="**/*.jar"
+                  prefix="${zip.dir}/gnu/${lib.dir}"/>
+      <zipfileset dir="../."
+                  includes="**/*.properties,**/*.xml,**/*.sh,**/*.bat,**/info.txt,**/*.log4j,**/*.java,**/version.txt"
+                  excludes="group/**/*.properties"
+                  prefix="${zip.dir}/gnu"/>
+
+    </zip>
+  </target>
+
+<!--
+ ==================================================================
+   Makes *.zip files for web release.
+ ==================================================================
+-->
+  <target name="zip" depends="zip_src,zip_jar">
+    <move file="${build.jar}" todir="../lib"/>
+    <delete dir="${javac.dest}"/>
+  </target>
+
+
+<!--
+ ==================================================================
+   Makes project Javadocs.
+ ==================================================================
+-->
+  <target name="javadoc" depends="init">
+    <path id="libpath">
+      <fileset dir="${jar.lib.dir}">
+        <include name="activation.jar"/>
+        <include name="mail.jar"/>
+        <include name="log4j.jar"/>
+      </fileset>
+    </path>
+
+    <mkdir dir="${javadoc.dir}"/>
+
+    <javadoc packagenames="net.vekapu.*"
+             sourcepath="${java.source.dir}"
+             classpathref="libpath"
+             destdir="${javadoc.dir}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="Vekapu ${versio} - JavaDoc">
+        <doctitle><![CDATA[<h1>Vekapu&#169; ${versio}</h1>]]></doctitle>
+        <bottom><![CDATA[<i>Copyright &#169; 2003-2006 Vekapu&#169; team (vekapu@vekapu.net) All Rights Reserved.</i>]]></bottom>
+    </javadoc>
+  </target>
+</project>

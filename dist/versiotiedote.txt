@@ -1,0 +1,66 @@
+===============================================================================
+ $Id$
+===============================================================================
+
+Versiotiedote 1.7.5
+===================
+
+ * Kaivoin vanhan MDI-GUI paketin esiin ja yritän sovittaa sitä mukaan.
+   Mainittu versiotiedotteessa Vekapu 1.2.0 (julkaistu 24.2.04) mutta sitten sen kuhitys unohtui vähäksiaikaa.)
+
+1)
+Pelkän Jokerin-rivin tarkistus kuntoon. 
+
+2)
+Hakemiston erottinmerkki haetaan ajonaikaisesti.
+
+3)
+Lisätty asetuksiin mahdollisuus yhden rivin tarkistmisen.
+Siis jos on määritelty useita porukoita niin tietyn porukan rivit 
+voitarkistaa asettamalla tähän halutun porukan nimi
+check_group = lotto
+
+4)
+vekapu.properties asetustiedostoa jäsennelty ja kommentointia
+lisätty. itäisköhän toi filu jakaan kahteen osaan ??
+ 1. vekapun yleissäädöt & 2. tiedot lottoporukoista
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+Versiotiedote 1.7.4
+===================
+
+Sama kuin edellinen 1.7.3.
+Nyt pitäisi toimia myös Winkkari ympäristössä.
+Edellinen toimii kyllä Linuxissa, mutta winkkarissa tuli häikkää (joku hämärä merkistö ongelma)
+
+Käänsin nyt paketit winkkarissa.
+Ehkä Linux myllyn Eclipsen asetuksissa on jotain häikkää ??
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+Versiotiedote 1.7.3
+===================
+
+Korjattu bugit:
+===============
+
+Oikeanrivin haku netistä.
+Sivuston kopion nimen loppuun tuli ylimääräinen '-' merkki ennen .html loppua. 
+
+Manuaali tarkistus toimii. Jokerin kanssa oli ongelmia.
+
+Vanhan rivin tarkistus 'correct' parametrilla toimii.
+Kunhan kopioi oikeista sivuista on omalla koneella.
+
+Viikkarin tarkistuksen lisätty arvonta kierros & päivä.
+
+
+Tiedetyt ongelmat
+=================
+
+./best hakenistoon talletetut tiedot kierroksen parhaista tuloksista ei tallennu oikein.
