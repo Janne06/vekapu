@@ -1,3 +1,0 @@
-#Vekapun versio numero
-#Sat Dec 16 22:34:49 EET 2006
-version=1.7.3
