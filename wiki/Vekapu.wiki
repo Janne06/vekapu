@@ -1,17 +1,22 @@
-# Ohjelman yleisesittely
+#labels Phase-Design
+= Vekapu - Veikkaus apuri =
 
-= Vekapu =
+Vekapu - Veikkaus apuri. Vekapu on Java-sovellus, joka on tehty lottorivien tarkistamiseen. Vekapulla voi tarkistaa myös Jokeri ja Viking-Lotto rivit.
 
-Toistaiseksi [http://www.vekapu.net Vekapu] lähdekoodi on [http://kooditakomo.cs.tut.fi/projects/vekapu/ Kooditakomossa] ja [http://wikihost.org/wikis/vekapu/wiki/start wiki täällä].
 
-Pitäisköhän siirtää kaikki romut tänne ??
-Toi kyssäri on sitten lähinnä retorinen.
-Eli ilmeisesti tänne kandee siirtää vanha kehitys. 
 
-Ainakin toi Kooditakomo tuntuu aika väsyneeltä. Mutkin projektit on siirtäneet kamansa pois sieltä.
+Siirsin [http://www.vekapu.net Vekapun] lähdekoodin täänne [http://kooditakomo.cs.tut.fi/projects/vekapu/ Kooditakomosta] ja [http://wikihost.org/wikis/vekapu/wiki/start wikin täältä] 20.2.07.
 
-Kooditakomo on tosiaankin lopussa ja mitään ylimääräsia wiki-saitteja ei jaksa alkaa ihmetteleen, etenkin jos kaikki onnistuu täällä.
+Perusteluina seuraavaa:
 
-Kokomukset Googlesta ja GMailista on sen verran hyviä että tähän viittii alkaaa.
+ * Ainakin toi [http://kooditakomo.cs.tut.fi/ Kooditakomo] tuntuu aika väsyneeltä (svn rikki, ei uusia projekteja sitten viime kesäkuun). Mutkin projektit on siirtäneet kamansa pois sieltä ([http://kooditakomo.cs.tut.fi/projects/gunit/ GUnit] [https://garage.maemo.org/projects/gunit uusi paikka]).
 
-$Revision: $ $Date: $
+ * Kooditakomo on tosiaankin lopussa ja mitään ylimääräsia wiki-saitteja ei jaksa alkaa ihmetteleen, etenkin jos kaikki onnistuu täällä.
+
+ * Kokomukset Googlesta ja GMailista on sen verran hyviä että tähän viittii alkaaa.
+
+
+
+
+
+
