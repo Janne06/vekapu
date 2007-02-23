@@ -8,22 +8,25 @@
 
 *Parannuksia*
 
+ * Siirsin lähdekoodin kehitys SVN Googlen code houstaukseen 20.02.2007. Kooditakomossa on ollu aika hiljasta viimeaikoina (svn rikki, ei uusia projekteja sitten viime kesäkuun & muutkin projektit muuttaa muualle ([http://kooditakomo.cs.tut.fi/projects/gunit/ GUnit] [https://garage.maemo.org/projects/gunit uusi paikka])
+
+
  * Tuli mieleen että tässä välissä (n. 3 vuotta) vois olla joku tehny jonkun MDI Gui:n mallin. Löyty tämmönen Bernhard Stiftnerin tekemä [http://jmdiframework.sourceforge.net/ Java MDI Application Framework]. Tää vaikuttaa aikas lupaavalta. Mun mielestä MDI on ainoa oikea sovelluksen olemus joten yritän tehdä tältäpohjalta softaa eteenpäin.
 
  * Kaivoin vanhan MDI-GUI paketin esiin ja yritän sovittaa sitä mukaan. Mainittu versiotiedotteessa Vekapu 1.2.0 (julkaistu 24.2.04) mutta sitten sen kehitys unohtui vähäksiaikaa. (Ei tästä taida olla mihkän, mutta jätän lähdekoodin roikkumaan mukaan ainakin vähäks aikaa.)
- * Ajastettuna (~~cronjob = yes~~) keskiviikon tarkisus meni ohi. Nyt korjattu.
+ * Ajastettuna (`cronjob = yes`) keskiviikon tarkisus meni ohi. Nyt korjattu.
  * Pelkän Jokerin-rivin tarkistus kuntoon.
  * Hakemiston erottinmerkki haetaan ajonaikaisesti (Winkkari / Linux erot). Ja siitähän se soppa syntyi. Tulee aikas paljon ihmeteltävää. Vielä kun yritää samalla muuttaa tekstitystä UTF-8 muotoon.
  * Lisätty asetuksiin mahdollisuus yhden rivin tarkistmisen. Siis jos on määritelty useita porukoita niin tietyn porukan rivit
-voitarkistaa asettamalla tähän halutun porukan nimi: ~~check_group = lotto~~
- * ~~vekapu.properties~~ asetustiedostoa jäsennelty ja kommentointia lisätty. Pitäisköhän toi filu jakaan kahteen osaan ?? 1. vekapun yleissäädöt & 2. tiedot lottoporukoista
+voitarkistaa asettamalla tähän halutun porukan nimi: `check_group = lotto`
+ * `vekapu.properties` asetustiedostoa jäsennelty ja kommentointia lisätty. Pitäisköhän toi filu jakaan kahteen osaan ?? 1. vekapun yleissäädöt & 2. tiedot lottoporukoista
 
 
 ----
 Tästä alespäin on tiedot kopioitu tänne muualta (Kooditakomo & nettisivu).
 Eli nää tiedot on jo julkaistu aikaisemmin jossain muualla.
 
-=====Vekapu 1.7.4
+==Vekapu 1.7.4==
 Julkaistu 16.12.06
 
 Sama kuin edellinen 1.7.3.
@@ -35,7 +38,7 @@ Käänsin nyt paketit winkkarissa.
 Ehkä Linux myllyn Eclipsen asetuksissa on jotain häikkää ??
 
 
-=====Vekapu 1.7.3
+==Vekapu 1.7.3==
 Julkaistu 12.12.06
 
 Korjattu bugit:
@@ -51,11 +54,11 @@ Kunhan kopioi oikeista sivuista on omalla koneella.
 Viikkarin tarkistuksen lisätty arvonta kierros & päivä.
 
 
-=====Tiedetyt ongelmat
+==Tiedetyt ongelmat==
 
-./best hakenistoon talletetut tiedot kierroksen parhaista tuloksista ei tallennu oikein.
+`./best` hakenistoon talletetut tiedot kierroksen parhaista tuloksista ei tallennu oikein.
 
-=====Vekapu 1.7.2
+==Vekapu 1.7.2==
 Julkaistu 7.12.06
 
 Jokerin tarkistus samaan tyyliin kuin loton.
@@ -63,18 +66,18 @@ Jokerin tarkistus samaan tyyliin kuin loton.
 Sovelluksen sisäinen rakenne oliomaiseksi, palvelu pohjaiseksi. Nyt jatkokehittämisen pitäisi olla helpompaa.
 
 
-=====Vekapu 1.5.11
+==Vekapu 1.5.11==
 Julkaistu 12.4.06
 
 TextiTV:n sivut on muuttunu.
 Pitää parsia oikearivi erilailla kuin ennen.
 
-=====Vekapu 1.5.10
+==Vekapu 1.5.10==
 Julkaistu 13.3.06
 
 Refaktoroinnin seurauksena koodiin jäi pari bugia. Nyt ne pitäis olla poistettu.
 
-=====Vekapu 1.5.9
+==Vekapu 1.5.9==
 Julkaistu 10.3.06
 
 Vekapu toimii nyt JDK 1.3 tai uudemmilla. Eipähän tarvii päivitellä jdk:ta ainakaan tän softan takia.
@@ -82,7 +85,7 @@ Vekapu toimii nyt JDK 1.3 tai uudemmilla. Eipähän tarvii päivitellä jdk:ta a
 Muut muutokset lähinnä refaktorointia.
 
 
-=====Vekapu 1.5.8.
+==Vekapu 1.5.8.==
 Julkaistu 24.2.06
 
 - Jokeritarkistus korjattu textitv:n sivu muutosten mukaiseksi.
@@ -95,45 +98,45 @@ Jokeritulos kohdalleen meilin otsikkoon.
 Vekapu.java toiminta jaettu peli kohtaisiin toiminta luokkiin, mitkä periytetty samanta kantaluokasta. Paketoidaan lähdekoodi omaan hakemistoon.
 Sisäisiä muutoksia (koodissa), joidenka ei pitäisi vaikuttaa Vekapun toimintaan.
 
-=====Vekapu 1.5.5
+==Vekapu 1.5.5==
 Julkaistu 30.10.05.
 
-=====Vekapu 1.5.2
+==Vekapu 1.5.2==
 Julkaistu 29.10.05.
 
 Uusi bugi päivitys.
 
-=====Vekapu 1.5.1
+==Vekapu 1.5.1==
 Julkaistu 26.9.05
-* Kehitysversioiden numerointi keskeltä parittomaksi.
+ * Kehitysversioiden numerointi keskeltä parittomaksi.
 
-* Mallirivit nimetty pelin mukaan.
-* Mallirivien kattavuutta parannettu
-* Mallirivit & hakemistot lotto & vikiglotto riveille serveri totetutukseen
+ * Mallirivit nimetty pelin mukaan.
+ * Mallirivien kattavuutta parannettu
+ * Mallirivit & hakemistot lotto & vikiglotto riveille serveri totetutukseen
 
-* vekapu.bat:tiin pause loppuun.
-* Ant:in build:i scriptiä siistitty.
+ * vekapu.bat:tiin pause loppuun.
+ * Ant:in build:i scriptiä siistitty.
 
-====Korjatut bugit
+===Korjatut bugit===
 
-* Bug #16 Viikkonumero korjattu lisäämällä propsiin korjaus arvo.
-* Bug #15 Lisäarvonnan ongelma.
-* Bug #14 Jos nettisivuston haku pielessä niin heiteään poikkeus.
-* Nollataa Jokerin paras -laskuri uudelle porukalle.
+ * Bug #16 Viikkonumero korjattu lisäämällä propsiin korjaus arvo.
+ * Bug #15 Lisäarvonnan ongelma.
+ * Bug #14 Jos nettisivuston haku pielessä niin heiteään poikkeus.
+ * Nollataa Jokerin paras -laskuri uudelle porukalle.
 
 http://kooditakomo.cs.tut.fi/tracker/index.php?group_id=36&atid=177
 
-=====Vekapu 1.3.1
+==Vekapu 1.3.1==
 Julkaistu 30.6.05
 
 Lottorivien tarkistusohjelmasta (Vekapu) on nyt julkaistu versio 1.3.1.
 Toiminnallisesti nyt julkaistu versio on sama kuin versio 1.2.0.
 
 Seuraavat ominaisuudet on muutettu:
-* Oletuksen tulostetaan tarkistettu rivi näytölle.
-* Tiedostojen paketointi oman urlin mukaan (www.vekapu.net).
-* Log4j mukaan käyttöön.
-* Lähdekoodi & sovelluskehitys nyt KoodiTakomon Subversionissa. Aiemmin oman linuxin CVS.
+ * Oletuksen tulostetaan tarkistettu rivi näytölle.
+ * Tiedostojen paketointi oman urlin mukaan (www.vekapu.net).
+ * Log4j mukaan käyttöön.
+ * Lähdekoodi & sovelluskehitys nyt KoodiTakomon Subversionissa. Aiemmin oman linuxin CVS.
 
 Vekapu 1.3.0 on julkaistu projektin Subversioniin.
 
@@ -143,36 +146,36 @@ konsolille = yes
 Tämän ansiosta tarkastetut rivit tulostuvat oletuksena näytölle. En tägää SVN:ään tämän muutoksen takia omaa haaraa.
 
 
-=====Vekapu 1.2.1
+==Vekapu 1.2.1==
 Julkaistu 10.6.05
 
 Lottorivien tarkistusohjelma Vekapu on uudelleen julkaissut version 1.2.0. Alkuperäinen julkaisu päivä oli jo 24.2.04.
 
 
-=====Vekapu 1.2.0
+==Vekapu 1.2.0==
 Julkaistu 24.2.04
 
 - Lisätty alihakemistot:
-  * best           - tiedot kierroksen parhaasta tuloksesta
-  * coupon         - tarkistettavat kupongit
-  * checked        - tarkistetut rivit
-  * correctnumbers - kopiot tekstiTV:n sivuista / käsin syötetyt numerot
-  * log            - loki-tiedosto
-  * lib            - tarvittavat *.jar tiedostot
-- Lisätty attribuutti storeresult = yes/no porukan asetustiedostoon.
-  Talleteaanko tulokset ./checked hakemistoon. Oletus no.
-- Lisätty 'info_group' attribuutti vekapu.properties tiedostoon.
+ * best           - tiedot kierroksen parhaasta tuloksesta
+ * coupon         - tarkistettavat kupongit
+ * checked        - tarkistetut rivit
+ * correctnumbers - kopiot tekstiTV:n sivuista / käsin syötetyt numerot
+ * log            - loki-tiedosto
+ * lib            - tarvittavat `*.jar` tiedostot
+- Lisätty attribuutti `storeresult = yes/no` porukan asetustiedostoon.
+  Talleteaanko tulokset `./checked` hakemistoon. Oletus no.
+- Lisätty `'info_group'` attribuutti vekapu.properties tiedostoon.
   Lähettää tiedotuksen osallistumisesta lottoon (email & sms).
   Testaa ko osoitteiden oikeellisuuden.
-- Lisätty 'replyto' attribuutti vekapu.properties tiedostoon.
+- Lisätty `'replyto'` attribuutti `vekapu.properties` tiedostoon.
 - Lisätty tarkistusaika mukaan viestiin.
 
   Muuta:
-- Jakelupaketti kasataan Ant build.xml scriptillä.
+- Jakelupaketti kasataan Ant `build.xml` scriptillä.
 - GUI:n kehitys aloitettu.
 
 
-=====Vekapu 1.1.3
+==Vekapu 1.1.3==
 Julkaistu 8.8.03
 
 - Talletetaan porukan parastulos xxx_best.txt tiedostoon.
@@ -182,40 +185,40 @@ Julkaistu 8.8.03
 - Tutkitaan Lotto-sivuilta myös merkkijonoa KIERR0S (nollalla) koska yle käyttää sitä.
 
 
-=====Vekapu 1.1.2
+==Vekapu 1.1.2==
 Julkaistu 13.7.03
 
 - Lisätty asetuksiin parametrit debug ja cronjob.
 
 
-=====Vekapu 1.1.1
+==Vekapu 1.1.1==
 Julkaistu 2.5.03
 
 - Korjattu bugi vikigloton tarkistettavasta kierroksesta.
 
 
-=====Vekapu 1.1.0
+==Vekapu 1.1.0==
 Julkaistu 27.4.03
 
 - Tarkistaa Jokerin ja Viking-Loton.
 - Lähettää ilmoituksen (s-posti) kun rivi on viimeistä kertaa voimassa.
 
 
-=====Vekapu 1.0.0
+==Vekapu 1.0.0==
 Julkaistu 13.12.02
 
 - Hakee oikean rivin netistä.
 - Lähettää tekstiviestinä parhaan tuloksen.
 
 
-=====Vekapu 0.3.1
+==Vekapu 0.3.1==
 Julkaistu 12.12.02
 
 - Sähköpostin otsikkoon parastulos.
 - Mukana tieto mihin asti rivi on voimassa.
 
 
-=====Vekapu 0.3.0
+==Vekapu 0.3.0==
 Julkaistu 28.11.02
 
 - Usean lottoporukan tuki.
@@ -223,14 +226,21 @@ Julkaistu 28.11.02
   käynnistysparametriksi 'print'.
 
   HUOMIO!!!
-  *.properties tiedostot on muutettu. Vanhat *.properties tiedostot
+  `*.properties` tiedostot on muutettu. Vanhat `*.properties` tiedostot
   eivät enää toimi, vaan ne on korvattava uusilla tiedostoilla.
 
 
-=====Vekapu 0.2.0
+==Vekapu 0.2.0==
 Julkaistu 26.11.02
 
 - Tarkastetun rivin postitus lottoporukan jäsenille.
+
+
+
+
+
+
+
 
 
 
