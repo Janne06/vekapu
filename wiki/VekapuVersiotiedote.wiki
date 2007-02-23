@@ -1,14 +1,11 @@
 #labels Phase-Design
-#versiotiedote
 =Vekapu versiotiedote=
-
-*Tää sivu pitää vielä siistiä !!*
 
 ==Kehitys versio==
 
 *Parannuksia*
 
- * Siirsin lähdekoodin kehitys SVN Googlen code houstaukseen 20.02.2007. Kooditakomossa on ollu aika hiljasta viimeaikoina (svn rikki, ei uusia projekteja sitten viime kesäkuun & muutkin projektit muuttaa muualle ([http://kooditakomo.cs.tut.fi/projects/gunit/ GUnit] [https://garage.maemo.org/projects/gunit uusi paikka])
+ * Siirsin lähdekoodin kehitys SVN Googlen code houstaukseen 20.02.2007. [http://kooditakomo.cs.tut.fi/ Kooditakomossa] on ollu aika hiljasta viimeaikoina (svn rikki, ei uusia projekteja sitten viime kesäkuun & muutkin projektit muuttaa muualle ([http://kooditakomo.cs.tut.fi/projects/gunit/ GUnit] [https://garage.maemo.org/projects/gunit uusi paikka])
 
 
  * Tuli mieleen että tässä välissä (n. 3 vuotta) vois olla joku tehny jonkun MDI Gui:n mallin. Löyty tämmönen Bernhard Stiftnerin tekemä [http://jmdiframework.sourceforge.net/ Java MDI Application Framework]. Tää vaikuttaa aikas lupaavalta. Mun mielestä MDI on ainoa oikea sovelluksen olemus joten yritän tehdä tältäpohjalta softaa eteenpäin.
