@@ -106,6 +106,8 @@
          compress="true">
 
       <include name="net/**"/>
+      <include name="translations/**"/>
+    	
       <manifest>
         <section name="Vekapu">
           <attribute name="Vekapu-Version" value="${versio}"/>
@@ -133,7 +135,7 @@
                   prefix="${zip.dir}/${lib.dir}"/>
       <zipfileset dir="../."
                   includes="**/*.properties,**/*.xml,**/*.sh,**/*.bat,**/info.txt,**/*.log4j,**/version.txt"
-                  excludes="group/**/*.properties,**/build.xml"
+                  excludes="group/**/*.properties,**/build.xml,**/translations/**"
                   prefix="${zip.dir}"/>
 
     </zip>
@@ -189,6 +191,6 @@
              windowtitle="Vekapu ${versio} - JavaDoc">
         <doctitle><![CDATA[<h1>Vekapu&#169; ${versio}</h1>]]></doctitle>
         <bottom><![CDATA[<i>Copyright &#169; 2003-2007 Janne Ilonen & Vekapu&#169; team (vekapu@vekapu.net) All Rights Reserved.</i>]]></bottom>
-    </javadoc>
+     </javadoc>
   </target>
 </project>
