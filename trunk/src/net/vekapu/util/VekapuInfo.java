@@ -9,7 +9,7 @@
 //
 // Purpose:  Informatin about Vekapu..
 //
-// (c) Copyright J.Ilonen, 2006
+// (c) Copyright J.Ilonen, 2006-2007
 //
 // $Id$
 //
@@ -27,7 +27,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 package net.vekapu.util;
 
 import net.vekapu.SettingsVO;
@@ -40,12 +39,12 @@ import org.apache.log4j.Logger;
  * Information about Vekapu project.
  * 
  * @author janne
- *
+ * 
  */
 public class VekapuInfo {
 
 	private static Logger logger = Logger.getLogger(VekapuInfo.class);
-	
+
 	/**
 	 * @param args
 	 */
@@ -53,39 +52,62 @@ public class VekapuInfo {
 		// TODO Auto-generated method stub
 
 	}
+
+	public static String getUsage() {
+		String NEW_LINE = Constant.getLineSeparator();
+		String rc = NEW_LINE;
+
+		rc += "usage: vekapu.bat/vekapu.sh [-v] [-test] " + NEW_LINE;
+		rc += "  [-v/version] displays Vekapu version" + NEW_LINE;
+		rc += "  [-test]      run Vekapu in test mode. Sends no email." + NEW_LINE;
+
+		return rc;
+	}
 	
+	/**
+	 * Version information
+	 * @return 
+	 */
 	public static String getVesionInfo() {
 		String NEW_LINE = Constant.getLineSeparator();
 		String rc = NEW_LINE;
-			
-		rc += Constant.getName() + " " +Constant.getVersionNumber();
+
+		rc += Constant.getName() + " " + Constant.getVersionNumber();
 		rc += NEW_LINE + NEW_LINE;
 		rc += "Veikkausapuri lotto- ja jokeririven tarkistamiseen.";
 		rc += NEW_LINE + Constant.getUrlHomePage();
 		rc += NEW_LINE + NEW_LINE;
-		rc += "(C) Janne Ilonen 2003 - 2006";
-		
+		rc += "(C) Janne Ilonen 2003 - 2007";
+
 		return rc;
 	}
 
 	public static void endInfo(Throwable t) {
-		
+
 		SettingsVO settingsVO = new SettingsVO("info");
+
 		String mail = Constant.getBugMail();
-		String messu ="Ilmoittaisitko ongelmista osoitteeseen: " + mail;
-		
+		String messu = "Ilmoittaisitko ongelmista osoitteeseen: " + mail;
+
 		System.out.println(messu);
 		t.printStackTrace();
 		logger.error(t, t);
 		if (!settingsVO.getMailServer().equals(""))
 			try {
-				Messenger.sendEMail(t.toString(), "",
-					new String[] { mail }, String.valueOf(t
-							.getStackTrace()), settingsVO);
+				Messenger.sendEMail("Bug", "", new String[] { mail },
+						t.toString() + String.valueOf(t.getStackTrace()), settingsVO);
 			} catch (VekapuException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
+
+	}
+
+	public static void groupNull() throws VekapuException {
+		String msg = "Tarkistetavan lottoporukan määritely pielessä.";
+		msg += "Tarkista asetuksen 'vekapu.properties' tiedostosta.";
+		logger.error(msg);
+		System.exit(0);
+		// throw new VekapuException(msg);
 	}
 }
