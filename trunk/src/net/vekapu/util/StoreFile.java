@@ -9,7 +9,7 @@
 //
 // Purpose:  Writing & reading files.
 //
-// (c) Copyright J.Ilonen, 2003-2006
+// (c) Copyright J.Ilonen, 2003-2007
 //
 // $Id$
 //
@@ -81,7 +81,7 @@ public class StoreFile {
 
 			}
 
-			isFileName = subdir + filename;
+			isFileName = "." + Constant.getFileSeparator() +  subdir + filename;
 
 			File f = new File(isFileName);
 			// If file dosn't exitis it will be created
@@ -182,8 +182,10 @@ public class StoreFile {
 	 */
 	public static String getFile(String fileName) throws VekapuException {
 		logger.debug("fileName: " + fileName);
+//		String userdir = System.getProperty("user.dir");
+		String userdir = Constant.getUserDir();
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(fileName));
+			BufferedReader br = new BufferedReader(new FileReader(userdir + fileName));
 			String nextLine = "";
 			StringBuffer sb = new StringBuffer();
 			while ((nextLine = br.readLine()) != null) {
@@ -193,12 +195,11 @@ public class StoreFile {
 			return sb.toString();
 
 		} catch (FileNotFoundException fnfe) {
-			logger.error("Here we are: " + System.getProperty("user.dir"));
-			System.out.println(System.getProperty("user.dir"));
+			String msg = "Filettä: '" + fileName + "' ei löydy hakemistosta: " + Constant.getUserDir();
 			
-			logger.error("FileNotFoundException", fnfe);
+			logger.error(msg + " FileNotFoundException", fnfe);
 			
-			throw new VekapuException(fnfe);
+			throw new VekapuException(msg,fnfe);
 		} catch (IOException e) {
 			logger.error("IOException", e);
 			throw new VekapuException(e);
