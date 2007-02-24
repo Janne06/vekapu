@@ -7,7 +7,7 @@
 //
 // Purpose:  Project constants.
 //
-// (c) Copyright J.Ilonen, 2003-2006
+// (c) Copyright J.Ilonen, 2003-2007
 //
 // $Id$
 //
@@ -37,9 +37,9 @@ public class Constant {
 
 	/*
 	 Päivitä molemmat (versio & VERSION) numerot AINA SAMOIKSI. 
-	 versio = 1.7.3
+	 versio = 1.7.5
 	 */
-	private final static String VERSION = "1.7.3";
+	private final static String VERSION = "1.7.5";
 
 	private final static String URL = "http://www.vekapu.net/";
 
@@ -54,6 +54,8 @@ public class Constant {
 
 	//
 	private final static String NEW_LINE = System.getProperty("line.separator");
+	private final static String FILE_SEPARATOR = System.getProperty("file.separator");
+	private final static String USER_DIR = System.getProperty("user.dir");
 
 	//
 	private final static String HIT = "X";
@@ -72,19 +74,21 @@ public class Constant {
 	private final static String EXTRA_CLOSE = "]";
 
 	// Default file append
-	private final static String BEST_DIR = "/best/";
+	private final static String BEST_DIR = FILE_SEPARATOR + "best" + FILE_SEPARATOR;
 
 	private final static String BEST_APP = ".txt";
 
-	private final static String WWW_DIR = "./correctnumbers/";
+	// Tää eteen niin pelittää näillä etuliite virityksillä
+	private final static String WWW_DIR = "." + FILE_SEPARATOR + "correctnumbers" + FILE_SEPARATOR;
 
 	private final static String WWW_APP = ".html";
 
-	private final static String RESULT_DIR = "/checked/";
+	private final static String RESULT_DIR = FILE_SEPARATOR + "checked" + FILE_SEPARATOR;
 
 	private final static String RESULT_APP = ".txt";
 
-	private final static String COUPON_DIR = "/coupon/";
+	// 
+	private final static String COUPON_DIR = "." + FILE_SEPARATOR + "coupon" + FILE_SEPARATOR;
 
 	public static String getName() {
 		return NAME;
@@ -120,6 +124,14 @@ public class Constant {
 
 	public static String getLineSeparator() {
 		return NEW_LINE;
+	}
+	
+	public static String getFileSeparator() {
+		return FILE_SEPARATOR;
+	}
+	
+	public static String getUserDir() {
+		return USER_DIR;
 	}
 
 	public static String getHitOpen() {
