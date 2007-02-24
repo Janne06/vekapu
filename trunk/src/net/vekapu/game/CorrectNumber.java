@@ -7,7 +7,7 @@
 //
 // Purpose:  Giving correct lotto numbers.
 //
-// (c) Copyright J.Ilonen, 2003-2006
+// (c) Copyright J.Ilonen, 2003-2007
 //
 // $Id$
 //
@@ -50,34 +50,35 @@ import org.apache.log4j.Logger;
 /**
  * 
  * @author janne
- *
+ * 
  */
 public class CorrectNumber {
 	static Logger logger = Logger.getLogger(CorrectNumber.class);
-	
+
 	private SettingsVO settingsVO = null;
-	
+
 	/*
 	 * Kuluvan päivän hahmotus => mikä kierrokselle numeroksi ?
-	 */ 
+	 */
 	protected DayHelper dayhelper = new DayHelper();
 
 	/**
 	 * Storing correct numbers
 	 */
 	protected CorrectNumberVO correctNumberVO = null;
-	
+
 	protected Properties properties = new Properties();
-	
+
 	/**
 	 * 
 	 * @param settingsVO
 	 * @param game
 	 */
 	public CorrectNumber(SettingsVO settingsVO, String game) {
-		logger.info("Haetaan oikeat '" + game + "' rivit. abManual = " + 
-				settingsVO.isManual() + " Tarkistettava: " +settingsVO.getCorrect());
-		
+		logger.info("Haetaan oikeat '" + game + "' rivit. abManual = "
+				+ settingsVO.isManual() + " Tarkistettava: "
+				+ settingsVO.getCorrect());
+
 		this.settingsVO = settingsVO;
 		correctNumberVO = new CorrectNumberVO(game);
 	}
@@ -94,9 +95,9 @@ public class CorrectNumber {
 	 * @return
 	 */
 	protected boolean isManual() {
-		return getSettingsVO().isManual().booleanValue(); 
+		return getSettingsVO().isManual().booleanValue();
 	}
-	
+
 	/**
 	 * 
 	 * @param week
@@ -104,7 +105,7 @@ public class CorrectNumber {
 	protected void setWeek(String week) {
 		settingsVO.setWeek(week);
 	}
-		
+
 	/**
 	 * 
 	 * @param checkedRound
@@ -112,18 +113,38 @@ public class CorrectNumber {
 	protected void setCheckedRound(String checkedRound) {
 		settingsVO.setCheckedRound(checkedRound);
 	}
-		
+
+	/**
+	 * 
+	 *
+	 */
+	protected void currentWeek() {
+		setCheckedRound(dayhelper.getYearWeek());
+		setWeek(dayhelper.getWeek());
+	}
+
+	/**
+	 * 
+	 *
+	 */
+	protected void lastWeek() {
+		// Pitää tutkia viimeviikon kierrosta
+		setCheckedRound(dayhelper.getYear() + "-" + dayhelper.getLastWeek());
+		setWeek(dayhelper.getLastWeek());
+	}
+
 	/**
 	 * 
 	 * @return
 	 * @throws VekapuException
 	 */
 	protected String getManualFile() throws VekapuException {
-		
+
 		String fileName = Constant.getCorrectNumberFile();
 		String checkWeek = "";
-		
-		logger.info("Haetaan tiedostoon '" + fileName + "' määritelty oikea rivi.");
+
+		logger.info("Haetaan tiedostoon '" + fileName
+				+ "' määritelty oikea rivi.");
 		try {
 			properties.load(new FileInputStream(fileName));
 			checkWeek = properties.getProperty("TarkistaKierros").trim();
@@ -137,43 +158,51 @@ public class CorrectNumber {
 	/**
 	 * Here we get local copy of web page whicts contains correct numbers.
 	 * 
-	 * @param name Local copy name. YYYY-ROUND (year int- round int)
-	 * @param url Web page location.
+	 * @param name
+	 *            Local copy name. YYYY-ROUND (year int- round int)
+	 * @param url
+	 *            Web page location.
 	 * @return Name of text file where is correct numbers.
-	 * @throws VekapuException 
+	 * @throws VekapuException
 	 * 
 	 */
 	protected String getPage(String name, String url) throws VekapuException {
-		
+
 		logger.debug("name: " + name);
-		logger.debug("getSettingsVO().getCorrect(): " + getSettingsVO().getCorrect());
-		logger.debug("getSettingsVO().getCheckedRound(): " + getSettingsVO().getCheckedRound());
-		
+		logger.debug("getSettingsVO().getCorrect(): "
+				+ getSettingsVO().getCorrect());
+		logger.debug("getSettingsVO().getCheckedRound(): "
+				+ getSettingsVO().getCheckedRound());
+
 		name = name + "-" + getSettingsVO().getCheckedRound();
 		logger.debug("name: " + name);
-		
-		String dir = correctNumberVO.getGame()  + "/";
+
+		String dir = correctNumberVO.getGame() + Constant.getFileSeparator();
 		String name_txt = name + ".txt";
 		name = name + Constant.getWwwFileExt();
 		String fullname = Constant.getWwwDir() + dir + name;
+		String userdir = System.getProperty("user.dir");
+		
 		logger.debug("fullname: " + fullname);
-		logger.debug("Here we are: " + System.getProperty("user.dir"));
-		
-		
+		logger.debug("Here we are: " + userdir);
+		logger.info("Real fullname: " +  userdir + fullname);
+
 		// Poistetaan vanha versio jos tarpeen
 		if (getSettingsVO().isNewPage().booleanValue()) {
-			StoreFile.deleteFile(fullname);
+			StoreFile.deleteFile(userdir + fullname);
 		}
-		
+
 		// Jos paikallinen kopio löytyy niin ei tarvii hake uutta
-		if (StoreFile.isFileExist(fullname)) {
+		if (StoreFile.isFileExist(userdir + fullname)) {
 			logger.info("Sivu '" + fullname + "' on jo haettu");
 			return name_txt;
 		}
 
 		// Jos tekstiteeveen sivusta ei vielä ole paikallista kopiota
-		// TODO jos tarkistettavaksi on annetu joku mu kuin 'auto' niin ei haeta netistä
-		// ainakaan tekstiTV:n sivuilta. Joskus vois ehkä hakee kopion vekapun omilta sivuilta !!
+		// TODO jos tarkistettavaksi on annetu joku mu kuin 'auto' niin ei haeta
+		// netistä
+		// ainakaan tekstiTV:n sivuilta. Joskus vois ehkä hakee kopion vekapun
+		// omilta sivuilta !!
 		// Vois olla aika hyvä.
 		if (!StoreFile.isFileExist(fullname)) {
 			logger.info("Haetaan oikea " + name + " rivi ja talleteaan se "
@@ -182,13 +211,15 @@ public class CorrectNumber {
 
 			PageLoader hae = new PageLoader(getSettingsVO());
 			String wwwpage = hae.readPage(url);
-			StoreFile sf = new StoreFile(Constant.getWwwDir() + dir , name, wwwpage);
+			StoreFile sf = new StoreFile(Constant.getWwwDir() + dir, name,
+					wwwpage);
 			logger.debug("StoreFile: " + sf);
-			
+
 			// Talleteaan lisäks tekstimuodossa.
-			StoreFile sf2 = new StoreFile(Constant.getWwwDir() + dir , name_txt, Html2txt.HtmlPage2txt(new StringBuffer(wwwpage)));
+			StoreFile sf2 = new StoreFile(Constant.getWwwDir() + dir, name_txt,
+					Html2txt.HtmlPage2txt(new StringBuffer(wwwpage)));
 			logger.debug("StoreFile txt: " + sf2);
-			
+
 		}
 		return name_txt;
 	}
