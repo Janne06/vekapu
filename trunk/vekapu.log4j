@@ -38,4 +38,4 @@ log4j.appender.A2.MaxFileSize = 100KB
 log4j.appender.A2.MaxBackupIndex = 10
 log4j.appender.A2.layout=org.apache.log4j.PatternLayout
 log4j.appender.A2.layout.ConversionPattern=%d %-5p [%t] %-17c (%13F:%L) %3x - %m\n
- 
+log4j.appender.A2.encoding=UTF8
