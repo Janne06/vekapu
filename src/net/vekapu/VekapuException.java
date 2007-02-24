@@ -7,7 +7,7 @@
 //
 // Purpose:  Vekapu exception handlin.
 //
-// (c) Copyright J.Ilonen, 2006
+// (c) Copyright J.Ilonen, 2006-2007
 //
 // $Id$
 //
@@ -27,11 +27,13 @@
 
 package net.vekapu;
 
+import net.vekapu.util.Constant;
+
 /**
  * Vekapu exception handlin.
  * 
  * @author janne
- *
+ * 
  */
 public class VekapuException extends Exception {
 
@@ -40,20 +42,14 @@ public class VekapuException extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	public VekapuException() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	private boolean bugMail = true;
+
 
 	/**
 	 * @param message
 	 */
 	public VekapuException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
+		this(message, false);
 	}
 
 	/**
@@ -62,6 +58,20 @@ public class VekapuException extends Exception {
 	 */
 	public VekapuException(String message, Throwable cause) {
 		super(message, cause);
+		// TODO Auto-generated constructor stub
+	}
+	
+	/**
+	 * If bugMail = false not sendin bug report.
+	 * It's normal action.
+	 * 
+	 * @param message   What's up.
+	 * @param bugMail   If 'true' sendin email bug report. Defaut 'true'.
+	 * @param cause     Original exception.
+	 */
+	public VekapuException(String message, boolean bugMail, Throwable cause) {
+		this(message, cause);
+		this.bugMail = bugMail;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -73,4 +83,37 @@ public class VekapuException extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * If bugMail = false not sendin bug report.
+	 * It's normal action.
+	 * 
+	 * @param message What's up
+	 * @param bugMail If 'true' sendin email bug report. Defaut 'true'.
+	 */
+	public VekapuException(String message, boolean bugMail) {
+		super(message);
+		this.bugMail = bugMail;
+
+	}
+
+	/**
+	 * @return the bugMail
+	 */
+	public boolean isBugMail() {
+		return bugMail;
+	}
+
+	/**
+	 * 
+	 */
+	public String getInfo() {
+		StringBuffer ret = new StringBuffer();
+		String NEW_LINE = Constant.getLineSeparator();
+
+		ret.append(super.toString());
+		ret.append(NEW_LINE);
+		ret.append(" bugMail : " + bugMail);
+
+		return ret.toString();
+	}
 }
