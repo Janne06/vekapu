@@ -7,7 +7,7 @@
 //
 // Purpose:  Giving groups lottery numbers & group info.
 //
-// (c) Copyright J.Ilonen, 2003-2006
+// (c) Copyright J.Ilonen, 2003-2007
 //
 // $Id$
 //
@@ -57,16 +57,24 @@ public class OwnNumbers {
 
 	public OwnNumbers(String aFileName,SettingsVO settingsVO) throws VekapuException {
 		
+		fileName = Constant.getUserDir() +  Constant.getFileSeparator();
 		numbersVO = new OwnNumbersVO(aFileName);
-		
+
 		// MODE SERVER
 		if (settingsVO.isServer().booleanValue()) {
-			fileName = settingsVO.getGroupDir() + "/" + aFileName;
-		} else {
-			fileName = ".";
-		}
-		fileName += Constant.getCouponDir() + aFileName + ".properties";		
+			logger.debug("isServer = true");
+			fileName = settingsVO.getGroupDir() + Constant.getFileSeparator() + aFileName;
+			logger.debug("fileName : " + fileName);
+		} 
+		
+		//fileName = System.getProperty("user.dir") + 
+		//		   fileName +
+		//           Constant.getFileSeparator() + 
+	fileName +=            Constant.getCouponDir() + 
+			       aFileName + ".properties";
 
+		logger.debug("fileName : " + fileName);
+		
 		// Read properties file.
 		try {
 			properties.load(new FileInputStream(fileName));
@@ -75,7 +83,7 @@ public class OwnNumbers {
 			// Mikäli filettä ei ole
 			String msg = "Tiedostoa '" + fileName + "' ei löydy";
 			logger.error(msg, e);
-			throw new VekapuException(msg,e);
+			throw new VekapuException(msg, false, e);
 		}
 	}
 
@@ -229,10 +237,8 @@ public class OwnNumbers {
 			// TODO Nyt pitäis kutsua OwnLotto luokkaa mikä sitten palauttaa 
 			// Set:issä (?) omat lottorivit.
 			OwnLotto lotto = new OwnLotto(properties);
-			
 			numbersVO.addLottoRivi(lotto.getRivit());
 		}
-			
 		
 		// Fill Jokeri
 		numbersVO.setJokeri(isJokeri());
@@ -243,7 +249,6 @@ public class OwnNumbers {
 			OwnJokeri jokeri = new OwnJokeri(properties);
 			numbersVO.addJokeriRivi(jokeri.getRivit());			
 		}
-
 		
 		// Fill Viking
 		numbersVO.setViking(isViking());
