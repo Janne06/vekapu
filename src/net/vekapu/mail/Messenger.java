@@ -39,12 +39,25 @@ import net.vekapu.util.StoreFile;
 
 import org.apache.log4j.Logger;
 
+/**
+ * @author janne
+ *
+ */
 public class Messenger {
 	private static Logger logger = Logger.getLogger(Messenger.class);
 
 	public Messenger() {
 	}
 
+	
+	/**
+	 * @param otsikko
+	 * @param group
+	 * @param to
+	 * @param tulos
+	 * @param settingsVO
+	 * @throws VekapuException
+	 */
 	public static void sendEMail(String otsikko, String group, List to,
 			String tulos,  SettingsVO settingsVO) throws VekapuException {
 		
@@ -59,6 +72,14 @@ public class Messenger {
 		sendEMail(otsikko,group, to2,tulos,settingsVO);
 	}
 
+	/**
+	 * @param otsikko
+	 * @param group
+	 * @param to
+	 * @param tulos
+	 * @param settingsVO
+	 * @throws VekapuException
+	 */
 	public static void sendEMail(String otsikko, String group, String[] to,
 			String tulos,  SettingsVO settingsVO) throws VekapuException {
 		String lsOtsikko = Constant.getEmailHeaderPrefix() + " " + group + " "
@@ -70,6 +91,13 @@ public class Messenger {
 				+ to.length + " henkilölle.");
 	}
 
+	/**
+	 * @param otsikko
+	 * @param group
+	 * @param to
+	 * @param settingsVO
+	 * @throws VekapuException
+	 */
 	public static void sendSMS(String otsikko, String group, List to, SettingsVO settingsVO) throws VekapuException {
 		String[] to2 = new String[to.size()];
 		
@@ -82,6 +110,13 @@ public class Messenger {
 		sendSMS(otsikko,group,to2, settingsVO);
 	}
 	
+	/**
+	 * @param otsikko
+	 * @param group
+	 * @param to
+	 * @param settingsVO
+	 * @throws VekapuException
+	 */
 	public static void sendSMS(String otsikko, String group, String[] to, SettingsVO settingsVO) throws VekapuException {
 		String viesti = "Lottoporukka '" + group + "' - " + otsikko;
 
@@ -91,6 +126,13 @@ public class Messenger {
 				+ to.length + " henkilölle.");
 	}
 
+	/**
+	 * @param game
+	 * @param group
+	 * @param to
+	 * @param settingsVO
+	 * @throws VekapuException
+	 */
 	public static void sendEndMail(String game, String group, List to, SettingsVO settingsVO) throws VekapuException {
 	
 		String[] to2 = new String[to.size()];
@@ -105,6 +147,13 @@ public class Messenger {
 	}
 
 		
+	/**
+	 * @param game
+	 * @param group
+	 * @param to
+	 * @param settingsVO
+	 * @throws VekapuException
+	 */
 	public static void sendEndMail(String game, String group, String[] to, SettingsVO settingsVO) throws VekapuException {
 
 		String lsOtsikko = Constant.getEmailHeaderPrefix() + game
@@ -117,12 +166,20 @@ public class Messenger {
 		// Lisätään mukaan tiedot parhaista tuloksista
 		lsViesti += Constant.getLineSeparator();
 		lsViesti += Constant.getLineSeparator();
-		lsViesti += StoreFile.getFile( settingsVO.getGroupDir() 
-				+ "/"
-				+ group 
-				+ Constant.getBestDir() + group
-				+ Constant.getBestFileExt());
-
+		
+		
+		String bestFileFullName = settingsVO.getGroupDir() +
+    		Constant.getFileSeparator();
+			
+			if (settingsVO.isServer().booleanValue()) {
+				bestFileFullName += group;
+			}
+			
+			bestFileFullName += Constant.getBestDir() + group
+			+ Constant.getBestFileExt();
+		
+		lsViesti += StoreFile.getFile(bestFileFullName);
+			
 		String lsViestiVetaja = "Veikkausporukkasi '" + group + "' " + game
 				+ " on vanhentunut. Ota yhteyttä Vekapu:n ylläpitäjään ("
 				+ settingsVO.getAdmin()
@@ -131,6 +188,13 @@ public class Messenger {
 		String lsViestiAdmin = "Porukan '" + group + "' " + game
 				+ " on vanhentunut.";
 
+		// Oli aikaisemmin if:fitety omaan haaraan  if (settingsVO.isTest().booleanValue())
+		logger.debug("Loppumisilmoitukset: " + game);
+		logger.debug("Otsikko - " + lsOtsikko);
+		logger.debug("Viesti  - " + lsViesti);
+		logger.debug("Vetäjä  - " + lsViestiVetaja);
+		logger.debug("Admin   - " + lsViestiAdmin);
+		
 		if (settingsVO.isEmail().booleanValue() && !settingsVO.isTest().booleanValue()) {
 			sendMail(lsOtsikko, group, to, lsViesti, settingsVO);
 
@@ -144,12 +208,6 @@ public class Messenger {
 			logger.info("Sähköposti - Porukan '" + group + "' " + game
 					+ " loppumisesta lähetetty.");
 
-		} else if (settingsVO.isTest().booleanValue()) {
-			logger.debug("Loppumisilmoitukset: " + game);
-			logger.debug("Otsikko - " + lsOtsikko);
-			logger.debug("Viesti  - " + lsViesti);
-			logger.debug("Vetäjä  - " + lsViestiVetaja);
-			logger.debug("Admin   - " + lsViestiAdmin);
 		}
 
 		for (int i = 0; i < to.length; i++) {
@@ -162,6 +220,13 @@ public class Messenger {
 
 	}
 
+	/**
+	 * @param group
+	 * @param to
+	 * @param toSms
+	 * @param settingsVO
+	 * @throws VekapuException
+	 */
 	public static void sendInfo(String group, List to, List toSms, SettingsVO settingsVO) throws VekapuException {
 		
 		String[] to2 = new String[to.size()];
@@ -181,6 +246,13 @@ public class Messenger {
 		
 		sendInfo( group,  to2,  toSms2,  settingsVO);
 	}
+	/**
+	 * @param group
+	 * @param to
+	 * @param toSms
+	 * @param settingsVO
+	 * @throws VekapuException
+	 */
 	public static void sendInfo(String group, String[] to, String[] toSms, SettingsVO settingsVO) throws VekapuException {
 		StringBuffer lsInfo = new StringBuffer(
 				"Tervetuloa mukaan '"
@@ -218,6 +290,14 @@ public class Messenger {
 
 	}
 
+	/**
+	 * @param header
+	 * @param group
+	 * @param to
+	 * @param text
+	 * @param settingsVO
+	 * @throws VekapuException
+	 */
 	private static void sendMail(String header, String group, String to,
 			String text,  SettingsVO settingsVO) throws VekapuException {
 		String[] apu = { to };
@@ -225,8 +305,14 @@ public class Messenger {
 	}
 
 	/**
-	 * Caling the real meil senging class.
-	 * @throws VekapuException 
+	 * Caling the real mail senging class.
+	 * 
+	 * @param header
+	 * @param group
+	 * @param to
+	 * @param text
+	 * @param settingsVO
+	 * @throws VekapuException
 	 */
 	private static void sendMail(String header, String group, String[] to,
 			String text, SettingsVO settingsVO) throws VekapuException {
