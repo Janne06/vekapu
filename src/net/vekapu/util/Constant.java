@@ -50,7 +50,7 @@ public class Constant {
 
 	private final static String FILE_MANUAL = "OikeaRivi.properties";
 
-	private final static String LOG4J_CONFIGURE = "vekapu.log4j";
+	private final static String LOG4J_CONFIGURE = "log4j.properties";
 
 	//
 	private final static String NEW_LINE = System.getProperty("line.separator");
