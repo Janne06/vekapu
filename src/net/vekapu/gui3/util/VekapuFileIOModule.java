@@ -14,7 +14,7 @@
 //
 //  (c) Copyright J.Ilonen, 2007
 //
-// $Id: VekapuFileIOModule.java 426 2007-02-06 20:40:53Z janne $
+// $Id$
 //
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -67,6 +67,9 @@ public class VekapuFileIOModule implements FileLoader, FileSaver, FileExporter {
 
 		try {
 			FileReader reader = new FileReader(filename);
+			
+			logger.info("reader.getEncoding(): " + reader.getEncoding() );
+			
 			while (reader.ready()) {
 				readlen = reader.read(cbuf, 0, 256);
 				sb.append(cbuf, 0, readlen);
