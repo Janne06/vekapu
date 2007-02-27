@@ -4,4 +4,4 @@
  * V: Ei arvo. Ellet osaa itse valita 7 numeroa niin unohda koko veikkaaminen.
 
  * K: Miksi en voita lotossa ?
- * V: Niinp� niin. Siin�p� vasta kysymys. Eräs vastaus asiaan löytyy [http://www.cs.tut.fi/~empii/matikka/lotto.html täältä].
+ * V: Niinpä niin. Siinäpä vasta kysymys. Eräs vastaus asiaan löytyy [http://www.cs.tut.fi/~empii/matikka/lotto.html täältä].
