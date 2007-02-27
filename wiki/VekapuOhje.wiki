@@ -1,0 +1,31 @@
+#labels Phase-Deploy
+=Ohjeita Vekapun käyttöön=
+
+==Vaatimukset==
+
+ * *JDK 1.3* tai uudempi (eli pitäis pyöriä melkein missä vaan).
+ * Nettiyhteys olis kiva. (Nykyäänhän se on kyllä jo kaikilla käytössä)
+
+
+==Yleiset asetukset==
+
+Vekapun asetuksia säädetään tiedostossa  `vekapu.properties`.
+
+
+==Omat lottonumerot==
+
+Omat lottonumerot määritetän hakemistossa 'coupon' olevissa tiedostoissa. Oletuksena sieltä
+löytyy tiedostot: `lotto.properties`, `jokeri.properties` ja `viking.properties`.
+
+Mikäli haluat niin voit tehdä itsellesi omat tiedoston (esim. janne.proprties), missä kerrot oman pelisi numerot.
+Tällöin porukan nimi (tässä janne), on lisättä `vekapu.properties` tiedostoon.
+
+Vekapulla on mahdollista lähettää s-postia tarkistetuista riveistä. Tämä kätevää, etenkin silloin kun 
+Vekapu on asennettu pyörimään ajastetuna (crontab).
+
+ 
+
+
+
+
+
