@@ -5,7 +5,7 @@ Vekapu - Veikkaus apuri. Vekapu on Java-sovellus, joka on tehty lottorivien tark
 
 
 
-Siirsin [http://www.vekapu.net Vekapun] lähdekoodin täänne [http://kooditakomo.cs.tut.fi/projects/vekapu/ Kooditakomosta] ja [http://wikihost.org/wikis/vekapu/wiki/start wikin täältä] 20.2.07.
+Siirsin [http://www.vekapu.net Vekapun] lähdekoodin täänne [http://kooditakomo.cs.tut.fi/projects/vekapu/ Kooditakomosta] ja [http://wikihost.org/wikis/vekapu/wiki/start wikin täältä] 20.2.07. Aika Kooditakomossa: 7.6.2005 - 20.2.2007 eli melkein 2-vuotta. Kiitokset Kooditakomolle tästä ajasta.
 
 Perusteluina seuraavaa:
 
@@ -14,7 +14,6 @@ Perusteluina seuraavaa:
  * Kooditakomo on tosiaankin lopussa ja mitään ylimääräsia wiki-saitteja ei jaksa alkaa ihmetteleen, etenkin jos kaikki onnistuu täällä.
 
  * Kokomukset Googlesta ja GMailista on sen verran hyviä että tähän viittii alkaaa.
-
 
 
 
