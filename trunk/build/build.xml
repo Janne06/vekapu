@@ -84,6 +84,7 @@
         <include name="activation.jar"/>
         <include name="mail.jar"/>
         <include name="log4j.jar"/>
+      	<include name="jmdi.jar"/>
       </fileset>
     </path>
 
@@ -94,7 +95,8 @@
       deprecation="${deprecation}"
       debug="on"
       source="1.5"
-      target="1.5">
+      target="1.5"
+      encoding="UTF8">
     </javac>
 
   </target>
@@ -176,6 +178,7 @@
         <include name="activation.jar"/>
         <include name="mail.jar"/>
         <include name="log4j.jar"/>
+      	<include name="jmdi.jar"/>
       </fileset>
     </path>
 
