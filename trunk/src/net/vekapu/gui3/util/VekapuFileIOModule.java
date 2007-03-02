@@ -32,10 +32,13 @@
 
 package net.vekapu.gui3.util;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import net.vekapu.gui3.VekapuData;
 
@@ -66,8 +69,11 @@ public class VekapuFileIOModule implements FileLoader, FileSaver, FileExporter {
 		VekapuData data = new VekapuData();
 
 		try {
+//			File file = new File( filename );
+//			FileInputStream fis = new FileInputStream( file );
 			FileReader reader = new FileReader(filename);
 			
+//			FileReader reader = InputStreamReader(fis,"UTF-8");
 			logger.info("reader.getEncoding(): " + reader.getEncoding() );
 			
 			while (reader.ready()) {
