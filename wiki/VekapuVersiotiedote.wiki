@@ -4,6 +4,9 @@
 ==Kehitys versio==
 
 *Parannuksia*
+Julkaistu 2.3.07
+
+ * Nyt tuntuu toi Bernhardin tekemä MDI kehys toimivan. Kohtapuoleen vois ehkä julkaista version 2.0 (Toi numero on varattu MDI-Gui:lle, eli sitä ootellessa.) 
 
  * Siirsin lähdekoodin kehitys SVN Googlen code houstaukseen 20.02.2007. [http://kooditakomo.cs.tut.fi/ Kooditakomossa] on ollu aika hiljasta viimeaikoina (svn rikki, ei uusia projekteja sitten viime kesäkuun & muutkin projektit muuttaa muualle ([http://kooditakomo.cs.tut.fi/projects/gunit/ GUnit] [https://garage.maemo.org/projects/gunit uusi paikka])
 
@@ -18,6 +21,11 @@
 voitarkistaa asettamalla tähän halutun porukan nimi: `check_group = lotto`
  * `vekapu.properties` asetustiedostoa jäsennelty ja kommentointia lisätty. Pitäisköhän toi filu jakaan kahteen osaan ?? 1. vekapun yleissäädöt & 2. tiedot lottoporukoista
 
+
+==Tiedetyt ongelmat==
+
+ * Pelkän (lauantai) Jokerin tarkistaminen MDI-Gui:lla ei onnistu. (Mahtaneeko haitata ketään ? Tuskin kukaan tekee pelkkää Jokeria. siis ehkä)
+ * Toi MDI-GUI on vielä kielellinen sekasotku. 
 
 ----
 Tästä alespäin on tiedot kopioitu tänne muualta (Kooditakomo & nettisivu).
