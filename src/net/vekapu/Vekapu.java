@@ -67,11 +67,15 @@ public class Vekapu {
 	private String tulos = "";
 
 	private boolean test = false;
-	
-	/**
-	 * @deprecated
-	 */
-	private String chec_kedFileName = "";
+		
+	// Uusia instanssimuuttujia kun tietyn porukan tarkistus omaan metodiin
+	private boolean ohi = true;
+	private boolean checked = false;
+
+	private int lkmLotto = 0;
+	private int lkmJokeri = 0;
+	private int lkmviking = 0;
+
 
 	public Vekapu() {
 		logger.info(Constant.getName() + " " + Constant.getVersionNumber());
@@ -179,12 +183,6 @@ public class Vekapu {
 	 */
 	public void tarkista(String kierros) throws VekapuException {
 
-		boolean ohi = true;
-
-		int lkmLotto = 0;
-		int lkmJokeri = 0;
-		int lkmviking = 0;
-
 		tulos = "";
 
 		// Kelataan läpi lottoporukat.
@@ -195,7 +193,7 @@ public class Vekapu {
 				VekapuInfo.groupNull();
 			}
 
-			ohi = checkGroup(group, kierros);
+			checkGroup(group, kierros);
 			
 			// Katotaan kuinka tarkistus menis tällätavalla
 			logger.debug(resultVO.getHeader() + resultVO.printLotto()
@@ -228,24 +226,37 @@ public class Vekapu {
 		return tulos;
 	}
 	
-	public boolean checkGroup(String group, String kierros) throws VekapuException { 
+	/**
+	 * 
+	 * @param group
+	 * @param kierros
+	 * @return
+	 * @throws VekapuException
+	 */
+	public String checkGroup(String group, String kierros) throws VekapuException { 
+	
+		// Taidetaan kutsua tätä luokkaa GUI:sta joten alustetaan arvot
+		if (settingsVO == null) {	
+			SettingsReader pr = new SettingsReader();
+			settingsVO = pr.getSettingsVO();	
+		}
 
-		boolean ohi = true;
-		boolean checked = false;
-	
-		int lkmLotto = 0;
-		int lkmJokeri = 0;
-		int lkmviking = 0;
-	
+		if (gameMaster == null) {
+			gameMaster = new GameMaster(settingsVO);
+		}	
+		if (dayhelper == null) {
+			dayhelper = new DayHelper();
+		}	
+
+		
+		String resultFile = "";
 		String parasTulos = "";
 		String parasJokeri = "";
 	
 		// TODO Meniskähän koko tää luuppi GameMasteriin ??
 		// Jos ei kokonaan niin ainakin eri pelien tarkastuksien kutsut
 
-		// TODO Porukka kohtaiset kutsut !!!!
-
-		String otsikko = "";
+//		String otsikko = "";
 
 		logger.info("Tarkistettava porukka: '" + group + "' & kierros: '" + kierros + "'.");
 
@@ -294,6 +305,10 @@ public class Vekapu {
 					//						
 				} else {
 					// Tarkistetaan lotto
+					logger.debug("gameMaster: " + gameMaster);
+					logger.debug("resultVO: " + resultVO);
+					logger.debug("numbersVO: " + numbersVO);
+					
 					resultVO = gameMaster.checkLotto(resultVO, numbersVO);
 					kierros = settingsVO.getWeek();
 					logger.debug("kierros: " + kierros);
@@ -385,11 +400,11 @@ public class Vekapu {
 				}
 				dir2 += Constant.getResultDir();
 				logger.debug("Group & week: " + group + "-" + weeknbr);
-/*
-				checkedFileName = dir2 + group + "-" + weeknbr
+				
+				resultFile = dir2 + group + "-" + weeknbr
 				   + Constant.getResultFileExt();
-				logger.debug("checkedFileName: " + checkedFileName);
-*/					
+				logger.debug("resultFile: " + resultFile);
+				
 				StoreFile sf2 = new StoreFile(dir2, group + "-" + weeknbr
 						+ Constant.getResultFileExt(), resultVO.toString());
 				logger.debug(sf2.toString());
@@ -413,7 +428,7 @@ public class Vekapu {
 				sendSms(kierros, numbersVO, parasTulos, parasJokeri);
 			}
 		}
-		return ohi;
+		return resultFile;
 	}
 	
 	private void sendMail(String kierros,OwnNumbersVO numbersVO, String parasTulos, String parasJokeri) throws VekapuException {
