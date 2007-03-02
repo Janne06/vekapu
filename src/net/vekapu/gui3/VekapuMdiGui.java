@@ -14,7 +14,7 @@
 //
 //  (c) Copyright J.Ilonen, 2007
 //
-// $Id: VekapuMdiGui.java 426 2007-02-06 20:40:53Z janne $
+// $Id$
 //
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -105,8 +105,9 @@ public class VekapuMdiGui extends Application {
 /*				
 		String ENCODING = "encoding";
 		String encoding = "UTF-8";
+		String Charset = "charset";
 		
-//		System.setProperty(ENCODING, encoding);
+		System.setProperty(Charset, encoding);
 //		System.setProperty("file.encoding",encoding);
 */			
 		VekapuMdiGui gui = new VekapuMdiGui();

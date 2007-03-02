@@ -40,7 +40,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 
 import net.vekapu.VekapuException;
 
@@ -90,7 +92,7 @@ public class StoreFile {
 				f.createNewFile();
 
 				PrintStream ps = new PrintStream(new FileOutputStream(
-						isFileName, true));
+						isFileName, true),true, "UTF-8");
 
 				// Kun tehdään ekan kerran luettelo parhaista tuloksista niin
 				// laitetaan fileeseen otsikko.
@@ -104,7 +106,10 @@ public class StoreFile {
 
 				logger.debug("Tehtiin tiedosto: "
 						+ System.getProperty("user.dir") + isFileName);
+			} else {
+				logger.debug("Tiedosto " + isFileName + " on jo olemassa !");
 			}
+				
 			
 			logger.debug(System.getProperty("user.dir") + f
 					+ (f.exists() ? " is found " : " is missing "));
@@ -163,13 +168,16 @@ public class StoreFile {
 
 		try {
 			PrintStream ps = new PrintStream(new FileOutputStream(isFileName,
-					true));
+					true),true, "UTF-8");
 			ps.println(results);
 		} catch (FileNotFoundException fnfe) {
 			//
 			logger.error("Ongelmia tiedoston " + isFileName
 					+ " tallennuksessa.", fnfe);
 			throw new VekapuException(fnfe);
+		} catch (UnsupportedEncodingException e) {
+			logger.error(e,e);
+			throw new VekapuException(e);
 		}
 
 	}
