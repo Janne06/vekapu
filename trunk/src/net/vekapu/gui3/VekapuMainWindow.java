@@ -14,7 +14,7 @@
 //
 //  (c) Copyright J.Ilonen, 2007
 //
-// $Id: VekapuMainWindow.java 423 2007-02-06 19:40:09Z janne $
+// $Id$
 //
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -40,7 +40,10 @@ import javax.swing.JMenuItem;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import net.vekapu.Vekapu;
+import net.vekapu.VekapuException;
 import net.vekapu.util.Constant;
+import net.vekapu.util.DayHelper;
 
 import org.apache.log4j.Logger;
 import org.bs.mdi.Application;
@@ -176,12 +179,22 @@ public class VekapuMainWindow extends SwingMainWindow {
 				fullName += VekapuMdiGui.getSettingsVO().getGroupDir();
 				fullName += Constant.getFileSeparator() + filename ;
 			}
-			fullName += Constant.getResultDir();
-			fullName += filename + "-" +  VekapuMdiGui.getSettingsVO().getCheckedRound();
-			fullName += Constant.getResultFileExt();
+
+			Vekapu vekapu = new Vekapu();
+	
+			try {
+				DayHelper dayHelper = new DayHelper();
+				String file = vekapu.checkGroup(event.getActionCommand(),dayHelper.getWeek());
+			
+				logger.debug("fullName : " + fullName);	
+				logger.debug("file : " + file);	
 				
-			logger.debug("fullName : " + fullName);		
-			Application.getInstance().openDocument(fullName);
+				Application.getInstance().openDocument(file);
+			
+			} catch (VekapuException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
