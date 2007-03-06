@@ -38,7 +38,6 @@ import net.vekapu.gui3.util.VekapuFileIOModule;
 import net.vekapu.gui3.util.VekapuResources;
 import net.vekapu.util.Constant;
 import net.vekapu.util.SettingsReader;
-import net.vekapu.util.VekapuInfo;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -102,14 +101,7 @@ public class VekapuMdiGui extends Application {
 		PropertyConfigurator.configure(Constant.getLog4JConfigFileName());
 		logger.info(Constant.getName() + " " + Constant.getVersionNumber());
 		logger.info("Argumentien määrä: " + args.length);
-/*				
-		String ENCODING = "encoding";
-		String encoding = "UTF-8";
-		String Charset = "charset";
 		
-		System.setProperty(Charset, encoding);
-//		System.setProperty("file.encoding",encoding);
-*/			
 		VekapuMdiGui gui = new VekapuMdiGui();
 		gui.run(args);
 			
