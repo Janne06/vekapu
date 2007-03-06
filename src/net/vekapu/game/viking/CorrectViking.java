@@ -219,6 +219,8 @@ public class CorrectViking extends CorrectNumber {
 			lisanro = sivu.indexOf("LIS�NUMEROT");
 		if (lisanro < 0)
 			lisanro = sivu.indexOf("LISÄNUMEROT");
+		if (lisanro < 0)
+			lisanro = sivu.indexOf("LISÃ„NUMEROT");
 		// Jos merkistö sekoilee niin ei kai tässä muukaan auta.
 		if (lisanro < 0)
 			lisanro = 531;
