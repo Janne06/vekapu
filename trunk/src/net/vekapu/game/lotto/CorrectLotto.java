@@ -7,7 +7,7 @@
 //
 // Purpose:  Giving correct lotto numbers.
 //
-// (c) Copyright J.Ilonen, 2003-2006
+// (c) Copyright J.Ilonen, 2003-2007
 //
 // $Id$
 //
@@ -157,7 +157,9 @@ public class CorrectLotto extends CorrectNumber {
 		sivu = StoreFile.getFile(Constant.getWwwDir() + dir + name_txt);
 		// Poistetaan html tägit varmuuden vuoksi.
 		sivu = Html2txt.HtmlPage2txt(new StringBuffer(sivu));
-				
+			
+//		logger.debug(sivu);
+		
 		if (sivu.indexOf("Seuraava arvonta") > 0) {
 			// Oikeita numeroita ei vielä ole julkaistu
 			String messu = "Oikeita Lotto-numeroita ei vielä ole julkaistu.";
@@ -191,13 +193,14 @@ public class CorrectLotto extends CorrectNumber {
 		correctNumberVO.setDate(pvm);
 
 		int alku = sivu.indexOf("OIKEAT NUMEROT");
-		// Bug [ #15 ] Lisäarvonasta ongelmia
+		logger.debug("OIKEAT NUMEROT alkaakohdasta " + alku);
+		// Bug [ #15 ] Kooditakomo > Lisäarvonasta ongelmia
 		// int alku2 = sivu.indexOf("</B>",alku);
 		// (alku + 45, alku + 46 + 21)
 		String oikeat = sivu.substring(alku + 16, alku + 42).trim();
 		logger.debug("oikeat: " + oikeat);
 		
-		int lisanro = sivu.indexOf("LIS&Auml;NUMEROT");		
+		int lisanro = sivu.indexOf("LIS&Auml;NUMEROT");
 		// Jostain syystä kirjoitusasu TXTTV sivuilla on muuttunu.
 		if (lisanro < 0)
 			lisanro = sivu.indexOf("LISÄNUMEROT");
@@ -206,6 +209,13 @@ public class CorrectLotto extends CorrectNumber {
 			lisanro = sivu.indexOf("LIS?NUMEROT");
 		if (lisanro < 0)
 			lisanro = sivu.indexOf("LIS�NUMEROT");
+		
+		if (lisanro < 0)
+			lisanro = sivu.indexOf("LISÃ¤NUMEROT");
+//		 LISÄNUMEROT
+		if (lisanro < 0)
+			lisanro = sivu.indexOf("LISÃ„NUMEROT");
+		//		LISÃ„NUMEROT
 		// Jos merkistö sekoilee niin ei kai tässä muukaan auta.
 		if (lisanro < 0)
 			lisanro = 490;
@@ -214,8 +224,10 @@ public class CorrectLotto extends CorrectNumber {
 		
 		//(lisanro + 42, lisanro + 60)
 		String lisat = sivu.substring(lisanro + 12, lisanro + 25).trim();
-		logger.debug("lisat: " + oikeat);
-
+		logger.debug("lisat: " + lisat);
+		lisat = lisat.replace(':', ' ').trim();
+		logger.debug("lisat: " + lisat);
+		
 		checkWeek = viikko;
 		lottoNumerot = oikeat;
 		lottoLisat = lisat;
