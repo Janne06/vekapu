@@ -14,6 +14,10 @@
 // $Id$
 //
 // Used this sites as modell:
+// UTF-8 
+// http://constructionyard.blogspot.com/
+// 
+// General file I/O
 // http://www.rgagnon.com/howto.html
 // http://www.rgagnon.com/javadetails/java-0054.html
 // http://www.rgagnon.com/javadetails/java-0057.html
@@ -35,13 +39,14 @@
 package net.vekapu.util;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import net.vekapu.VekapuException;
@@ -57,8 +62,6 @@ public class StoreFile {
 
 	private String isFileName = null;
 
-	private static SettingsReader pr = null;
-
 	public StoreFile(String subdir, String file)  throws VekapuException {
 		this(subdir, file, "");
 	}
@@ -72,8 +75,7 @@ public class StoreFile {
 	public StoreFile(String subdir, String filename, String file) throws VekapuException {
 		logger.debug("subdir: " + subdir + " filename: " + filename
 				+ " file's length: " + file.length());
-		try {
-			pr = new SettingsReader();
+//		try {
 			
 			// If subdir dosn't exitis it will be created
 			if (!isFileExist(subdir)) {
@@ -85,48 +87,69 @@ public class StoreFile {
 
 			isFileName = "." + Constant.getFileSeparator() +  subdir + filename;
 
-			File f = new File(isFileName);
-			// If file dosn't exitis it will be created
-			if (!isFileExist(isFileName)) {
-
-				f.createNewFile();
-
-				PrintStream ps = new PrintStream(new FileOutputStream(
-						isFileName, true),true, "UTF-8");
-
-				// Kun tehdään ekan kerran luettelo parhaista tuloksista niin
-				// laitetaan fileeseen otsikko.
-				if (subdir.indexOf(Constant.getBestDir()) > 0) {
-					ps.println("Porukan " + filename
-							+ " parhaat lottotulokset kierroksittain.");
-					ps.println();
-				} else {
-					ps.print(file);
-				}
-
-				logger.debug("Tehtiin tiedosto: "
-						+ System.getProperty("user.dir") + isFileName);
-			} else {
-				logger.debug("Tiedosto " + isFileName + " on jo olemassa !");
+			// If file exitis 
+			if (isFileExist(isFileName)) { 
+				logger.info("Tiedosto " + isFileName + " on jo olemassa !");
+				
 			}
+			
+			storeFile(file);
+			
+/*				
+			f.createNewFile();
+
+			PrintStream ps = new PrintStream(new FileOutputStream(
+					isFileName, true),true, "UTF-8");
+*/
+			// http://constructionyard.blogspot.com/
+//			File f2 = new File(  isFileName + "_UTF-8.txt" );
+			/* 
+			FileOutputStream fos = new FileOutputStream( f );
+			OutputStreamWriter osw = new OutputStreamWriter( fos, "UTF-8" );
+			BufferedWriter writer = new BufferedWriter( osw );
+
+			PrintWriter out = new PrintWriter ( writer );
+			
+			
+			// Kun tehdään ekan kerran luettelo parhaista tuloksista niin
+			// laitetaan fileeseen otsikko.
+			if (subdir.indexOf(Constant.getBestDir()) > 0) {
+/*
+				ps.println("Porukan " + filename
+						+ " parhaat lottotulokset kierroksittain.");
+				ps.println(); * /
+				out.println("Porukan " + filename
+						+ " parhaat lottotulokset kierroksittain.");
+				out.println();
+				
+			} else {
+//				ps.print(file);				
+				out.print(file);
+				
+			}
+
+			out.close();
+
+			logger.debug("Tehtiin tiedosto: "
+					+ System.getProperty("user.dir") + isFileName);
 				
 			
 			logger.debug(System.getProperty("user.dir") + f
 					+ (f.exists() ? " is found " : " is missing "));
-			
+			* /
 		} catch (FileNotFoundException fnfe) {
 			//
 			logger.error("Ongelmia tiedoston: "
 					+ System.getProperty("user.dir") + isFileName
 					+ " tallennuksessa. ", fnfe);
-			throw new VekapuException(fnfe);
+			throw new VekapuException(fnfe); */ /*
 		} catch (Exception e) {
 			// "user.dir"
 			logger.error("Ongelmia tiedoston: "
 					+ System.getProperty("user.dir") + isFileName
 					+ " luomisessa. ", e);
 			throw new VekapuException(e);
-		}
+		} */
 
 		try {
 			File dir1 = new File(".");
@@ -166,19 +189,7 @@ public class StoreFile {
 			return;
 		}
 
-		try {
-			PrintStream ps = new PrintStream(new FileOutputStream(isFileName,
-					true),true, "UTF-8");
-			ps.println(results);
-		} catch (FileNotFoundException fnfe) {
-			//
-			logger.error("Ongelmia tiedoston " + isFileName
-					+ " tallennuksessa.", fnfe);
-			throw new VekapuException(fnfe);
-		} catch (UnsupportedEncodingException e) {
-			logger.error(e,e);
-			throw new VekapuException(e);
-		}
+		storeFile(results);
 
 	}
 
@@ -200,8 +211,23 @@ public class StoreFile {
 				sb.append(nextLine + Constant.getLineSeparator());
 			}
 
+			String utf = new String(sb.toString().getBytes(),"UTF-8");
+			logger.info("utf: " + utf);
+			
+			logger.info("original: " + sb);
+			
 			return sb.toString();
+/* / ====================================
+			File f = new File(  fileName + "_UTF-8.txt" );
+			FileOutputStream fos = new FileOutputStream( f );
+			OutputStreamWriter osw = new OutputStreamWriter( fos, "UTF-8" );
+			BufferedWriter writer = new BufferedWriter( osw );
 
+			PrintWriter out = new PrintWriter ( writer );
+			out.print("file");
+			out.close();
+//			 ==================================== */
+			
 		} catch (FileNotFoundException fnfe) {
 			String msg = "Filettä: '" + fileName + "' ei löydy hakemistosta: " + Constant.getUserDir();
 			
@@ -223,19 +249,15 @@ public class StoreFile {
 	public void rename(String yearWeek) throws VekapuException {
 
 		File f = new File(isFileName);
+		String newFile = isFileName + "." + yearWeek;
+		
 		// If file exitis then rename it.
 		logger.debug("If file (" + isFileName
-				+ ") exitis then rename it.");
+				+ ") exitis then rename it to : " + newFile);
 
 		if (f.exists()) {
-			try {
-				String newFile = isFileName + "." + yearWeek;
-				if (pr.getSettingsVO().isTest().booleanValue()) {
-					logger.debug("Uudelleen nimetty tiedosto: " + newFile);
-				} else {
-					f.renameTo(new File(newFile));
-				}
-				logger.debug("Tehtiin tiedosto: " + newFile);
+			try {				
+				f.renameTo(new File(newFile));
 			} catch (Exception e) {
 				//
 				logger.error("Ongelmia tiedoston " + "uudelleennimeämisessä.",
@@ -272,6 +294,32 @@ public class StoreFile {
 		return rc;
 	}
 
+	private void storeFile(String file) throws VekapuException {
+
+		try {
+
+			logger.info("Talletetaan file UTF-8 muodossa: " + isFileName);
+			// + "_UTF-8.txt"
+			File f = new File(  isFileName  );
+			FileOutputStream fos = new FileOutputStream( f );
+			OutputStreamWriter osw = new OutputStreamWriter( fos, "UTF-8" );
+			BufferedWriter writer = new BufferedWriter( osw );
+
+			PrintWriter out = new PrintWriter ( writer );
+			out.print(file);
+			out.close();
+			
+		} catch (FileNotFoundException fnfe) {
+			//
+			logger.error("Ongelmia tiedoston " + isFileName
+					+ " tallennuksessa.", fnfe);
+			throw new VekapuException(fnfe);
+		} catch (UnsupportedEncodingException e) {
+			logger.error(e,e);
+			throw new VekapuException(e);
+		}
+
+	}
 	private void test() {
 		try {
 
