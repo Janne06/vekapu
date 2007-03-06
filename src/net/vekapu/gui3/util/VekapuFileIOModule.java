@@ -32,13 +32,11 @@
 
 package net.vekapu.gui3.util;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 import net.vekapu.gui3.VekapuData;
 
@@ -69,25 +67,31 @@ public class VekapuFileIOModule implements FileLoader, FileSaver, FileExporter {
 		VekapuData data = new VekapuData();
 
 		try {
-//			File file = new File( filename );
-//			FileInputStream fis = new FileInputStream( file );
 			FileReader reader = new FileReader(filename);
-			
-//			FileReader reader = InputStreamReader(fis,"UTF-8");
-			logger.info("reader.getEncoding(): " + reader.getEncoding() );
+			String encoding = reader.getEncoding();
+			logger.info("reader.getEncoding() " + encoding );
 			
 			while (reader.ready()) {
 				readlen = reader.read(cbuf, 0, 256);
 				sb.append(cbuf, 0, readlen);
 			}
 			reader.close();
+
+			byte[] bytes = sb.toString().getBytes(encoding);
+			String utf = new String(bytes,"UTF-8");			
+			
+//			data.setText(sb.toString());
+			data.setText(utf);
+			
 		} catch (FileNotFoundException e) {
 			throw new FileIOException(FileIOException.ERR_NOSUCHFILE, filename);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
-			throw new FileIOException(FileIOException.ERR_UNKNOWN, filename);
+			throw new FileIOException(FileIOException.ERR_UNKNOWN, filename);	
 		}
-
-		data.setText(sb.toString());
+		
 		return data;
 	}
 
