@@ -201,7 +201,7 @@ public class StoreFile {
 	 */
 	public static String getFile(String fileName) throws VekapuException {
 		logger.debug("fileName: " + fileName);
-//		String userdir = System.getProperty("user.dir");
+
 		String userdir = Constant.getUserDir();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(userdir + fileName));
@@ -210,23 +210,8 @@ public class StoreFile {
 			while ((nextLine = br.readLine()) != null) {
 				sb.append(nextLine + Constant.getLineSeparator());
 			}
-
-			String utf = new String(sb.toString().getBytes(),"UTF-8");
-			logger.info("utf: " + utf);
-			
-			logger.info("original: " + sb);
 			
 			return sb.toString();
-/* / ====================================
-			File f = new File(  fileName + "_UTF-8.txt" );
-			FileOutputStream fos = new FileOutputStream( f );
-			OutputStreamWriter osw = new OutputStreamWriter( fos, "UTF-8" );
-			BufferedWriter writer = new BufferedWriter( osw );
-
-			PrintWriter out = new PrintWriter ( writer );
-			out.print("file");
-			out.close();
-//			 ==================================== */
 			
 		} catch (FileNotFoundException fnfe) {
 			String msg = "Filettä: '" + fileName + "' ei löydy hakemistosta: " + Constant.getUserDir();

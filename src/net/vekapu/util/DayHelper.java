@@ -7,7 +7,7 @@
 //
 // Purpose:  Determinating what is day of the week.
 //
-// (c) Copyright J.Ilonen, 2003-2006
+// (c) Copyright J.Ilonen, 2003-2007
 //
 // $Id$
 //
@@ -38,45 +38,79 @@ import net.vekapu.VekapuException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+/**
+ * Determinating what is day of the week.
+ * 
+ * @author janne
+ * 
+ */
 public class DayHelper {
 	static Logger logger = Logger.getLogger(DayHelper.class);
+
 	private int week = 0;
+
 	private int year = 0;
+
 	private int day = 0;
 
-
+	/**
+	 * 
+	 */
 	public DayHelper() {
 		setYearInt();
 		setWeekInt();
 		setDayInt();
 	}
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		PropertyConfigurator.configure(Constant.getLog4JConfigFileName());
 		DayHelper day = new DayHelper();
 		day.test();
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isSaturday() {
 		return (day == Calendar.SATURDAY);
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isSunday() {
 		return (day == Calendar.SUNDAY);
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isMonday() {
 		return (day == Calendar.MONDAY);
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isTuesday() {
 		return (day == Calendar.TUESDAY);
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isWednesday() {
 		return (day == Calendar.WEDNESDAY);
 	}
 
+	/**
+	 * @param aDate
+	 * @return
+	 * @throws VekapuException
+	 */
 	public boolean isToday(String aDate) throws VekapuException {
 		boolean isToday = false;
 		try {
@@ -104,6 +138,11 @@ public class DayHelper {
 		return isToday;
 	}
 
+	/**
+	 * @param aDate
+	 * @return
+	 * @throws VekapuException
+	 */
 	public boolean isExpired(String aDate) throws VekapuException {
 		boolean expired = false;
 		try {
@@ -131,28 +170,45 @@ public class DayHelper {
 		return expired;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getYearWeek() {
 		String ret = getYear() + "-" + week;
 
 		return ret;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getWeek() {
 		return String.valueOf(week);
 	}
-	
+
+	/**
+	 * @return
+	 */
 	public String getLastWeek() {
 		int week2 = week - 1;
 		// Laitetaan vuodenvaihteessa viikoksi 53.
-		if (week2 < 1) week2 = 53;
+		if (week2 < 1)
+			week2 = 53;
+
 		String ret = String.valueOf(week2);
 		return ret;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getYear() {
 		return String.valueOf(year);
 	}
 
+	/**
+	 * @return
+	 */
 	public static String now() {
 		String DATE_FORMAT = "dd.MM.yyyy HH:mm:ss";
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
@@ -162,21 +218,33 @@ public class DayHelper {
 		return sdf.format(date);
 	}
 
+	/**
+	 * 
+	 */
 	private void setDayInt() {
 		GregorianCalendar newCal = new GregorianCalendar();
 		day = newCal.get(Calendar.DAY_OF_WEEK);
 	}
 
+	/**
+	 * 
+	 */
 	private void setWeekInt() {
 		GregorianCalendar newCal = new GregorianCalendar();
 		week = newCal.get(Calendar.WEEK_OF_YEAR);
 	}
 
+	/**
+	 * 
+	 */
 	private void setYearInt() {
 		GregorianCalendar newCal = new GregorianCalendar();
 		year = newCal.get(Calendar.YEAR);
 	}
 
+	/**
+	 * 
+	 */
 	private void test() {
 		// Testataan luokan toimintaa
 		try {
@@ -189,10 +257,12 @@ public class DayHelper {
 
 			String pvm = "24.4.2003";
 			logger.debug("Onko tänään " + pvm + " ? " + this.isToday(pvm));
-			logger.debug("Onko vanhentunut " + pvm + " ? " + this.isExpired(pvm));
+			logger.debug("Onko vanhentunut " + pvm + " ? "
+					+ this.isExpired(pvm));
 
 			String pvm2 = "24.4.2300";
-			logger.debug("Onko vanhentunut " + pvm2 + " ? " + this.isExpired(pvm2));
+			logger.debug("Onko vanhentunut " + pvm2 + " ? "
+					+ this.isExpired(pvm2));
 
 			logger.debug("Mikä vuosi ja viikko ? " + this.getYearWeek());
 			logger.debug("Mikä vuosi ? " + this.getYear());
