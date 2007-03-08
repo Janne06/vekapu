@@ -32,10 +32,14 @@
 
 package net.vekapu.gui3.util;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import net.vekapu.gui3.VekapuData;
@@ -54,13 +58,13 @@ import org.bs.mdi.Task;
 public class VekapuFileIOModule implements FileLoader, FileSaver, FileExporter {
 
 	private static Logger logger = Logger.getLogger(VekapuFileIOModule.class);
-	
-	static FileFormat[] formats = {new TextFileFormat() };
+
+	static FileFormat[] formats = { new TextFileFormat() };
 
 	public RootData load(String filename) throws FileIOException {
-		
+
 		logger.debug("filename: " + filename);
-		
+
 		char[] cbuf = new char[256];
 		int readlen;
 		StringBuffer sb = new StringBuffer();
@@ -69,8 +73,8 @@ public class VekapuFileIOModule implements FileLoader, FileSaver, FileExporter {
 		try {
 			FileReader reader = new FileReader(filename);
 			String encoding = reader.getEncoding();
-			logger.info("reader.getEncoding() " + encoding );
-			
+			logger.info("reader.getEncoding() " + encoding);
+
 			while (reader.ready()) {
 				readlen = reader.read(cbuf, 0, 256);
 				sb.append(cbuf, 0, readlen);
@@ -78,32 +82,38 @@ public class VekapuFileIOModule implements FileLoader, FileSaver, FileExporter {
 			reader.close();
 
 			byte[] bytes = sb.toString().getBytes(encoding);
-			String utf = new String(bytes,"UTF-8");			
-			
-//			data.setText(sb.toString());
+			String utf = new String(bytes, "UTF-8");
+
 			data.setText(utf);
-			
+
 		} catch (FileNotFoundException e) {
 			throw new FileIOException(FileIOException.ERR_NOSUCHFILE, filename);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			throw new FileIOException(FileIOException.ERR_UNKNOWN, filename);	
+			throw new FileIOException(FileIOException.ERR_UNKNOWN, filename);
 		}
-		
+
 		return data;
 	}
 
 	public void save(RootData data, String filename) throws FileIOException {
-		
+
 		logger.debug("filename: " + filename);
 		String text = ((VekapuData) data).getText();
-		
+
 		try {
-			FileWriter writer = new FileWriter(filename);
-			writer.write(text);
-			writer.close();
+			logger.info("Talletetaan file UTF-8 muodossa: " + filename);
+
+			File f = new File(filename);
+			FileOutputStream fos = new FileOutputStream(f);
+			OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+			BufferedWriter writer = new BufferedWriter(osw);
+
+			PrintWriter out = new PrintWriter(writer);
+			out.print(text);
+			out.close();
 		} catch (FileNotFoundException e) {
 			// A FileNotFoundException while writing a file usually means
 			// "access denied"
