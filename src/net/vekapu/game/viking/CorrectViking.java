@@ -229,6 +229,8 @@ public class CorrectViking extends CorrectNumber {
 		
 		String lisat = sivu.substring(lisanro + 12, lisanro + 30).trim();
 		logger.debug("lisat: " + lisat);
+		lisat = lisat.replace(':', ' ').trim();
+		logger.debug("lisat: " + lisat);
 		
 		checkWeek = viikko;
 		kierrosViking = "VikingKierros " + viikko + " - " + pvm;
