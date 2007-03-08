@@ -27,15 +27,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-/**
-
- Tarkistetaan lottorivit (& jokeri & vikinlotto).
-
-
- @author J.Ilonen
- @version $Revision$
-
- */
 package net.vekapu;
 
 import net.vekapu.game.GameMaster;
@@ -50,13 +41,28 @@ import net.vekapu.util.VekapuInfo;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+/**
+ * Tarkistetaan lottorivit (& jokeri & vikinlotto).
+ *   
+ * @author janne
+ *
+ */
 public class Vekapu {
 	private static Logger logger = Logger.getLogger(Vekapu.class);
 
+	/**
+	 * 
+	 */
 	private DayHelper dayhelper = null;
 
+	/**
+	 * 
+	 */
 	private GameMaster gameMaster = null;
 
+	/**
+	 * 
+	 */
 	private static SettingsVO settingsVO = null;
 
 	private ResultVO resultVO = null;
@@ -385,31 +391,31 @@ public class Vekapu {
 			}
 
 			// =========================================
+			// Nyt talletetaan kaikki rivit.
+			logger.info("Talleteaan tulokset kierrokselta: "
+					+ settingsVO.getWeek());
+			String weeknbr = settingsVO.getCheckedRound();
 
-			if (numbersVO.isStoreResult()) {
-				logger.info("Talleteaan tulokset kierrokselta: "
-						+ settingsVO.getWeek());
-				String weeknbr = settingsVO.getCheckedRound();
-
-				// Talletetaan tarkistuksen tiedot
-				String dir2 = "";
-				if (settingsVO.isServer().booleanValue()) {
-					dir2 = settingsVO.getGroupDir() + "/" + group;
-				} else {
-					dir2 = ".";
-				}
-				dir2 += Constant.getResultDir();
-				logger.debug("Group & week: " + group + "-" + weeknbr);
-				
-				resultFile = dir2 + group + "-" + weeknbr
-				   + Constant.getResultFileExt();
-				logger.debug("resultFile: " + resultFile);
-				
-				StoreFile sf2 = new StoreFile(dir2, group + "-" + weeknbr
-						+ Constant.getResultFileExt(), resultVO.toString());
-				logger.debug(sf2.toString());
+			// Talletetaan tarkistuksen tiedot
+			String dir2 = "";
+			if (settingsVO.isServer().booleanValue()) {
+				dir2 = settingsVO.getGroupDir();
+				dir2 += Constant.getFileSeparator() + group;
+			} else {
+				dir2 = ".";
 			}
+			dir2 += Constant.getResultDir();
+			logger.debug("Group & week: " + group + "-" + weeknbr);
+			
+			resultFile = dir2 + group + "-" + weeknbr
+			   + Constant.getResultFileExt();
+			logger.debug("resultFile: " + resultFile);
+			
+			StoreFile sf2 = new StoreFile(dir2, group + "-" + weeknbr
+					+ Constant.getResultFileExt(), resultVO.toString());
+			logger.debug(sf2.toString());
 
+			
 			if (settingsVO.isConsole().booleanValue()
 					|| settingsVO.isTest().booleanValue()) {
 				System.out.println(resultVO.toString());

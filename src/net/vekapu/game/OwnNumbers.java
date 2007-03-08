@@ -169,16 +169,6 @@ public class OwnNumbers {
 		return properties.getProperty("jokeri_asti").trim();
 	}
 
-	private void isStoreResult() {
-		boolean rc = false;
-
-		String cron = properties.getProperty("storeresult", "no");
-		if (cron.equalsIgnoreCase("yes"))
-			rc = true;
-
-		numbersVO.setStoreResult(rc);
-	}
-
 	private boolean isJokeri() {
 		boolean jokeri = true;
 
@@ -226,7 +216,6 @@ public class OwnNumbers {
 		// Fill common info
 		getTo();
 		getToSMS();
-		isStoreResult();
 			
 		// Fill Lotto
 		numbersVO.setLotto(isLotto());

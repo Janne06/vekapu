@@ -53,8 +53,6 @@ public class OwnNumbersVO {
 	private boolean jokeriChecked = false;
 	private boolean vikingChecked = false;
 	
-	private boolean storeResult = false;
-		
 	private String mihinAstiLotto = "";
 	private String mihinAstiJokeri = "";
 	private String mihinAstiViking = "";
@@ -64,10 +62,6 @@ public class OwnNumbersVO {
 	private List to = new ArrayList();
 	private List toSms = new ArrayList();
 	
-	// Asetetaan pariksi (tyyppi = List (rivi)) eli lotto7=List(omat lottorivit)).
-
-	private Map jokeririvit = Collections.synchronizedMap(new HashMap());
-	private Map vikingrivit = Collections.synchronizedMap(new HashMap());
 	
 	// Tää vaikuttaa hyvältä !!!
 	private List ownLotto = new ArrayList();
@@ -159,20 +153,6 @@ public class OwnNumbersVO {
 	}
 
 	/**
-	 * @return the jokeririvit
-	 */
-	public Map getJokeririvit() {
-		return jokeririvit;
-	}
-
-	/**
-	 * @param jokeririvit the jokeririvit to set
-	 */
-	public void setJokeririvit(Map jokeririvit) {
-		this.jokeririvit = jokeririvit;
-	}
-
-	/**
 	 * @return the to
 	 */
 	public List getTo() {
@@ -198,20 +178,6 @@ public class OwnNumbersVO {
 	 */
 	public void setToSms(List toSms) {
 		this.toSms = toSms;
-	}
-
-	/**
-	 * @return the vikingrivit
-	 */
-	public Map getVikingrivit() {
-		return vikingrivit;
-	}
-
-	/**
-	 * @param vikingrivit the vikingrivit to set
-	 */
-	public void setVikingrivit(Map vikingrivit) {
-		this.vikingrivit = vikingrivit;
 	}
 
 	public void addLottoRivi(List rivi) {
@@ -289,7 +255,6 @@ public class OwnNumbersVO {
 		ret += " group : " + group + NEW_LINE;
 		ret += " getTo() : " + getTo().toString() + NEW_LINE; 
 		ret += " getToSms() : " + getToSms().toString() + NEW_LINE;
-		ret += " isStoreResult " + isStoreResult() + NEW_LINE;
 		
 		ret += NEW_LINE;
 		ret += " Game numbers:" + NEW_LINE;
@@ -375,20 +340,7 @@ public class OwnNumbersVO {
 		return ret;		
 	}
 
-	/**
-	 * @return the storeResult
-	 */
-	public boolean isStoreResult() {
-		return storeResult;
-	}
-
-	/**
-	 * @param storeResult the storeResult to set
-	 */
-	public void setStoreResult(boolean storeResult) {
-		this.storeResult = storeResult;
-	}
-
+	
 	/**
 	 * @return the lottoChecked
 	 */
