@@ -14,7 +14,7 @@
 //
 //  (c) Copyright J.Ilonen, 2007
 //
-// $Id: VekapuResources.java 427 2007-02-06 20:52:28Z janne $
+// $Id:VekapuResources.java 30 2007-02-25 20:21:49Z janne.ilonen $
 //
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -44,7 +44,7 @@ public class VekapuResources extends Resources {
 
 	ResourceBundle strings;
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.bs.mdi.Resources#loadResources()
 	 */
 	public void loadResources() {
@@ -52,7 +52,7 @@ public class VekapuResources extends Resources {
 				getLocale());
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.bs.mdi.Resources#getString(java.lang.String)
 	 */
 	public String getString(String key) {
@@ -63,7 +63,7 @@ public class VekapuResources extends Resources {
 		}
 	}
 
-	/* (non-Javadoc)
+	/** 
 	 * @see org.bs.mdi.Resources#getIcon(java.lang.String, int)
 	 */
 	public javax.swing.Icon getIcon(String key, int size) {
