@@ -30,8 +30,11 @@ package net.vekapu.game;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 import net.vekapu.OwnNumbersVO;
 import net.vekapu.SettingsVO;
@@ -70,8 +73,8 @@ public class OwnNumbers {
 		//fileName = System.getProperty("user.dir") + 
 		//		   fileName +
 		//           Constant.getFileSeparator() + 
-	fileName +=            Constant.getCouponDir() + 
-			       aFileName + ".properties";
+		fileName += Constant.getCouponDir() + 
+			        aFileName + ".properties";
 
 		logger.debug("fileName : " + fileName);
 		
@@ -144,50 +147,44 @@ public class OwnNumbers {
 	 *
 	 */
 	private String getMihinAsti() {
-		logger.debug("getMihinAsti()");
 		String asti = "";
-		try {
-			asti = properties.getProperty("asti").trim();
-			logger.debug("asti: " + asti);
-		} catch (NullPointerException ne) {
-			// Rivinä on joko viikkari tai jokeri
-			// Ainaski versioon 1.5.2 asti.
-			// Taidan luottaa siihen että kyseessä on viikkari
-			logger.warn("Oiskohan viikkari ...");
-			try {
-				asti = getMihinAstiViking();
-				logger.warn("asti viking: " + asti);
-			} catch (NullPointerException ne2) {
-				asti = getMihinAstiJokeri();
-				logger.warn("asti jokeri: " + asti);
-			}
-		}
+		
+		asti = properties.getProperty("asti").trim();
+		logger.debug("getMihinAsti(): " + asti);
+	
 		return asti;
 	}
 
-	private String getMihinAstiJokeri() {
-		return properties.getProperty("jokeri_asti").trim();
+	private Set getGame() {
+
+		String game = properties.getProperty("game");
+		StringTokenizer toke = new StringTokenizer(game, ",");
+
+		Set games = new HashSet();
+		
+		while (toke.hasMoreTokens()) {
+			games.add(toke.nextToken().trim());
+		}
+		
+		logger.info("Own numbers for game: " + game + " - games: " + games);
+
+		return games;
 	}
 
 	private boolean isJokeri() {
-		boolean jokeri = true;
+		boolean jokeri = false;
 
-		String ok = properties.getProperty("jokeri");
-		if (ok == null)
-			jokeri = false;
+		if(getGame().contains("jokeri"))
+			jokeri = true;
 
 		return jokeri;
 	}
 
-	private String getMihinAstiViking() {
-		return properties.getProperty("viking_asti").trim();
-	}
 
 	private boolean isViking() {
 		boolean viking = false;
 
-		String ok = properties.getProperty("viking_asti");
-		if (ok != null)
+		if(getGame().contains("viking"))
 			viking = true;
 
 		return viking;
@@ -197,14 +194,15 @@ public class OwnNumbers {
 	 * @return
 	 */
 	private boolean isLotto() {
+		// TODO täähän pitää muuttaa erilaisex
+		// TODO Lisä kuponkeihin arvo 'game='
 		boolean lotto = false;
 
-		String ok = properties.getProperty("asti");
-		if (ok != null)
+		if(getGame().contains("lotto"))
 			lotto = true;
 
 		return lotto;
-	}
+	} 
 
 	/**
 	 * Get Own / group numbers & common info of the group
@@ -216,12 +214,13 @@ public class OwnNumbers {
 		// Fill common info
 		getTo();
 		getToSMS();
+		
+		numbersVO.setUntil(getMihinAsti());
 			
 		// Fill Lotto
 		numbersVO.setLotto(isLotto());
 		if (isLotto()) {
 			logger.info("Haetaan lotto-rivit & muut tiedot");
-			numbersVO.setMihinAstiLotto(getMihinAsti());	
 			
 			// TODO Nyt pitäis kutsua OwnLotto luokkaa mikä sitten palauttaa 
 			// Set:issä (?) omat lottorivit.
@@ -233,7 +232,6 @@ public class OwnNumbers {
 		numbersVO.setJokeri(isJokeri());
 		if (isJokeri()) {
 			logger.info("Haetaan jokeri-rivit & muut tiedot");
-			numbersVO.setMihinAstiJokeri(getMihinAstiJokeri());
 			
 			OwnJokeri jokeri = new OwnJokeri(properties);
 			numbersVO.addJokeriRivi(jokeri.getRivit());			
@@ -243,7 +241,6 @@ public class OwnNumbers {
 		numbersVO.setViking(isViking());
 		if (isViking()) {
 			logger.info("Haetaan viikkari-rivit & muut tiedot");
-			numbersVO.setMihinAstiViking(getMihinAstiViking());
 			
 			OwnViking viking = new OwnViking(properties);
 			numbersVO.addVikingRivi(viking.getRivit());	

@@ -28,11 +28,8 @@
 package net.vekapu;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import net.vekapu.util.Constant;
 
@@ -53,9 +50,7 @@ public class OwnNumbersVO {
 	private boolean jokeriChecked = false;
 	private boolean vikingChecked = false;
 	
-	private String mihinAstiLotto = "";
-	private String mihinAstiJokeri = "";
-	private String mihinAstiViking = "";
+	private String until = "";
 	
 	private String bestLotto = "?";
 	
@@ -72,6 +67,7 @@ public class OwnNumbersVO {
 
 	private List ownViking = new ArrayList();
 	private List checkedViking = new ArrayList();
+	
 	/**
 	 * 
 	 */
@@ -99,27 +95,12 @@ public class OwnNumbersVO {
 		this.lotto = lotto;
 	}
 
-	public String getMihinAstiJokeri() {
-		return mihinAstiJokeri;
+	public String getUntil() {
+		return until;
 	}
 
-	public void setMihinAstiJokeri(String mihinAstiJokeri) {
-		this.mihinAstiJokeri = mihinAstiJokeri;
-	}
-
-	public String getMihinAstiLotto() {
-		// TODO Onx järkee ??
-		String pk = "";
-		if (mihinAstiLotto.equals("")) {
-			pk = getMihinAstiViking();
-		} else {
-			pk = mihinAstiLotto;
-		}
-		return pk;
-	}
-
-	public void setMihinAstiLotto(String mihinAstiLotto) {
-		this.mihinAstiLotto = mihinAstiLotto;
+	public void setUntil(String mihinAstiLotto) {
+		this.until = mihinAstiLotto;
 	}
 
 	/**
@@ -134,14 +115,6 @@ public class OwnNumbersVO {
 	 */
 	public void setBestLotto(String bestLotto) {
 		this.bestLotto = bestLotto;
-	}
-
-	public String getMihinAstiViking() {
-		return mihinAstiViking;
-	}
-
-	public void setMihinAstiViking(String mihinAstiViking) {
-		this.mihinAstiViking = mihinAstiViking;
 	}
 	
 	public boolean isViking() {
@@ -259,11 +232,11 @@ public class OwnNumbersVO {
 		ret += NEW_LINE;
 		ret += " Game numbers:" + NEW_LINE;
 		ret += " =============" + NEW_LINE;
+		ret += " until : " + until + NEW_LINE;
 		ret += " isLotto :" + lotto + NEW_LINE;
 		
 		if (isLotto()) {
 
-			ret += " mihinAstiLotto : " + mihinAstiLotto + NEW_LINE;
 			ret += " isLottoChecked :" + isLottoChecked() + NEW_LINE;
 
 			ret += "Rivit: " + getOwnLotto().size() + " kpl" + NEW_LINE;	
@@ -287,11 +260,9 @@ public class OwnNumbersVO {
 		ret += " isJokeri :" + jokeri + NEW_LINE;
 		if (isJokeri()) {
 			
-			ret += " mihinAstiJokeri : " + mihinAstiJokeri + NEW_LINE;
 			ret += " isJokeriChecked :" + isJokeriChecked() + NEW_LINE;
 			
 			ret += "Rivit: " + getOwnJokeri().size() + " kpl" + NEW_LINE;	
-//			if (isLottoChecked()) ret += " Parastulos : " + getBestJokeri() + NEW_LINE;
 			
 			ret += NEW_LINE;
 			
@@ -318,7 +289,6 @@ public class OwnNumbersVO {
 		
 		if (isViking()) {
 			
-			ret += " mihinAstiViking : " + mihinAstiViking + NEW_LINE;
 			ret += " isVikingChecked :" + isVikingChecked() + NEW_LINE;
 			
 			ret += "Rivit: " + getOwnViking().size() + " kpl" + NEW_LINE;	

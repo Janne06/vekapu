@@ -303,7 +303,7 @@ public class Vekapu {
 				checked = true;
 
 				// Tarkistetaan onko rivi vielä voimassa
-				if (dayhelper.isExpired(numbersVO.getMihinAstiLotto())) {
+				if (dayhelper.isExpired(numbersVO.getUntil())) {
 					Messenger.sendEndMail("Lotto", group,
 							numbersVO.getTo(), settingsVO);
 					logger.warn("<======== PORUKAN " + group
@@ -383,7 +383,7 @@ public class Vekapu {
 			// FIXME Nyt tutkitaan vain Loton loppumisajankohta. Tosin
 			// VO:ssa katotaan
 			// viikkari jos lotto on tyhjä.
-			if (dayhelper.isToday(numbersVO.getMihinAstiLotto())
+			if (dayhelper.isToday(numbersVO.getUntil())
 					|| settingsVO.isTest().booleanValue()) {
 				Messenger.sendEndMail("Lotto", group, numbersVO.getTo(),
 						settingsVO);
