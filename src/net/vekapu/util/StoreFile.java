@@ -200,11 +200,14 @@ public class StoreFile {
 	 * @throws Exception 
 	 */
 	public static String getFile(String fileName) throws VekapuException {
-		logger.debug("fileName: " + fileName);
 
 		String userdir = Constant.getUserDir();
+		String fullname = userdir + Constant.getFileSeparator() + fileName;
+		logger.debug("fullname: " + fullname);
+
+		
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(userdir + fileName));
+			BufferedReader br = new BufferedReader(new FileReader(fullname));
 			String nextLine = "";
 			StringBuffer sb = new StringBuffer();
 			while ((nextLine = br.readLine()) != null) {
