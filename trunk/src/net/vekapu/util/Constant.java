@@ -37,9 +37,9 @@ public class Constant {
 
 	/*
 	 Päivitä molemmat (versio & VERSION) numerot AINA SAMOIKSI. 
-	 versio = 1.7.5
+	 versio = 2.0rc1
 	 */
-	private final static String VERSION = "1.7.5";
+	private final static String VERSION = "2.0rc1";
 
 	private final static String URL = "http://www.vekapu.net/";
 
