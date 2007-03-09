@@ -4,7 +4,12 @@
 ==Kehitys versio==
 
 *Parannuksia*
-Julkaistu 2.3.07
+Julkaistu 9.3.07
+
+ * Muutoksia omien numeroiden/tietojen asetuksiin:
+   * Muutettu entinen `asti` => `until` 
+   * Lisätty asetus `game` missä pitää kertoa tarkastettava(t) peli(t)
+   * Poistettu lottoporukka kohtainen `storeresuts` asetus. Nyt tarkastetut tulokset talletetaan jokakerta.
 
  * Nyt tuntuu toi Bernhardin tekemä MDI kehys toimivan. Kohtapuoleen vois ehkä julkaista version 2.0 (Toi numero on varattu MDI-Gui:lle, eli sitä ootellessa.) 
 
@@ -24,10 +29,10 @@ voitarkistaa asettamalla tähän halutun porukan nimi: `check_group = lotto`
 
 ==Tiedetyt ongelmat==
 
- * Pelkän (lauantai) Jokerin tarkistaminen MDI-Gui:lla ei onnistu. (Mahtaneeko haitata ketään ? Tuskin kukaan tekee pelkkää Jokeria. siis ehkä)
- * Toi MDI-GUI on vielä kielellinen sekasotku. 
+ * Finsklandian kielinen MDI-GUI on vielä kesken. 
 
-----
+-------
+
 Tästä alespäin on tiedot kopioitu tänne muualta (Kooditakomo & nettisivu).
 Eli nää tiedot on jo julkaistu aikaisemmin jossain muualla.
 
