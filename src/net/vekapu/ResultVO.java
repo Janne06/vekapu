@@ -238,7 +238,7 @@ public class ResultVO {
 		ret.append(ownNumbersVO.getGroup());
 		ret.append(" ");
 		ret.append("Voimassa: ");
-		ret.append(ownNumbersVO.getMihinAstiLotto());
+		ret.append(ownNumbersVO.getUntil());
 		ret.append(NEW_LINE);
 		ret.append("Tarkastettu: ");
 		ret.append(DayHelper.now());
@@ -342,7 +342,7 @@ public class ResultVO {
 			ret.append(ownNumbersVO.getGroup());
 			ret.append(" ");
 			ret.append("Voimassa: ");
-			ret.append(ownNumbersVO.getMihinAstiLotto());
+			ret.append(ownNumbersVO.getUntil());
 			ret.append(NEW_LINE);
 			ret.append("Tarkastettu: ");
 			ret.append(DayHelper.now());
@@ -428,7 +428,7 @@ public String printViking() {
 		ret.append(ownNumbersVO.getGroup());
 		ret.append(" ");
 		ret.append("Voimassa: ");
-		ret.append(ownNumbersVO.getMihinAstiLotto());
+		ret.append(ownNumbersVO.getUntil());
 		ret.append(NEW_LINE);
 		ret.append("Tarkastettu: ");
 		ret.append(DayHelper.now());
