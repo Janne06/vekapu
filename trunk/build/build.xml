@@ -7,7 +7,7 @@
    $Id$
    $Rev$
 -->
-<project name="Vekapu GH" default="usage" basedir="." >
+<project name="Vekapu" default="usage" basedir="." >
 
 <!--
  =================================================================
@@ -41,6 +41,7 @@
 
     <!-- Build properties -->
     <property name="java.source.dir" value="../src"/>
+  	<property name="translations.dir" value="/translations"/>  	  	
     <property name="java.build.dir" value="./build"/>
     <property name="jar.lib.dir" value="../lib"/>
 
@@ -75,6 +76,7 @@
     <mkdir dir="${build.dir}"/>
     <mkdir dir="${javac.dest}"/>
     <mkdir dir="${dist.dir}"/>
+  	<mkdir dir="${build.dir}${translations.dir}"/>
   </target>
 
   <target name="c" depends="compile" description="Shortcut to compile"/>
@@ -100,10 +102,15 @@
     </javac>
 
   </target>
-
+	
   <target name="j" depends="jar" description="Shortcut to jar"/>
   <target name="jar" depends="compile" description="Assemble source code and images into jar file">
-    <jar jarfile="${build.jar}"
+  	<copy todir="${build.dir}${translations.dir}">	 		
+  	  	    <fileset dir="${java.source.dir}${translations.dir}">
+  	  	    </fileset>
+    </copy>	
+
+  	<jar jarfile="${build.jar}"
          basedir="${build.dir}"
          compress="true">
 
