@@ -1,15 +1,21 @@
-
 = Kooditakomo =
 
 Vekapu kehitys oli pitkään *Kooditakomo* nimisessä projektien ylläpito paikassa
 
+Siirsin [http://www.vekapu.net Vekapun] lähdekoodin täänne [http://kooditakomo.cs.tut.fi/projects/vekapu/ Kooditakomosta] ja [http://wikihost.org/wikis/vekapu/wiki/start wikin täältä] 20.2.07.
+
+Perusteluina seuraavaa:
+
+ * Ainakin toi [http://kooditakomo.cs.tut.fi/ Kooditakomo] tuntuu aika väsyneeltä (svn rikki, ei uusia projekteja sitten viime kesäkuun). Mutkin projektit on siirtäneet kamansa pois sieltä (ehkä parhaan projektin: [http://kooditakomo.cs.tut.fi/projects/gunit/ GUnit]:in [https://garage.maemo.org/projects/gunit uusi sijainti]).
+
+ * Kooditakomo on tosiaankin lopussa ja mitään ylimääräsia wiki-saitteja ei jaksa alkaa ihmetteleen, etenkin jos kaikki onnistuu täällä.
+
+ * Kokomukset Googlesta ja GMailista on sen verran hyviä että tähän viittii alkaaa.
 
 = Tilastoa =
 
 Latauksia : 323 (9.3.2007)
 Sivulatauksia: 12685 (9.3.2007)
-
-
 
 
 
