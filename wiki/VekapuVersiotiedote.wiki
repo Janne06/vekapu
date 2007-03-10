@@ -4,7 +4,11 @@
 ==Kehitys versio==
 
 *Parannuksia*
-Julkaistu 9.3.07
+
+==Vekapu 2.0rc1==
+Julkaistu 10.3.07
+
+Vihdoinkin voin julkaista MDI-käyttöliittymällä varustetun Vekapun.
 
  * Muutoksia omien numeroiden/tietojen asetuksiin:
    * Muutettu entinen `asti` => `until` 
@@ -244,7 +248,6 @@ Julkaistu 28.11.02
 Julkaistu 26.11.02
 
 - Tarkastetun rivin postitus lottoporukan jäsenille.
-
 
 
 
