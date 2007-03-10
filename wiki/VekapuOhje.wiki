@@ -3,14 +3,14 @@
 
 ==Vaatimukset==
 
- * *JDK 1.3* tai uudempi (eli pitäis pyöriä melkein missä vaan).
+ * *JDK 1.3* tai uudempi (eli pitäis pyöriä melkein missä vaan). Version 2.0rc1 MDI-Gui tarttee varmaankin JRE 1.5 elli Java 5:den. (Sinällään säli sillä yritin tehdä mahd. pienellä versiolla toimivaa softaa.)
  * Nettiyhteys olis kiva. (Nykyäänhän se on kyllä jo kaikilla käytössä)
 
 
 ==Yleiset asetukset==
 
 Vekapun asetuksia säädetään tiedostossa  `vekapu.properties`.
-
+MDI-Gui:lla valikosta *Vekapu* löytyy kaikki oleellinen.
 
 ==Omat lottonumerot==
 
