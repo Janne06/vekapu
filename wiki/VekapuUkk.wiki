@@ -5,3 +5,6 @@
 
  * K: Miksi en voita lotossa ?
  * V: Niinpä niin. Siinäpä vasta kysymys. Eräs vastaus asiaan löytyy [http://www.cs.tut.fi/~empii/matikka/lotto.html täältä].
+
+$Rev$ $Date$
+$Url:$
