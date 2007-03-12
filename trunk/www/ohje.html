@@ -46,20 +46,9 @@
    <br>
    Ohje
    <br>
-<!--   <a href= "./ukk.html"  >UKK
-   </a>
-   <br>
-   <a href= "./historia.html"  >Historia
-   </a> 
-   <br> -->
    <a href= "./group">Demo
    </a>
    <br>
-<!--   <a href= "./linkit.html"  >Linkit
-   </a>
-   <br>
-   <A HREF="./vieraskirja.html">Vieraskirja
-   </a> -->
    <br><br><br>
    <br><br><br>
    </td>
@@ -68,62 +57,32 @@
 <!-- Varsinainen sivin sisalto -->
 
 <h2>Ohje</h2>
-
+<p>    
+Ohjeet ovat yleiset Vekapu 2.0rc1 MDI-sovelluksen k&auml;yt&ouml;st&auml;.
+Tarkemmat ohjeet 
 <font size=+2>
-<b>Uudempia ohjeita <a href="http://code.google.com/p/vekapu/wiki/VekapuOhje"> t&auml;&auml;ll&auml;</a></b>
+<b><a href="http://code.google.com/p/vekapu/wiki/VekapuOhje"> t&auml;&auml;ll&auml;</a></b>
 </font>
-
-
-
-<br><p>
-Ohjeet ovat versiolle Vekapu 1.1.3 asti voimassa.
-Uudempia ohjeita tulossa
-<p>Vekapu - ohjelmaa ohjataan 'vekapu.properties' tiedoston asetuksilla.
-<a href="./pics/vekapu_properties.jpg">Kuva</a> ko. tiedostosta on alla.</p>
-<p align="center">
-<a href="./pics/vekapu_properties.jpg">
-<img SRC="./pics/vekapu_properties.jpg" NAME="vekapu.properties" BORDER=0 height=350 width=350 align=CENTER>
-</a>
+ja t&auml;&auml;lt&auml; l&ouml;ytyy vanhat <a href= "./ohje_113.html"  >ohjeet </a>.
+<br>
 </p>
 
-<p>'vekapu.properties' tiedoston lis&auml;ksi tarvitset ainakin yhden *.properties
-tiedoston, miss&auml; on kerrottu ko. lottoporukan vakiorivit.<br>
-Tiedostoon voi kertoa my&ouml;s lottoporukan j&auml;senten s&auml;hk&ouml;postiosoitteet ja
-mik&auml;li k&auml;yt&ouml;ss&auml; on mahdollisuus l&auml;hett&auml;&auml; tekstiviesti s&auml;hk&ouml;postilla niin
-tekstiviestiksi l&auml;hetet&auml;&auml;n tieto parhaasta tuloksesta.<br>
-Tiedostosta on alla <a href="./pics/malli_properties.jpg">malli</a>.</p>
-<p align="center">
-<a href="./pics/malli_properties.jpg">
-<img SRC="./pics/malli_properties.jpg" NAME="malli.properties" BORDER=0 height=350 width=350>
-</a>
+<p>
+Vekapun mukana tullee 3:n eri pelin mallirivit:
+<li> Lotto - tarkistetavia rivej&auml; 30 kpl & 10 jokeri-rivi&auml;
+<li> Jokeri (lauantai) - tarkistettavia rivej&auml; 11 kpl
+<li> Vikin-lotto - tarkistetavia rivej&auml; 37 kpl
 </p>
 
-<p>Ohjelma k&auml;ynnistet&auml;&auml;n komennolla:</p>
-<code>
-java -cp vekapu.jar;mail.jar;activation.jar;. net.vekapu.Vekapu
-</code>
-<p>Sama komento on my&ouml;s tiedostoissa <code>vekapu.bat</code> (Windows) ja
-<code>vekapu.sh</code> (Linux). Tarkistus tuloste n&auml;ytt&auml;&auml;
-<a href="./pics/konsoli.jpg">seuraavalta</a>:</p>
-
-<p align="center">
-<a href="./pics/konsoli.jpg">
-<img SRC="./pics/konsoli.jpg" NAME="Konsoli" BORDER=0 height=350 width=450 align=BOTTOM>
-</a>
+<p>
+Vekapu k&auml;ynnistet&auml;&auml;n komenolla: <code>gui2.bat</code>.
 </p>
 
-<p>Mik&auml;li k&auml;yt&ouml;ss&auml;si on internet yhteys niin ohjelma hakee oikean lottorivin
-tekstiTV:n sivuilta (viimeisimm&auml;n arvonnan tulokset). <br>
-Jos internet-yhteytt&auml; ei ole, tai haluat tarkistaa jonkun muun kierroksen kuin
-viimeisimm&auml;n niin anna oikea rivi ja tarkistetavan kierroksen tiedot + ym
-tiedot 'OikeaRivi.properties' tiedostossa.<br>
-T&auml;m&auml;n malli <a href="./pics/OikeaRivi_properties.jpg">seuraavassa:</a></p>
+Vekapun omaa toimintaa ohjataan valikon <b>Vekapu</b> valinnoilla.
 
-<p align="center">
-<a href="./pics/OikeaRivi_properties.jpg">
-<img SRC="./pics/OikeaRivi_properties.jpg" NAME="OikeaRivi.properties" height=350 width=350>
+<img SRC="./pics/MDI_Gui.jpg" NAME="Vekapun ulkoasu.">
 </a>
-</p>
+
 
 </TD>
 </TR>
@@ -139,7 +98,10 @@ T&auml;m&auml;n malli <a href="./pics/OikeaRivi_properties.jpg">seuraavassa:</a>
 </TR>
 </TABLE>
 <HR>
-
+<!--
+ $Id$
+ $URL$
+-->
 </BODY>
 </HTML>
 
