@@ -65,6 +65,9 @@ public class Vekapu {
 	 */
 	private static SettingsVO settingsVO = null;
 
+	/**
+	 * 
+	 */
 	private ResultVO resultVO = null;
 
 	/**
@@ -72,6 +75,9 @@ public class Vekapu {
 	 */
 	private String tulos = "";
 
+	/**
+	 * 
+	 */
 	private boolean test = false;
 		
 	// Uusia instanssimuuttujia kun tietyn porukan tarkistus omaan metodiin
@@ -84,7 +90,6 @@ public class Vekapu {
 
 
 	public Vekapu() {
-		logger.info(Constant.getName() + " " + Constant.getVersionNumber());
 		dayhelper = new DayHelper();
 	}
 
@@ -135,6 +140,7 @@ public class Vekapu {
 
 		try {
 			Vekapu vekapu = new Vekapu(args);
+			logger.info(Constant.getName() + "-core " + Constant.getVersionNumber());
 			vekapu.start();
 		} catch (VekapuException v) {
 			if (v.isBugMail()) {
