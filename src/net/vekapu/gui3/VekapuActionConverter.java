@@ -14,7 +14,7 @@
 //
 //  (c) Copyright J.Ilonen, 2007
 //
-// $Id: VekapuActionConverter.java 423 2007-02-06 19:40:09Z janne $
+// $Id$
 //
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -71,6 +71,8 @@ public class VekapuActionConverter implements ActionConverter {
 	}
 
 	public Transferable toTransferable(Action action) {
+		logger.debug("action.getName(): " + action.getName() );
+
 		if (!(action instanceof VekapuAction))
 			return null;
 		return new EditorTransferable((VekapuAction) action);
@@ -93,6 +95,8 @@ public class VekapuActionConverter implements ActionConverter {
 		ArrayList flavors;
 
 		public EditorTransferable(VekapuAction action) {
+			logger.debug("VekapuAction " + action);
+			
 			text = action.getOldText();
 			flavors = new ArrayList();
 			flavors.add(DataFlavor.stringFlavor);
