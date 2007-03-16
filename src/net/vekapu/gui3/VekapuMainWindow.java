@@ -47,6 +47,7 @@ import net.vekapu.util.DayHelper;
 
 import org.apache.log4j.Logger;
 import org.bs.mdi.Application;
+import org.bs.mdi.MainWindow;
 import org.bs.mdi.swing.SwingCommandButton;
 import org.bs.mdi.swing.SwingCommandMenu;
 import org.bs.mdi.swing.SwingDefaultCommands;
@@ -194,6 +195,14 @@ public class VekapuMainWindow extends SwingMainWindow {
 			} catch (VekapuException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				logger.error(e,e);
+				
+				// Nyt pitää näyttää mikä on ongelma !!
+				Application.getMainWindow().showMessage(MainWindow.ERROR,
+						Application.getMainWindow(),
+						Application.tr(e.toString()));
+				
+				
 			}
 		}
 	}
