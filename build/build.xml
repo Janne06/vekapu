@@ -71,7 +71,6 @@
     <delete dir="${javac.dest}"/>
   </target>
 
-
   <target name="prepare" depends="init">
     <mkdir dir="${build.dir}"/>
     <mkdir dir="${javac.dest}"/>
@@ -79,6 +78,11 @@
   	<mkdir dir="${build.dir}${translations.dir}"/>
   </target>
 
+<!--
+ ==================================================================
+   Here we compile the project
+ ==================================================================
+-->	
   <target name="c" depends="compile" description="Shortcut to compile"/>
   <target name="compile" depends="prepare">
     <path id="libpath">
