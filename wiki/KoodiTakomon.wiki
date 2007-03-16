@@ -6,7 +6,7 @@ Siirsin [http://www.vekapu.net Vekapun] lähdekoodin täänne [http://kooditakom
 
 Perusteluina seuraavaa:
 
- * Ainakin toi [http://kooditakomo.cs.tut.fi/ Kooditakomo] tuntuu aika väsyneeltä (svn rikki, ei uusia projekteja sitten viime kesäkuun). Mutkin projektit on siirtäneet kamansa pois sieltä (ehkä parhaan projektin: [http://kooditakomo.cs.tut.fi/projects/gunit/ GUnit]:in [https://garage.maemo.org/projects/gunit uusi sijainti]).
+ * Ainakin toi [http://kooditakomo.cs.tut.fi/ Kooditakomo] tuntuu aika väsyneeltä: svn rikki, ei uusia projekteja sitten viime kesäkuun (8.6.2006 [http://kooditakomo.cs.tut.fi/projects/mdltut/ Tut-tools]). Mutkin projektit on siirtäneet kamansa pois sieltä (ehkä parhaan projektin: [http://kooditakomo.cs.tut.fi/projects/gunit/ GUnit]:in [https://garage.maemo.org/projects/gunit uusi sijainti]).
 
  * Kooditakomo on tosiaankin lopussa ja mitään ylimääräsia wiki-saitteja ei jaksa alkaa ihmetteleen, etenkin jos kaikki onnistuu täällä.
 
@@ -16,6 +16,5 @@ Perusteluina seuraavaa:
 
 Latauksia : 323 (9.3.2007)
 Sivulatauksia: 12685 (9.3.2007)
-
 
 
