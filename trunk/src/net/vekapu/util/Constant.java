@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 //
 // Filename: Constant.java
 //
@@ -37,9 +37,9 @@ public class Constant {
 
 	/*
 	 Päivitä molemmat (versio & VERSION) numerot AINA SAMOIKSI. 
-	 versio = 2.0.1
+	 versio = 2.0
 	 */
-	private final static String VERSION = "2.0.1";
+	private final static String VERSION = "2.0";
 
 	private final static String URL = "http://www.vekapu.net/";
 
