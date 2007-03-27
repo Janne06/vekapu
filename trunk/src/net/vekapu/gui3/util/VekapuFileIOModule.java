@@ -46,16 +46,13 @@ import net.vekapu.gui3.VekapuData;
 
 import org.apache.log4j.Logger;
 import org.bs.mdi.Application;
-import org.bs.mdi.FileExporter;
 import org.bs.mdi.FileFormat;
 import org.bs.mdi.FileIOException;
 import org.bs.mdi.FileLoader;
 import org.bs.mdi.FileSaver;
-import org.bs.mdi.MainWindow;
 import org.bs.mdi.RootData;
-import org.bs.mdi.Task;
 
-public class VekapuFileIOModule implements FileLoader, FileSaver, FileExporter {
+public class VekapuFileIOModule implements FileLoader, FileSaver {
 
 	private static Logger logger = Logger.getLogger(VekapuFileIOModule.class);
 
@@ -121,35 +118,6 @@ public class VekapuFileIOModule implements FileLoader, FileSaver, FileExporter {
 		} catch (IOException e) {
 			throw new FileIOException(FileIOException.ERR_UNKNOWN, filename);
 		}
-	}
-
-	public void export(RootData data) {
-		Task exporter = new Task() {
-			public String getName() {
-				return Application.tr("exporting...");
-			}
-
-			public boolean isActive() {
-				return true;
-			}
-
-			public int getMinimumProgress() {
-				return 0;
-			}
-
-			public int getMaximumProgress() {
-				return 100;
-			}
-
-			public int getProgress() {
-				return Task.PROGRESS_UNAVAILABLE;
-			}
-		};
-		Application.getMainWindow().getProgressMonitor().add(exporter);
-		Application.getMainWindow().showMessage(MainWindow.INFO,
-				Application.getMainWindow(),
-				Application.tr("This is just a dummy exporting function."));
-		Application.getMainWindow().getProgressMonitor().remove(exporter);
 	}
 
 	public FileFormat[] getSupportedFormats() {
