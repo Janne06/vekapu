@@ -5,6 +5,10 @@
 
 *Parannuksia*
 
+ * Koko MDI-kehikko on nyt käännetty suomeksi.
+ * Ohje-valikkoon on lisätty kohta kotisivu joka avaa Vekapun nettisivun oletusselaimessa.
+Tähän löyty valmis pohja [http://browserlaunch2.sourceforge.net/index.shtml BrowserLauncher2].
+
 ==Vekapu 2.0rc1==
 Julkaistu 10.3.07
 
@@ -247,7 +251,6 @@ Julkaistu 28.11.02
 Julkaistu 26.11.02
 
 - Tarkastetun rivin postitus lottoporukan jäsenille.
-
 
 
 
