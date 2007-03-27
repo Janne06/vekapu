@@ -14,7 +14,7 @@
 //
 //  (c) Copyright J.Ilonen, 2007
 //
-// $Id: VekapuCommands.java 424 2007-02-06 20:18:13Z janne $
+// $Id:VekapuCommands.java 30 2007-02-25 20:21:49Z janne.ilonen $
 //
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -44,6 +44,10 @@ import org.bs.mdi.swing.SwingCommand;
 import org.bs.mdi.swing.SwingCommandAdapter;
 import org.bs.mdi.swing.SwingDefaultCommands;
 
+import edu.stanford.ejalbert.BrowserLauncher;
+import edu.stanford.ejalbert.exception.BrowserLaunchingInitializingException;
+import edu.stanford.ejalbert.exception.UnsupportedOperatingSystemException;
+
 public class VekapuCommands extends SwingDefaultCommands {
 
 	private static Logger logger = Logger.getLogger(VekapuCommands.class);
@@ -57,7 +61,8 @@ public class VekapuCommands extends SwingDefaultCommands {
 	SwingCommand showHelpMenuCommand = new ShowHelpMenuCommand();
 
 	SwingCommand helpAboutCommand = new HelpAboutCommand();
-
+	SwingCommand homepageCommand = new HelpHomePageCommand();
+	
 	public SwingCommand getShowVekapuMenuCommand() {
 		return showVekapuMenuCommand;
 	}
@@ -81,6 +86,11 @@ public class VekapuCommands extends SwingDefaultCommands {
 	public SwingCommand getHelpAboutCommand() {
 		return helpAboutCommand;
 	}
+	
+	public SwingCommand getHelpHomePageCommand() {
+		return homepageCommand;
+	}
+	
 
 	class ShowVekapuMenuCommand extends SwingCommandAdapter {
 		public ShowVekapuMenuCommand() {
@@ -128,6 +138,7 @@ public class VekapuCommands extends SwingDefaultCommands {
 				break;
 			}
 		}
+		
 	}
 	
 	//// ===========================================================================
@@ -167,4 +178,28 @@ public class VekapuCommands extends SwingDefaultCommands {
 		}
 	}
 
+	class HelpHomePageCommand extends SwingCommandAdapter {
+		public HelpHomePageCommand() {
+			super("Homepage", "Vekapu homepage");
+			setAvailable(true);
+		}
+
+		protected void doExecute() {
+//          Thanks:   BrowserLauncher2
+//          http://browserlaunch2.sourceforge.net/index.shtml
+
+			try {
+				BrowserLauncher launcher = new BrowserLauncher();
+				launcher.openURLinBrowser(Constant.getUrlHomePage());
+			} catch (BrowserLaunchingInitializingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnsupportedOperatingSystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+
+	}
 }

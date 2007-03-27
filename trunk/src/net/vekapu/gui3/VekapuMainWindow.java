@@ -107,10 +107,19 @@ public class VekapuMainWindow extends SwingMainWindow {
 		JMenu helpMenu = SwingCommandMenu
 				.createMenu(((VekapuCommands) getCommands())
 						.getShowHelpMenuCommand());
+		
+		// Homepage
+		helpMenu.add(SwingCommandButton
+				.createMenuItem(((VekapuCommands) getCommands())
+						.getHelpHomePageCommand()));
+		
+		helpMenu.addSeparator();
+		// About
 		helpMenu.add(SwingCommandButton
 				.createMenuItem(((VekapuCommands) getCommands())
 						.getHelpAboutCommand()));
 		getJMenuBar().add(helpMenu);
+		
 	}
 
 	protected SwingDefaultCommands createCommands() {
@@ -134,6 +143,7 @@ public class VekapuMainWindow extends SwingMainWindow {
 		}
 		public void menuDeselected(MenuEvent e) {};
 		public void menuCanceled(MenuEvent e) {};
+		
 	}
 	class CouponsFileActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
