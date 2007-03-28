@@ -5,6 +5,10 @@
 
 *Parannuksia*
 
+
+==Vekapu 2.0==
+Julkaistu 28.3.07
+
  * Koko MDI-kehikko on nyt käännetty suomeksi.
  * Ohje-valikkoon on lisätty kohta kotisivu joka avaa Vekapun nettisivun oletusselaimessa. Tähän löyty valmis pohja [http://browserlaunch2.sourceforge.net/index.shtml BrowserLauncher2].
 
