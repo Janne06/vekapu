@@ -91,6 +91,7 @@
         <include name="mail.jar"/>
         <include name="log4j.jar"/>
       	<include name="jmdi.jar"/>
+      	<include name="BrowserLauncher2-10.jar"/>
       </fileset>
     </path>
 
@@ -190,6 +191,7 @@
         <include name="mail.jar"/>
         <include name="log4j.jar"/>
       	<include name="jmdi.jar"/>
+      	<include name="BrowserLauncher2-10.jar"/>
       </fileset>
     </path>
 
