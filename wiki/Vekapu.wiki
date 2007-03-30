@@ -20,4 +20,13 @@ Perusteluina seuraavaa:
 ==url==
 Oma urli: www.vekapu.net on olut 22.6.2005 lähtien.
 
+==wiki==
+Pvm: 27.1.2007 09:23
+Yhteenveto: Vekapu Wiki
+Project: Vekapu - Veikkaus apuri
+
+Vekapulle on nyt oma Wiki sivusto:
+http://wikihost.org/wikis/vekapu/wiki/start
+
+Toistaiseksi se on vielä alkutekijöissään, mutta eiköhän sinne saada jotain laitetuksi.
 
