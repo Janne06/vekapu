@@ -3,9 +3,11 @@
 
 ==Vaatimukset==
 
- * *JDK 1.3* tai uudempi (eli pitäis pyöriä melkein missä vaan). Version 2.0rc1 MDI-Gui tarttee varmaankin JRE 1.5 elli Java 5:den. (Sinällään säli sillä yritin tehdä mahd. pienellä versiolla toimivaa softaa.)
+ * *JDK 1.3* tai uudempi (eli pitäis pyöriä melkein missä vaan). Version 2.0 MDI-Gui tarttee varmaankin JRE 1.5 eli Java 5:den. (Sinällään säli sillä yritin tehdä mahd. pienellä versiolla toimivaa softaa.)
  * Nettiyhteys olis kiva. (Nykyäänhän se on kyllä jo kaikilla käytössä)
 
+==Asennus==
+Pura tiedosto johonkin kansioon (esim. Winzipillä) ja käynnistä kansiossa oleva {{{gui2.bat}}}(graafinen ulkoasu).
 
 ==Yleiset asetukset==
 
@@ -24,6 +26,7 @@ Vekapulla on mahdollista lähettää s-postia tarkistetuista riveistä. Tämä k
 Vekapu on asennettu pyörimään ajastetuna (crontab).
 
  
+
 
 
 
