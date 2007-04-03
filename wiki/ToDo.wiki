@@ -1,0 +1,22 @@
+#labels Phase-Requirements
+#ToDo 
+
+= Lisäominaisuudet =
+
+Listaan tänne yleisellä tasolla ideoituja lisäpiirteitä. Pitäisköhän näistä tehä oma issue  tolle sivustolle ?? Ehkä.
+
+1) Pelien tietojen parametrisointi. (3.4.07)
+  * tiedot pelintyypistä (lotto/jokeri)
+  * arvonta päivä & aika
+  * URL missä oikea rivi
+  * numeroiden määrä & monella voittaa
+   
+2) Vekapusta kännykä versio. (3.4.07)
+  * java me:llä vois (pitäis) väsätä versio Vekapusta. (Ton luulis kiinnostavan ihmisiä)
+  * lähdekoodiin tarvii varmaankin tehä oma paketti (./me) tota varten
+     
+3) build.xml:llä vois kasata useampia jar:reja. (3.4.07)
+  * vekapu-core.jar misää olis kaikille yhteinen toiminta
+  * server -versiolle oma paketti
+  * gui:lle oma paketti
+  * me -versiolle oma paketti
