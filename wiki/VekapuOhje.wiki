@@ -12,7 +12,11 @@ Pura tiedosto johonkin kansioon (esim. Winzipillä) ja käynnistä kansiossa ole
 ==Yleiset asetukset==
 
 Vekapun asetuksia säädetään tiedostossa  `vekapu.properties`.
-MDI-Gui:lla valikosta *Vekapu* löytyy kaikki oleellinen.
+MDI-Gui:lla valikosta *Vekapu* löytyy kaikki oleellinen. Mikäli nettiyhteys muodostetaan proxy:n kauta on proxy määriteltävä myös *Vekapu => Asetukset* näytöllä:
+  * proxySet = true
+  * proxyHost = cache
+  * proxyPort = 80
+
 
 ==Omat lottonumerot==
 
@@ -31,7 +35,7 @@ Valitsemalla *Vekapu => Tarkistetut* saat tarkistetua viimeisimän kierroksen tu
 
 Mikäli yrität tarkistaa tuloksia arvontapäivänä, niin homa toimii vasta sen jälkeen kun Yle on päivittänyt nettisivuilleen oikean rivin. Eli esim. loton voi tarkistaa lauantaina noin klo 21.
 
-== Lisä piirteitä ==
+== Lisäpiirteitä ==
  
 Vekapulla on mahdollista lähettää s-postia tarkistetuista riveistä. Tämä kätevää, etenkin silloin kun 
 Vekapu on asennettu pyörimään ajastetuna (crontab).
