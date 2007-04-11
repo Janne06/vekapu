@@ -4,10 +4,11 @@ Vekapu on mainittu ainakin suraavissa yhteyksissä
 
 ==MikroPC==
 
-Vekapu versio 1.5.11 on päässyt MikroPC:n tiedosto jakeluun 18.7.2006.
-Osastona on: Tiedostot > Päätaso > Apuohjelmat > Vekapu v1.5.11
+Vekapu versio 2.0 on päässyt [http://mikropc.net/tiedostot/tiedosto.jsp?fileId=w5586 MikroPC:n] tiedosto jakeluun 11.4.2007.
 
-tai suoraan [http://mikropc.net/tiedostot/tiedosto.jsp?fileId=w4913 tästä linkistä].
+
+Vekapu versio 1.5.11 on päässyt [http://mikropc.net/tiedostot/tiedosto.jsp?fileId=w4913 MikroPC:n] tiedosto jakeluun 18.7.2006.
+Osastona on: Tiedostot > Päätaso > Apuohjelmat > Vekapu v1.5.11
 
 
 *mikropc.net* 
