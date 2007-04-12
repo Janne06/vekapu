@@ -41,11 +41,13 @@ import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
 import net.vekapu.util.Constant;
 import net.vekapu.util.DayHelper;
+import net.vekapu.util.SettingsReader;
 import net.vekapu.util.StoreFile;
 import net.vekapu.web.Html2txt;
 import net.vekapu.web.PageLoader;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 /**
  * 
@@ -68,6 +70,12 @@ public class CorrectNumber {
 	protected CorrectNumberVO correctNumberVO = null;
 
 	protected Properties properties = new Properties();
+	
+	/**
+	 * Game spesifig setting
+	 */
+	protected Properties gameProps = new Properties();
+	
 
 	/**
 	 * 
@@ -83,6 +91,21 @@ public class CorrectNumber {
 		correctNumberVO = new CorrectNumberVO(game);
 	}
 
+	public static void main(String s[]) {
+		PropertyConfigurator.configure(Constant.getLog4JConfigFileName());
+		
+		try {
+			SettingsReader pr = new SettingsReader();
+			SettingsVO settingsVO = pr.getSettingsVO();
+
+			String game = "lotto";
+			
+			CorrectNumber cn = new CorrectNumber(settingsVO,game);
+			cn.getCorrectNumbers(game);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 	/**
 	 * @return Returns the settingsVO.
 	 */
@@ -155,6 +178,117 @@ public class CorrectNumber {
 		}
 	}
 
+	private void getCorrectNumbers(String game) throws VekapuException {
+		String name = game;
+		String name_txt = "";
+		String dir = game + Constant.getFileSeparator();
+
+		String gameSettings = Constant.getGamePropsDir()+ game + ".properties";
+		
+		try {
+			gameProps.load(new FileInputStream(gameSettings));
+		} catch (IOException e) {
+			logger.error("IOException", e);
+			throw new VekapuException(e);
+		}
+		
+		logger.info(gameSettings);
+		logger.info(gameProps);
+		
+		// Tarkistettava kierrros 
+		logger.debug("getSettingsVO().getCorrect() : " + getSettingsVO().getCorrect());
+		if (getSettingsVO().getCorrect().equals("auto")) {	
+			// ===============================================================
+			// Päätellään tarkistettava kierros ja asetetaan se SettingsVO:hon
+			// 
+			int day = Integer.valueOf( gameProps.getProperty("day") ).intValue();
+			
+			logger.debug("Weekday: " + day);
+			
+			if ( day <= dayhelper.getWeekDayNumber()) {
+				currentWeek();
+			} else {
+				// Pitää tutkia viimeviikon kierrosta
+				lastWeek();
+			}
+		}
+		
+//		 Haetaan sivu missä oikeat numrot. 
+		name_txt = getPage(name, gameProps.getProperty("url"));
+		
+		logger.debug("getSettingsVO().getCorrect() : " + getSettingsVO().getCorrect());
+		logger.debug("getSettingsVO().getKierros() : " + getSettingsVO().getWeek());
+		logger.debug("Name: " + name_txt);	
+		String sivu = "";
+		sivu = StoreFile.getFile(Constant.getWwwDir() + dir + name_txt);
+		// Poistetaan html tägit varmuuden vuoksi.
+		sivu = Html2txt.HtmlPage2txt(new StringBuffer(sivu));
+		
+		// logger.debug(sivu);
+		
+		if (sivu.indexOf(gameProps.getProperty("pass")) > 0) {
+			// Oikeita numeroita ei vielä ole julkaistu
+			String messu = "Oikeita " + game + "-numeroita ei vielä ole julkaistu.";
+			logger.warn(messu);
+			throw new VekapuException(messu);
+		}
+		
+		// Asetetaan kierroksen numero mukaan rivien tietoihin.
+		correctNumberVO.setGameweek(getSettingsVO().getWeek());
+		
+		// Jos etsittävä merkkijono vaihtelee
+		String round = gameProps.getProperty("round");
+		logger.debug("round: " + round);
+		
+
+
+		int kierros_int = 0;
+		kierros_int = sivu.indexOf(round);
+
+		int start = Integer.valueOf( gameProps.getProperty("roundStartPosition") ).intValue();
+		int end = Integer.valueOf( gameProps.getProperty("roundEndPosition") ).intValue();
+
+		String viikko = sivu.substring(kierros_int + start , kierros_int + end).trim();
+		viikko = viikko.replace('<', ' ').trim();
+		logger.debug("viikko: " + viikko);
+
+		start = Integer.valueOf( gameProps.getProperty("dateStartPosition") ).intValue();
+		end = Integer.valueOf( gameProps.getProperty("dateEndPosition") ).intValue();
+		
+		String pvm = sivu.substring(kierros_int + start, kierros_int + end).trim();
+		correctNumberVO.setDate(pvm);
+		logger.debug("date: " + pvm);
+		
+		int alku = sivu.indexOf(gameProps.getProperty("startCorrect"));
+		logger.debug("OIKEAT NUMEROT alkaakohdasta " + alku);
+
+		start = Integer.valueOf( gameProps.getProperty("corrctStartPosition") ).intValue();
+		end = Integer.valueOf( gameProps.getProperty("corrctEndPosition") ).intValue();
+		
+		String oikeat = sivu.substring(alku + start, alku + end).trim();
+		logger.debug("oikeat: " + oikeat);
+		
+		start = Integer.valueOf( gameProps.getProperty("startExtraFirstPosition") );
+		logger.debug("startExtra: " + gameProps.getProperty("startExtra"));
+		int lisanro = sivu.indexOf(gameProps.getProperty("startExtra"),start);
+		start = Integer.valueOf( gameProps.getProperty("extraStartPosition") ).intValue();
+		end = Integer.valueOf( gameProps.getProperty("extraEndPosition") ).intValue();
+		
+		logger.debug("lisanro: " + lisanro);
+
+		// TODO Kato tää loppu kuntoon
+		String lisat = sivu.substring(lisanro + start, lisanro + end).trim();
+		logger.debug("lisat: " + lisat);
+		lisat = lisat.replace(':', ' ').trim();
+		logger.debug("lisat: " + lisat);
+				
+		correctNumberVO.setDate(pvm);
+		correctNumberVO.setGameweek(viikko);
+		
+		logger.debug(correctNumberVO.toString());
+	}
+	
+	
 	/**
 	 * Here we get local copy of web page whicts contains correct numbers.
 	 * 
