@@ -90,6 +90,9 @@ public class Constant {
 	// 
 	private final static String COUPON_DIR = "." + FILE_SEPARATOR + "coupon" + FILE_SEPARATOR;
 
+	private final static String GAME_DIR = "." + FILE_SEPARATOR + "game" + FILE_SEPARATOR;
+
+	
 	public static String getName() {
 		return NAME;
 	}
@@ -176,6 +179,10 @@ public class Constant {
 
 	public static String getCouponDir() {
 		return COUPON_DIR;
+	}
+
+	public static String getGamePropsDir() {
+		return GAME_DIR;
 	}
 
 	public static String getEmptyAddress() {
