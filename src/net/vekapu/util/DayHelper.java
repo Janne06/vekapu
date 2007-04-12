@@ -67,8 +67,8 @@ public class DayHelper {
 	 */
 	public static void main(String[] args) {
 		PropertyConfigurator.configure(Constant.getLog4JConfigFileName());
-		DayHelper day = new DayHelper();
-		day.test();
+		DayHelper dh = new DayHelper();
+		dh.test();
 	}
 
 	/**
@@ -218,6 +218,17 @@ public class DayHelper {
 		return sdf.format(date);
 	}
 
+	/**
+	 * Returns current weekdays 'normal' number. Week start at monday and ends at sunday.
+	 * Monday = 1,..., Sunday = 7
+	 * @return
+	 */
+	public int getWeekDayNumber() {
+		int rc = day - 1;
+		if (rc == 0) rc = 7; 		
+		return rc;
+	}
+	
 	/**
 	 * 
 	 */
