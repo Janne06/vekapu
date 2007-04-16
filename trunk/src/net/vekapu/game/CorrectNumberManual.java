@@ -54,8 +54,8 @@ import org.apache.log4j.PropertyConfigurator;
  * @author janne
  * 
  */
-public class CorrectNumber {
-	static Logger logger = Logger.getLogger(CorrectNumber.class);
+public class CorrectNumberManual {
+	static Logger logger = Logger.getLogger(CorrectNumberManual.class);
 
 	private SettingsVO settingsVO = null;
 
@@ -82,7 +82,7 @@ public class CorrectNumber {
 	 * @param settingsVO
 	 * @param game
 	 */
-	public CorrectNumber(SettingsVO settingsVO, String game) {
+	public CorrectNumberManual(SettingsVO settingsVO, String game) {
 		logger.info("Haetaan oikeat '" + game + "' rivit. abManual = "
 				+ settingsVO.isManual() + " Tarkistettava: "
 				+ settingsVO.getCorrect());
@@ -100,8 +100,8 @@ public class CorrectNumber {
 
 			String game = "lotto";
 			
-			CorrectNumber cn = new CorrectNumber(settingsVO,game);
-			cn.getCorrectNumbers(game);
+			CorrectNumberManual cnm = new CorrectNumberManual(settingsVO,game);
+			cnm.getCorrectNumbers(game);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
