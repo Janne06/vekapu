@@ -7,7 +7,7 @@
 //
 // Purpose:  Giving correct lotto numbers.
 //
-// (c) Copyright J.Ilonen, 2003-2006
+// (c) Copyright J.Ilonen, 2003-2007
 //
 // $Id$
 //
@@ -37,11 +37,8 @@ import net.vekapu.ResultVO;
 import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
 import net.vekapu.game.jokeri.CheckJokeri;
-import net.vekapu.game.jokeri.CorrectJokeri;
 import net.vekapu.game.lotto.CheckLotto;
-import net.vekapu.game.lotto.CorrectLotto;
 import net.vekapu.game.viking.CheckViking;
-import net.vekapu.game.viking.CorrectViking;
 import net.vekapu.util.Constant;
 import net.vekapu.util.SettingsReader;
 
@@ -63,11 +60,6 @@ public class GameMaster {
 	
 	private SettingsVO settingsVO = null;
 	
-	// List of games
-	private CorrectLotto clotto = null;
-	private CorrectJokeri cjokeri = null;
-	private CorrectViking cviking = null;
-
 	// Correct numbers of the game	(kind of cache)
 	private Map correct = Collections.synchronizedMap(new HashMap());
 
@@ -98,8 +90,8 @@ public class GameMaster {
 	 * 
 	 * @throws VekapuException
 	 */
-	public void tarkista() throws VekapuException {
-		
+	public void tarkista(String game) throws VekapuException {
+		getGameCorrectNumbers(game);
 		
 	}
 	
@@ -112,9 +104,11 @@ public class GameMaster {
 	 */
 	public ResultVO checkLotto(ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
 		
-		alustaLotto();
+//		alustaLotto();
 		
-		CorrectNumberVO cLottoVO = (CorrectNumberVO) correct.get(CorrectLotto.GAME);
+		getGameCorrectNumbers("lotto");
+		
+		CorrectNumberVO cLottoVO = (CorrectNumberVO) correct.get("lotto");
 		
 		logger.debug(cLottoVO);
 		
@@ -138,9 +132,10 @@ public class GameMaster {
 	 */
 	public ResultVO checkJokeri(ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
 		
-		alustaJokeri();
+//		alustaJokeri();
+		getGameCorrectNumbers("jokeri");
 		
-		CorrectNumberVO cJokeriVO = (CorrectNumberVO) correct.get(CorrectJokeri.GAME);
+		CorrectNumberVO cJokeriVO = (CorrectNumberVO) correct.get("jokeri");
 		
 		logger.debug(cJokeriVO);
 		
@@ -163,9 +158,10 @@ public class GameMaster {
 	 */
 	public ResultVO checkVikingLotto(ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
 		
-		alustaViking();
+//		alustaViking();
+		getGameCorrectNumbers("viking-lotto");
 		
-		CorrectNumberVO cVikingVO = (CorrectNumberVO) correct.get(CorrectViking.GAME);
+		CorrectNumberVO cVikingVO = (CorrectNumberVO) correct.get("viking-lotto");
 		logger.debug(cVikingVO);
 		logger.debug(numbersVO);
 		
@@ -184,54 +180,27 @@ public class GameMaster {
 		
 	}
 	
-	
-	/**
-	 * 
-	 */
-	private void alustaLotto() throws VekapuException {
-		CorrectNumberVO clottoVO = null;
-		if (clotto == null) {
-			clotto = new CorrectLotto(settingsVO);
-			clottoVO = clotto.getCorrectNumberVO();
+	private void getGameCorrectNumbers(String game) throws VekapuException {
+		CorrectNumberVO correctVO = null;
 		
-			if (!correct.containsKey(clottoVO.getGame())) {
-				correct.put(clottoVO.getGame(), clottoVO);
-			}		
-			logger.info( correct.toString() );
-		}
+		// If empty for game
+		if (!correct.containsKey(game)) {
+
+			CorrectNumber correctNumber = new CorrectNumber(settingsVO,game);
+			correctVO = correctNumber.getCorrectNumbers(game);			
+			correct.put(game, correctVO);
+		
+		}		
+					
+		logger.info( correct.toString() );
 	}
 	
-	private void alustaJokeri() throws VekapuException {
-		CorrectNumberVO cjokeriVO = null;
-		if (cjokeri == null) {
-			cjokeri = new CorrectJokeri(settingsVO);
-			cjokeriVO = cjokeri.getCorrectNumberVO();
-		
-			if (!correct.containsKey(cjokeriVO.getGame())) {
-				correct.put(cjokeriVO.getGame(), cjokeriVO);
-			}		
-			logger.info( correct.toString() );
-		}
-	}
-	
-	private void alustaViking() throws VekapuException {
-		CorrectNumberVO cvikingVO = null;
-		if (cviking == null) {
-			cviking = new CorrectViking(settingsVO);
-			cvikingVO = cviking.getCorrectNumberVO();
-		
-			if (!correct.containsKey(cvikingVO.getGame())) {
-				correct.put(cvikingVO.getGame(), cvikingVO);
-			}
-			logger.info( correct.toString() );
-		}
-	}
-	
+
 	private void test() {
 		logger.info("CorrectNumber test Start");
 
 		try {
-			tarkista();
+			tarkista("lotto");
 //			getOikeaRiviLotto();
 //			getLisaNumerot();
 //			getLottoWeek();
