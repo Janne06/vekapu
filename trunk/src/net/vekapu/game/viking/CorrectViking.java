@@ -34,6 +34,7 @@ import net.vekapu.CorrectNumberVO;
 import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
 import net.vekapu.game.CorrectNumber;
+import net.vekapu.game.CorrectNumberManual;
 import net.vekapu.util.Constant;
 import net.vekapu.util.SettingsReader;
 import net.vekapu.util.StoreFile;
@@ -68,7 +69,13 @@ public class CorrectViking extends CorrectNumber {
 
 		logger.debug("Haetaan oikea VIKINGLOTTO rivi. abManual = " + isManual());
 		if (isManual()) {
-			checkWeek = getManualFile();
+			CorrectNumberManual manual = new CorrectNumberManual();
+			
+			checkWeek = manual.geArg("VikingTarkistaKierros").trim();
+			vikingNumerot = manual.geArg(checkWeek + "_VikingOikeaRivi");
+			vikingLisat = manual.geArg(checkWeek + "_VikingLisanumerot");
+			kierrosViking = manual.geArg(checkWeek + "_VikingKierros");
+			
 		} else {
 			haeOikeaRiviVikin();
 		}
@@ -93,10 +100,7 @@ public class CorrectViking extends CorrectNumber {
 	 * @return
 	 */
 	private void getOikeaRiviViking() {
-		if (isManual()) {
-			vikingNumerot = properties.getProperty(checkWeek
-					+ "_VikingOikeaRivi");
-		}
+
 		StringTokenizer toke = new StringTokenizer(vikingNumerot, ",");
 		int i = 0;
 		int[] oikeaRivi = new int[6];
@@ -114,10 +118,7 @@ public class CorrectViking extends CorrectNumber {
 	 * @return
 	 */
 	private void getLisaNumerotViking() {
-		if (isManual()) {
-			vikingLisat = properties.getProperty(checkWeek
-					+ "_VikingLisanumerot");
-		}
+
 		StringTokenizer toke = new StringTokenizer(vikingLisat, ",");
 		int i = 0;
 		int[] lisaNumero = new int[2];
@@ -135,11 +136,7 @@ public class CorrectViking extends CorrectNumber {
 	 * @return 
 	 */
 	private String getKierrosViking() {
-		if (isManual()) {
-			checkWeek = properties.getProperty("VikingTarkistaKierros").trim();
-			kierrosViking = properties
-					.getProperty(checkWeek + "_VikingKierros");
-		}
+
 		logger.debug("Kierros Viking: " + kierrosViking);
 		return kierrosViking;
 	}

@@ -33,6 +33,7 @@ import net.vekapu.CorrectNumberVO;
 import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
 import net.vekapu.game.CorrectNumber;
+import net.vekapu.game.CorrectNumberManual;
 import net.vekapu.util.Constant;
 import net.vekapu.util.SettingsReader;
 import net.vekapu.util.StoreFile;
@@ -61,7 +62,11 @@ public class CorrectLotto extends CorrectNumber {
 		super(settingsVO,GAME);
 				
 		if (isManual()) {
-			checkWeek = getManualFile();
+			CorrectNumberManual manual = new CorrectNumberManual();
+			
+			checkWeek =  manual.geArg("TarkistaKierros");
+			lottoNumerot = manual.geArg(checkWeek + "_OikeaRivi");
+			lottoLisat = manual.geArg(checkWeek + "_Lisanumerot");
 		} else {
 			haeOikeaRiviLotto();
 		}
@@ -86,9 +91,6 @@ public class CorrectLotto extends CorrectNumber {
 	 *
 	 */
 	private void getOikeaRiviLotto() {
-		if (isManual()) {
-			lottoNumerot = properties.getProperty(checkWeek + "_OikeaRivi");
-		}
 
 		StringTokenizer toke = new StringTokenizer(lottoNumerot, ",");
 		int i = 0;
@@ -108,9 +110,7 @@ public class CorrectLotto extends CorrectNumber {
 	 *
 	 */
 	private void getLisaNumerot() {
-		if (isManual()) {
-			lottoLisat = properties.getProperty(checkWeek + "_Lisanumerot");
-		}
+
 		StringTokenizer toke = new StringTokenizer(lottoLisat, ",");
 		int i = 0;
 		int[] lisaNumero = new int[3];
