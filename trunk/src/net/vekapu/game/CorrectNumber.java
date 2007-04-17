@@ -35,6 +35,7 @@ package net.vekapu.game;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 import net.vekapu.CorrectNumberVO;
 import net.vekapu.SettingsVO;
@@ -50,6 +51,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 /**
+ * Gettin correct numbers of the game.
  * 
  * @author janne
  * 
@@ -69,8 +71,6 @@ public class CorrectNumber {
 	 */
 	protected CorrectNumberVO correctNumberVO = null;
 
-	protected Properties properties = new Properties();
-	
 	/**
 	 * Game spesifig setting
 	 */
@@ -89,6 +89,12 @@ public class CorrectNumber {
 
 		this.settingsVO = settingsVO;
 		correctNumberVO = new CorrectNumberVO(game);
+		
+		if (isManual()) {
+			setWeek("manual");
+			setCheckedRound("manual");
+		}
+		
 	}
 
 	public static void main(String s[]) {
@@ -98,7 +104,9 @@ public class CorrectNumber {
 			SettingsReader pr = new SettingsReader();
 			SettingsVO settingsVO = pr.getSettingsVO();
 
-			String game = "lotto";
+			// lotto, jokeri, viking-lotto
+			String game = "jokeri";
+			
 			
 			CorrectNumber cn = new CorrectNumber(settingsVO,game);
 			cn.getCorrectNumbers(game);
@@ -156,29 +164,10 @@ public class CorrectNumber {
 		setWeek(dayhelper.getLastWeek());
 	}
 
-	/**
-	 * 
-	 * @return
-	 * @throws VekapuException
-	 */
-	protected String getManualFile() throws VekapuException {
+	public CorrectNumberVO getCorrectNumbers(String game) throws VekapuException {
 
-		String fileName = Constant.getCorrectNumberFile();
-		String checkWeek = "";
-
-		logger.info("Haetaan tiedostoon '" + fileName
-				+ "' määritelty oikea rivi.");
-		try {
-			properties.load(new FileInputStream(fileName));
-			checkWeek = properties.getProperty("TarkistaKierros").trim();
-			return checkWeek;
-		} catch (IOException e) {
-			logger.error("IOException", e);
-			throw new VekapuException(e);
-		}
-	}
-
-	private void getCorrectNumbers(String game) throws VekapuException {
+		CorrectNumberVO l_correctNumberVO = new CorrectNumberVO(game);
+		
 		String name = game;
 		String name_txt = "";
 		String dir = game + Constant.getFileSeparator();
@@ -235,6 +224,7 @@ public class CorrectNumber {
 		
 		// Asetetaan kierroksen numero mukaan rivien tietoihin.
 		correctNumberVO.setGameweek(getSettingsVO().getWeek());
+		l_correctNumberVO.setGameweek(getSettingsVO().getWeek());
 		
 		// Jos etsittävä merkkijono vaihtelee
 		String round = gameProps.getProperty("round");
@@ -256,7 +246,7 @@ public class CorrectNumber {
 		end = Integer.valueOf( gameProps.getProperty("dateEndPosition") ).intValue();
 		
 		String pvm = sivu.substring(kierros_int + start, kierros_int + end).trim();
-		correctNumberVO.setDate(pvm);
+		l_correctNumberVO.setDate(pvm);
 		logger.debug("date: " + pvm);
 		
 		int alku = sivu.indexOf(gameProps.getProperty("startCorrect"));
@@ -281,11 +271,36 @@ public class CorrectNumber {
 		logger.debug("lisat: " + lisat);
 		lisat = lisat.replace(':', ' ').trim();
 		logger.debug("lisat: " + lisat);
-				
-		correctNumberVO.setDate(pvm);
-		correctNumberVO.setGameweek(viikko);
+						
+		l_correctNumberVO.setDate(pvm);
+		l_correctNumberVO.setGameweek(viikko);
 		
-		logger.debug(correctNumberVO.toString());
+		
+		String delimeter = ",";
+		if (oikeat.indexOf(delimeter) < 0) delimeter = " ";
+		
+		StringTokenizer toke = new StringTokenizer(oikeat, delimeter);
+		Integer number = null;
+
+		while (toke.hasMoreTokens()) {
+			number = Integer.valueOf(toke.nextToken().trim());
+			l_correctNumberVO.addCorrectNumber(number);
+		}
+		
+		delimeter = ",";
+		if (lisat.indexOf(delimeter) < 0) delimeter = " ";
+		
+		toke = new StringTokenizer(lisat, delimeter);
+		number = null;
+
+		while (toke.hasMoreTokens()) {
+			number = Integer.valueOf(toke.nextToken().trim());
+			l_correctNumberVO.addExtraNumber(number);
+		}
+		
+		logger.debug(l_correctNumberVO.toString());
+		
+		return l_correctNumberVO;
 	}
 	
 	
