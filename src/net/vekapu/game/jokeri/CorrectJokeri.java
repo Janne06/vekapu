@@ -33,6 +33,7 @@ import net.vekapu.CorrectNumberVO;
 import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
 import net.vekapu.game.CorrectNumber;
+import net.vekapu.game.CorrectNumberManual;
 import net.vekapu.util.Constant;
 import net.vekapu.util.SettingsReader;
 import net.vekapu.util.StoreFile;
@@ -65,7 +66,13 @@ public class CorrectJokeri extends CorrectNumber {
 		super(settingsVO,GAME);
 
 		if (isManual()) {
-			checkWeek = getManualFile();
+			CorrectNumberManual manual = new CorrectNumberManual();
+			
+			// checkWeek = getManualFile();
+			checkWeek = manual.geArg("JokeriTarkistaKierros");
+			kierrosJokeri = manual.geArg(checkWeek + "_JokeriKierros");
+			jokeriRivi = manual.geArg(checkWeek + "_JokeriOikeaRivi");
+			
 		} else {
 			haeOikeaJokeriRivi();
 		}
@@ -91,11 +98,7 @@ public class CorrectJokeri extends CorrectNumber {
 	 * @return
 	 */
 	private String getKierrosJokeri() {
-		if (isManual()) {
-			checkWeek = properties.getProperty("JokeriTarkistaKierros").trim();
-			kierrosJokeri = properties
-					.getProperty(checkWeek + "_JokeriKierros");
-		}
+
 		correctNumberVO.setGameweek(kierrosJokeri);
 		
 		logger.debug("Kierros Jokeri: " + kierrosJokeri);
@@ -108,9 +111,6 @@ public class CorrectJokeri extends CorrectNumber {
 	 */
 	private String getJokeriWeek() {
 		String week = "";
-		if (isManual()) {
-			checkWeek = properties.getProperty("JokeriTarkistaKierros").trim();
-		}
 		logger.debug("JokeriWeek: " + week);
 		return week;
 	}
@@ -120,10 +120,7 @@ public class CorrectJokeri extends CorrectNumber {
 	 * @return
 	 */
 	private void getOikeaRiviJokeri() {
-		if (isManual()) {
-			checkWeek = properties.getProperty("JokeriTarkistaKierros").trim();
-			jokeriRivi = properties.getProperty(checkWeek + "_JokeriOikeaRivi");
-		}
+
 		StringTokenizer toke = new StringTokenizer(jokeriRivi, " ");
 		int i = 0;
 		int[] oikeaRivi = new int[7];
