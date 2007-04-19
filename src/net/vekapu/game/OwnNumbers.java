@@ -39,9 +39,6 @@ import java.util.StringTokenizer;
 import net.vekapu.OwnNumbersVO;
 import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
-import net.vekapu.game.jokeri.OwnJokeri;
-import net.vekapu.game.lotto.OwnLotto;
-import net.vekapu.game.viking.OwnViking;
 import net.vekapu.util.Constant;
 
 import org.apache.log4j.Logger;
@@ -96,7 +93,7 @@ public class OwnNumbers {
 	 */
 	private void getTo() {
 		int max = 0;
-		List to = new ArrayList();
+		List <String> to = new ArrayList <String> ();
 		try {
 			max = Integer.parseInt(properties.getProperty("to_count"));
 		} catch (NumberFormatException nfe) {
@@ -121,7 +118,7 @@ public class OwnNumbers {
 	 */
 	private void getToSMS() {
 		int max = 0;
-		List toSms = new ArrayList();
+		List <String> toSms = new ArrayList <String> ();
 		try {
 			max = Integer.parseInt(properties.getProperty("sms_count"));
 		} catch (NumberFormatException nfe) {
@@ -149,7 +146,7 @@ public class OwnNumbers {
 	private String getMihinAsti() {
 		String asti = "";
 		
-		asti = properties.getProperty("asti").trim();
+		asti = properties.getProperty("until").trim();
 		logger.debug("getMihinAsti(): " + asti);
 	
 		return asti;
@@ -160,7 +157,7 @@ public class OwnNumbers {
 		String game = properties.getProperty("game");
 		StringTokenizer toke = new StringTokenizer(game, ",");
 
-		Set games = new HashSet();
+		Set <String> games = new HashSet <String> ();
 		
 		while (toke.hasMoreTokens()) {
 			games.add(toke.nextToken().trim());
@@ -220,34 +217,60 @@ public class OwnNumbers {
 		// Fill Lotto
 		numbersVO.setLotto(isLotto());
 		if (isLotto()) {
-			logger.info("Haetaan lotto-rivit & muut tiedot");
+			logger.info("Haetaan lotto-rivit & muut tiedot");			
+			numbersVO.addLottoRivi(getOwnNumbers("lotto"));
 			
-			// TODO Nyt pitäis kutsua OwnLotto luokkaa mikä sitten palauttaa 
-			// Set:issä (?) omat lottorivit.
-			OwnLotto lotto = new OwnLotto(properties);
-			numbersVO.addLottoRivi(lotto.getRivit());
 		}
 		
 		// Fill Jokeri
 		numbersVO.setJokeri(isJokeri());
 		if (isJokeri()) {
 			logger.info("Haetaan jokeri-rivit & muut tiedot");
+			numbersVO.addJokeriRivi(getOwnNumbers("jokeri"));
 			
-			OwnJokeri jokeri = new OwnJokeri(properties);
-			numbersVO.addJokeriRivi(jokeri.getRivit());			
 		}
 		
 		// Fill Viking
 		numbersVO.setViking(isViking());
 		if (isViking()) {
 			logger.info("Haetaan viikkari-rivit & muut tiedot");
+			numbersVO.addVikingRivi(getOwnNumbers("viking"));
 			
-			OwnViking viking = new OwnViking(properties);
-			numbersVO.addVikingRivi(viking.getRivit());	
 		}
-
+				
 		logger.debug(numbersVO.toString());
 		
 		return numbersVO;
+	}
+	
+	
+	private List getOwnNumbers(String game) {
+		
+		// TODO Jokerin suunta pitäis vielä saada tähän mukaan.
+		
+		// Haetaan yleishakuna
+		// Lista mihin numerot ängetään.
+		
+		List rivit = new ArrayList();
+		List lista = null;
+		int lkm = Integer.parseInt(properties.getProperty(game));
+		
+		for (int i = 0; i < lkm; i++) {
+
+			String rivi = properties.getProperty(game + "_" + (i + 1));
+			StringTokenizer toke = new StringTokenizer(rivi, ",");
+			
+			lista = new ArrayList ();
+
+			int numero=0;
+			while (toke.hasMoreTokens()) {
+				numero = Integer.parseInt(toke.nextToken().trim());				
+				lista.add(String.valueOf(numero));
+				
+			}			
+			// Laitetaankin suoraa OwnNumbersVO:hon. (kaiki samaan)
+			rivit.add(lista);
+		}
+		return rivit;
 	}
 }
