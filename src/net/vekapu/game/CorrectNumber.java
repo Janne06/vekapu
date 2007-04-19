@@ -66,10 +66,6 @@ public class CorrectNumber {
 	 */
 	protected DayHelper dayhelper = new DayHelper();
 
-	/**
-	 * Storing correct numbers
-	 */
-	protected CorrectNumberVO correctNumberVO = null;
 
 	/**
 	 * Game spesifig setting
@@ -88,7 +84,6 @@ public class CorrectNumber {
 				+ settingsVO.getCorrect());
 
 		this.settingsVO = settingsVO;
-		correctNumberVO = new CorrectNumberVO(game);
 		
 		if (isManual()) {
 			setWeek("manual");
@@ -104,7 +99,7 @@ public class CorrectNumber {
 			SettingsReader pr = new SettingsReader();
 			SettingsVO settingsVO = pr.getSettingsVO();
 
-			// lotto, jokeri, viking-lotto
+			// lotto, jokeri, viking
 			String game = "jokeri";
 			
 			
@@ -223,7 +218,6 @@ public class CorrectNumber {
 		}
 		
 		// Asetetaan kierroksen numero mukaan rivien tietoihin.
-		correctNumberVO.setGameweek(getSettingsVO().getWeek());
 		l_correctNumberVO.setGameweek(getSettingsVO().getWeek());
 		
 		// Jos etsittävä merkkijono vaihtelee
@@ -317,6 +311,8 @@ public class CorrectNumber {
 	 */
 	protected String getPage(String name, String url) throws VekapuException {
 
+		String dir = name + Constant.getFileSeparator();
+		
 		logger.debug("name: " + name);
 		logger.debug("getSettingsVO().getCorrect(): "
 				+ getSettingsVO().getCorrect());
@@ -326,7 +322,6 @@ public class CorrectNumber {
 		name = name + "-" + getSettingsVO().getCheckedRound();
 		logger.debug("name: " + name);
 
-		String dir = correctNumberVO.getGame() + Constant.getFileSeparator();
 		String name_txt = name + ".txt";
 		name = name + Constant.getWwwFileExt();
 		String fullname = Constant.getWwwDir() + dir + name;
