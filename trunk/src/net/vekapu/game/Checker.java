@@ -9,7 +9,7 @@
 //
 // Purpose:  Checkin services.
 //
-// (c) Copyright J.Ilonen, 2003-2006
+// (c) Copyright J.Ilonen, 2003-2007
 //
 // $Id$
 //
@@ -47,18 +47,6 @@ public class Checker {
 	
 	protected String parasTulos;
 
-	// Parastulos
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	protected int iiParas = 0;
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	protected int iiParaslisa = 0;
-
 	public Checker() {
 	}
 
@@ -72,7 +60,7 @@ public class Checker {
 			if (apu.equals(Constant.getHit())) {
 				if (lbA) {
 					hit ++;
-				}						
+				}
 			}
 			else {
 				lbA = false;
@@ -87,12 +75,12 @@ public class Checker {
 		int lkm = list.size();
 		boolean lbB = true;
 		
-		for (int j = lkm - 1; j > 0; j--) {
+		for (int j = lkm - 1; j >= 0; j--) {
 			String apu = (String) list.get(j);
 			if (apu.equals(Constant.getHit())) {
 				if (lbB) {
 					hit ++;
-				}						
+				}
 			}
 			else {
 				lbB = false;
@@ -116,7 +104,7 @@ public class Checker {
 		int paraslisa = 0;
 		
 		logger.debug(correctNumberVO.getCorrectNumbersString());
-		// Omien rivien lukumäärä		 
+		// Omien rivien lukumäärä
 		for (Iterator iter = omaRivi.iterator(); iter.hasNext();) {
 
 			List rivi = (List) iter.next();
