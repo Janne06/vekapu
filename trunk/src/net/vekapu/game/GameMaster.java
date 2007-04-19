@@ -36,9 +36,6 @@ import net.vekapu.OwnNumbersVO;
 import net.vekapu.ResultVO;
 import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
-import net.vekapu.game.jokeri.CheckJokeri;
-import net.vekapu.game.lotto.CheckLotto;
-import net.vekapu.game.viking.CheckViking;
 import net.vekapu.util.Constant;
 import net.vekapu.util.SettingsReader;
 
@@ -103,22 +100,20 @@ public class GameMaster {
 	 * @throws VekapuException
 	 */
 	public ResultVO checkLotto(ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
-		
-//		alustaLotto();
-		
+				
 		getGameCorrectNumbers("lotto");
 		
 		CorrectNumberVO cLottoVO = (CorrectNumberVO) correct.get("lotto");
 		
 		logger.debug(cLottoVO);
 		
-		CheckLotto lotto = new CheckLotto(cLottoVO);
-//		CheckLotto lotto = new CheckLotto(clotto.correctNumberVO);
-
-		lotto.tarkista(numbersVO);
-		resultVO.setLottobest(lotto.getParasTulos());
+		Checker checker = new Checker();
+		checker.setCorrectNumberVO(cLottoVO);		
+		numbersVO.addCheckedLotto( checker.tarkistaRivit(numbersVO.getOwnLotto()) );
+		numbersVO.setBestLotto(checker.getBestResult());
+				
+		resultVO.setLottobest(checker.getBestResult());
 		resultVO.setCorrectLottoVO(cLottoVO );
-//		resultVO.setCorrectLottoVO((CorrectNumberVO) correct.get(CorrectLotto.GAME));
 		
 		return resultVO;
 		
@@ -132,20 +127,20 @@ public class GameMaster {
 	 */
 	public ResultVO checkJokeri(ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
 		
-//		alustaJokeri();
 		getGameCorrectNumbers("jokeri");
 		
 		CorrectNumberVO cJokeriVO = (CorrectNumberVO) correct.get("jokeri");
 		
 		logger.debug(cJokeriVO);
-		
-		CheckJokeri jokeri = new CheckJokeri(cJokeriVO);
-		
-		jokeri.tarkista(numbersVO);
-		resultVO.setCorrectJokeriVO(cJokeriVO );
-//		resultVO.setJokeri( jokeri.tarkista(resultVO.getGroup()).toString()) ;
-//		resultVO.setJokeribest(jokeri.getBestResult());
-		
+	
+		Checker checker = new Checker();
+		checker.setCorrectNumberVO(cJokeriVO);
+		numbersVO.addCheckedJokeri( checker.checkJokeri(numbersVO.getOwnJokeri()) );
+//		numbersVO.setBestLotto(checker.getBestResult());
+				
+		resultVO.setJokeribest(checker.getBestResult());
+		resultVO.setCorrectJokeriVO( cJokeriVO );
+				
 		return resultVO;
 		
 	}
@@ -159,22 +154,30 @@ public class GameMaster {
 	public ResultVO checkVikingLotto(ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
 		
 //		alustaViking();
-		getGameCorrectNumbers("viking-lotto");
+		getGameCorrectNumbers("viking");
 		
-		CorrectNumberVO cVikingVO = (CorrectNumberVO) correct.get("viking-lotto");
+		CorrectNumberVO cVikingVO = (CorrectNumberVO) correct.get("viking");
 		logger.debug(cVikingVO);
 		logger.debug(numbersVO);
 		
-		CheckViking vlotto = new CheckViking(cVikingVO);
+		Checker checker = new Checker();
+		checker.setCorrectNumberVO(cVikingVO);		
+		numbersVO.addCheckedViking( checker.tarkistaRivit(numbersVO.getOwnViking()) );
+		numbersVO.setBestLotto(checker.getBestResult());
+				
+		resultVO.setVikingbest(checker.getBestResult());
+		resultVO.setCorrectVikingLottoVO( cVikingVO );
+		
+		////////////////////////////////
+		
+///		CheckViking vlotto = new CheckViking(cVikingVO);
 //		CheckViking vlotto = new CheckViking(cviking);
 		
-		vlotto.tarkista(numbersVO);
+//		vlotto.tarkista(numbersVO);
 		
-		resultVO.setVikingbest(vlotto.getParasTulos());
-		resultVO.setCorrectVikingLottoVO(cVikingVO );
-		
-//		resultVO.setViking( vlotto.tarkista(resultVO.getGroup()).toString()) ;
 //		resultVO.setVikingbest(vlotto.getParasTulos());
+//		resultVO.setCorrectVikingLottoVO(cVikingVO );
+		
 		
 		return resultVO;
 		
