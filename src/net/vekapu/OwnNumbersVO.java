@@ -7,7 +7,7 @@
 //
 // Purpose:  Transfer/Value Object for numbers & group info.
 //
-// (c) Copyright J.Ilonen, 2006
+// (c) Copyright J.Ilonen, 2006-2007
 //
 // $Id$
 //
@@ -28,27 +28,34 @@
 package net.vekapu;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import net.vekapu.util.Constant;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Transfer/Value Object for numbers & group info.
+ * 
+ * @author janne
+ *
+ */
 public class OwnNumbersVO {
 
 	static Logger logger = Logger.getLogger(OwnNumbersVO.class);
 	private String group = "";
 	
 	// Eri peleille yhteinen ??
-	private boolean lotto = false;
-	private boolean jokeri = false;
-	private boolean viking = false;
-	
+	// TODO Tää luokka pitää saada joustavammax
+	private List games = new ArrayList();
+		
 	// TODO Tarvisko tarkastuksesta samanlaisen ??
-	private boolean lottoChecked = false;
-	private boolean jokeriChecked = false;
-	private boolean vikingChecked = false;
+	private List checkedGame = new ArrayList();
+	
 	
 	private String until = "";
 	
@@ -58,14 +65,26 @@ public class OwnNumbersVO {
 	private List toSms = new ArrayList();
 	
 	
-	// Tää vaikuttaa hyvältä !!!
+	// TODO Pitäiskö nää laittaa Map:piin josta sitten vois hakee pelikohtaset
+	// tiedot jouheesti.
+	private Map own = Collections.synchronizedMap(new HashMap());
+	private Map correct = Collections.synchronizedMap(new HashMap());
+
+	
+	// Tää on jäykkä tapa toimia.
+	@Deprecated
 	private List ownLotto = new ArrayList();
+	@Deprecated
 	private List checkedLotto = new ArrayList();
 
+	@Deprecated
 	private List ownJokeri = new ArrayList();
+	@Deprecated
 	private List checkedJokeri = new ArrayList();
 
+	@Deprecated
 	private List ownViking = new ArrayList();
+	@Deprecated
 	private List checkedViking = new ArrayList();
 	
 	/**
@@ -79,22 +98,15 @@ public class OwnNumbersVO {
 		return group;
 	}
 
-	public boolean isJokeri() {
-		return jokeri;
+	public void setGames(List games) {
+		this.games = games;
 	}
-
-	public void setJokeri(boolean jokeri) {
-		this.jokeri = jokeri;
+	
+	public boolean isGame(String game) {
+		
+		return games.contains(game);
 	}
-
-	public boolean isLotto() {
-		return lotto;
-	}
-
-	public void setLotto(boolean lotto) {
-		this.lotto = lotto;
-	}
-
+	
 	public String getUntil() {
 		return until;
 	}
@@ -117,14 +129,10 @@ public class OwnNumbersVO {
 		this.bestLotto = bestLotto;
 	}
 	
-	public boolean isViking() {
-		return viking;
+	
+	public void addCheckegGame(String game) {
+		checkedGame.add(game);
 	}
-
-	public void setViking(boolean viking) {
-		this.viking = viking;
-	}
-
 	/**
 	 * @return the to
 	 */
@@ -152,51 +160,50 @@ public class OwnNumbersVO {
 	public void setToSms(List toSms) {
 		this.toSms = toSms;
 	}
+	
+	public void addOwnLines(String game,List lines) {
+		own.put(game, lines);
+	}
 
-	public void addLottoRivi(List rivi) {
-		ownLotto.addAll(rivi);
+	public List getOwnLines(String game) {
+		
+		List list = (List) own.get(game);
+		return list;
 	}
 		
 	/**
 	 * @return the ownLotto
 	 */
 	public List getOwnLotto() {
-		return ownLotto;
+//		return ownLotto;
+		return getOwnLines("lotto");
 	}
 
 	public void addCheckedLotto(List rivi) {
 //		logger.debug("##rivi : " + rivi);
 		checkedLotto.addAll(rivi);
-		setLottoChecked(true);
+		addCheckegGame("lotto");
 	}
 
 	public List getCheckedLotto() {
 		return checkedLotto;
 	}
-	
-	public void addJokeriRivi(List rivi) {
-		ownJokeri.addAll(rivi);
-	}
 		
 	public List getOwnJokeri() {
-		return ownJokeri;
+//		return ownJokeri;
+		return getOwnLines("jokeri");
 	}
 	
 	public void addCheckedJokeri(List rivi) {
 //		logger.debug("##rivi : " + rivi);
 		checkedJokeri.addAll(rivi);
-		setJokeriChecked(true);
+		addCheckegGame("jokeri");
 	}
 
 	public List getCheckedJokeri() {
 		return checkedJokeri;
 	}
-	
-	// Viikkari
-	public void addVikingRivi(List rivi) {
-		ownViking.addAll(rivi);
-	}
-		
+			
 	/**
 	 * @return the ownLotto
 	 */
@@ -207,7 +214,7 @@ public class OwnNumbersVO {
 	public void addCheckedViking(List rivi) {
 //		logger.debug("##rivi : " + rivi);
 		checkedViking.addAll(rivi);
-		setVikingChecked(true);
+		addCheckegGame("viking");
 	}
 
 	public List getCheckedViking() {
@@ -233,14 +240,15 @@ public class OwnNumbersVO {
 		ret += " Game numbers:" + NEW_LINE;
 		ret += " =============" + NEW_LINE;
 		ret += " until : " + until + NEW_LINE;
-		ret += " isLotto :" + lotto + NEW_LINE;
-		
-		if (isLotto()) {
+		ret += " isLotto :" + isGame("lotto") + NEW_LINE;
+	
+		// TODO Tääkin pitää paketoida. Joustoa juttun.
+		if (isGame("lotto")) {
 
-			ret += " isLottoChecked :" + isLottoChecked() + NEW_LINE;
+			ret += " isLottoChecked :" + isGameChecked("lotto") + NEW_LINE;
 
 			ret += "Rivit: " + getOwnLotto().size() + " kpl" + NEW_LINE;	
-			if (isLottoChecked()) ret += " Parastulos : " + getBestLotto() + NEW_LINE;
+			if (isGameChecked("lotto")) ret += " Parastulos : " + getBestLotto() + NEW_LINE;
 			
 			ret += NEW_LINE;
 			
@@ -249,7 +257,7 @@ public class OwnNumbersVO {
 				List element = (List) iter.next();
 				ret += "Rivi "+ (i +1) +":" +  element + NEW_LINE;
 				
-				if (isLottoChecked()) {
+				if (isGameChecked("lotto")) {
 					ret += "Osumat:" +  getCheckedLotto().get(i) + NEW_LINE + NEW_LINE;
 				}
 				i++ ;
@@ -257,10 +265,10 @@ public class OwnNumbersVO {
 		}
 		
 		ret += NEW_LINE + " =============" + NEW_LINE;
-		ret += " isJokeri :" + jokeri + NEW_LINE;
-		if (isJokeri()) {
+		ret += " isJokeri :" + isGame("jokeri") + NEW_LINE;
+		if (isGame("jokeri")) {
 			
-			ret += " isJokeriChecked :" + isJokeriChecked() + NEW_LINE;
+			ret += " isJokeriChecked :" + isGameChecked("jokeri") + NEW_LINE;
 			
 			ret += "Rivit: " + getOwnJokeri().size() + " kpl" + NEW_LINE;	
 			
@@ -271,7 +279,7 @@ public class OwnNumbersVO {
 				List element = (List) iter.next();
 				ret += "Rivi "+ (i +1) +":" +  element + NEW_LINE;
 				
-				if (isJokeriChecked()) {
+				if (isGameChecked("jokeri")) {
 					ret += "Osumat:" +  getCheckedJokeri().get(i) + NEW_LINE + NEW_LINE;
 				}
 				i++ ;
@@ -284,12 +292,11 @@ public class OwnNumbersVO {
 		}
 	*/
 		ret += NEW_LINE + " =============" + NEW_LINE;
-		ret += " isViking :" + viking + NEW_LINE;
+		ret += " isViking :" + isGame("viking") + NEW_LINE;
 		
-		
-		if (isViking()) {
+		if (isGame("viking")) {
 			
-			ret += " isVikingChecked :" + isVikingChecked() + NEW_LINE;
+			ret += " isVikingChecked :" + isGameChecked("viking") + NEW_LINE;
 			
 			ret += "Rivit: " + getOwnViking().size() + " kpl" + NEW_LINE;	
 //			if (isVikingChecked()) ret += " Parastulos : " + getBestViking() + NEW_LINE;
@@ -301,7 +308,7 @@ public class OwnNumbersVO {
 				List element = (List) iter.next();
 				ret += "Rivi "+ (i +1) +":" +  element + NEW_LINE;
 				
-				if (isVikingChecked()) {
+				if (isGameChecked("viking")) {
 					ret += "Osumat:" +  getCheckedViking().get(i) + NEW_LINE + NEW_LINE;
 				}
 				i++ ;
@@ -310,41 +317,9 @@ public class OwnNumbersVO {
 		return ret;		
 	}
 
-	
-	/**
-	 * @return the lottoChecked
-	 */
-	public boolean isLottoChecked() {
-		return lottoChecked;
-	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isJokeriChecked() {
-		return jokeriChecked;
-	}
-
-	/**
-	 * @param lottoChecked the lottoChecked to set
-	 */
-	private void setLottoChecked(boolean lottoChecked) {
-		this.lottoChecked = lottoChecked;
-	}
-
-	/**
-	 * @param lottoChecked the lottoChecked to set
-	 */
-	private void setJokeriChecked(boolean jokeriChecked) {
-		this.jokeriChecked = jokeriChecked;
-	}
-
-	public boolean isVikingChecked() {
-		return vikingChecked;
+	public boolean isGameChecked(String game) {
+		return checkedGame.contains(game);
 	}
 	
-	private void setVikingChecked(boolean vikingChecked) {
-		this.vikingChecked = vikingChecked;
-	}
 }

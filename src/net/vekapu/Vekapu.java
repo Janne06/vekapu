@@ -42,7 +42,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 /**
- * Tarkistetaan lottorivit (& jokeri & vikinlotto).
+ * Checkin lottery like games.
  *   
  * @author janne
  *
@@ -304,7 +304,7 @@ public class Vekapu {
 			parasTulos = "";
 
 			// Onko porukalla Lottorivejä
-			if (numbersVO.isLotto()) {
+			if (numbersVO.isGame("lotto")) {
 				lkmLotto++;
 				checked = true;
 
@@ -332,7 +332,7 @@ public class Vekapu {
 				}
 			}
 			// Jokerin tarkistua
-			if (numbersVO.isJokeri()) {
+			if (numbersVO.isGame("jokeri")) {
 				resultVO = gameMaster.checkJokeri(resultVO, numbersVO);
 				parasJokeri = " Jokeri '"
 						+ String.valueOf(resultVO.getJokeribest())
@@ -352,7 +352,7 @@ public class Vekapu {
 
 		if (tarkista) {
 
-			if (numbersVO.isViking()) {
+			if (numbersVO.isGame("viking")) {
 				ohi = false;
 				checked = true;
 
@@ -379,7 +379,7 @@ public class Vekapu {
 			StoreFile sf = new StoreFile(dir, group
 					+ Constant.getBestFileExt());
 			String jokeri = "";
-			if (numbersVO.isJokeri())
+			if (numbersVO.isGame("jokeri"))
 				jokeri = " -" + parasJokeri;
 
 			sf.store(kierros + " - " + parasTulos + jokeri);
@@ -448,10 +448,10 @@ public class Vekapu {
 //		 TODO Porukka mukaan ??
 		String otsikko = "Kierros " + kierros;
 
-		if (numbersVO.isLotto())
+		if (numbersVO.isGame("lotto"))
 			otsikko += " Paras lotto " + parasTulos;
 
-		if (numbersVO.isJokeri())
+		if (numbersVO.isGame("jokeri"))
 			otsikko += " Paras" + parasJokeri;
 
 		logger.debug("Otsikko: " + otsikko);
@@ -465,10 +465,10 @@ public class Vekapu {
 
 		String otsikko = "Kierros " + kierros;
 
-		if (numbersVO.isLotto())
+		if (numbersVO.isGame("lotto"))
 			otsikko += " Paras lotto " + parasTulos;
 
-		if (numbersVO.isJokeri())
+		if (numbersVO.isGame("jokeri"))
 			otsikko += " Paras jokeri " + parasJokeri;
 
 		logger.debug("Otsikko: " + otsikko);
