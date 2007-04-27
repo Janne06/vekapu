@@ -30,10 +30,8 @@ package net.vekapu.game;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import net.vekapu.OwnNumbersVO;
@@ -108,8 +106,8 @@ public class OwnNumbers {
 			for (int i = 0; i < max; i++) {
 				to.add(properties.getProperty("to_" + (i + 1)));
 			}
-		}		
-		numbersVO.setTo(to);		
+		}
+		numbersVO.setTo(to);
 	}
 
 	/**
@@ -137,7 +135,7 @@ public class OwnNumbers {
 
 		numbersVO.setToSms(toSms);
 	}
-
+	
 	/**
 	 * 
 	 * @return
@@ -152,12 +150,12 @@ public class OwnNumbers {
 		return asti;
 	}
 
-	private Set getGame() {
+	private List getGame() {
 
+		List <String> games = new ArrayList <String> ();
+		
 		String game = properties.getProperty("game");
 		StringTokenizer toke = new StringTokenizer(game, ",");
-
-		Set <String> games = new HashSet <String> ();
 		
 		while (toke.hasMoreTokens()) {
 			games.add(toke.nextToken().trim());
@@ -165,26 +163,20 @@ public class OwnNumbers {
 		
 		logger.info("Own numbers for game: " + game + " - games: " + games);
 
+		numbersVO.setGames(games);
+		
 		return games;
 	}
 
 	private boolean isJokeri() {
-		boolean jokeri = false;
 
-		if(getGame().contains("jokeri"))
-			jokeri = true;
-
-		return jokeri;
+		return numbersVO.isGame("jokeri");
 	}
 
 
 	private boolean isViking() {
-		boolean viking = false;
 
-		if(getGame().contains("viking"))
-			viking = true;
-
-		return viking;
+		return numbersVO.isGame("viking");
 	}
 
 	/**
@@ -193,12 +185,9 @@ public class OwnNumbers {
 	private boolean isLotto() {
 		// TODO täähän pitää muuttaa erilaisex
 		// TODO Lisä kuponkeihin arvo 'game='
-		boolean lotto = false;
 
-		if(getGame().contains("lotto"))
-			lotto = true;
+		return numbersVO.isGame("lotto");
 
-		return lotto;
 	} 
 
 	/**
@@ -209,38 +198,25 @@ public class OwnNumbers {
 	public OwnNumbersVO getOwnNumbers() throws VekapuException {	
 
 		// Fill common info
+		
 		getTo();
 		getToSMS();
 		
 		numbersVO.setUntil(getMihinAsti());
-			
-		// Fill Lotto
-		numbersVO.setLotto(isLotto());
-		if (isLotto()) {
-			logger.info("Haetaan lotto-rivit & muut tiedot");			
-			numbersVO.addLottoRivi(getOwnNumbers("lotto"));
-			
-		}
 		
-		// Fill Jokeri
-		numbersVO.setJokeri(isJokeri());
-		if (isJokeri()) {
-			logger.info("Haetaan jokeri-rivit & muut tiedot");
-			numbersVO.addJokeriRivi(getOwnNumbers("jokeri"));
+		List games = getGame();
+		// TODO Nää erilliskutsut pitää saada luuppiin. Tulis vähän joustoa hommaan
+		for (int i = 0; i < games.size(); i++) {
+			String gam = (String) games.get(i);
+			logger.info("game "+i+": " + gam);
+			numbersVO.addOwnLines(gam, getOwnNumbers(gam));
 			
 		}
-		
-		// Fill Viking
-		numbersVO.setViking(isViking());
-		if (isViking()) {
-			logger.info("Haetaan viikkari-rivit & muut tiedot");
-			numbersVO.addVikingRivi(getOwnNumbers("viking"));
-			
-		}
-				
+
 		logger.debug(numbersVO.toString());
 		
 		return numbersVO;
+
 	}
 	
 	
