@@ -109,7 +109,8 @@ public class GameMaster {
 		
 		Checker checker = new Checker();
 		checker.setCorrectNumberVO(cLottoVO);		
-		numbersVO.addCheckedLotto( checker.tarkistaRivit(numbersVO.getOwnLotto()) );
+//		numbersVO.addCheckedLotto( checker.tarkistaRivit(numbersVO.getOwnLotto()) );
+		numbersVO.addCheckedGame2("lotto",checker.tarkistaRivit(numbersVO.getOwnLotto()));
 		numbersVO.setBestLotto(checker.getBestResult());
 				
 		resultVO.setLottobest(checker.getBestResult());
@@ -135,7 +136,7 @@ public class GameMaster {
 	
 		Checker checker = new Checker();
 		checker.setCorrectNumberVO(cJokeriVO);
-		numbersVO.addCheckedJokeri( checker.checkJokeri(numbersVO.getOwnJokeri()) );
+		numbersVO.addCheckedJokeri( checker.checkJokeri(numbersVO.getOwnLines("jokeri")) );
 //		numbersVO.setBestLotto(checker.getBestResult());
 				
 		resultVO.setJokeribest(checker.getBestResult());
