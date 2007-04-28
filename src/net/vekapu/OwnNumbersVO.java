@@ -69,21 +69,14 @@ public class OwnNumbersVO {
 	// tiedot jouheesti.
 	private Map own = Collections.synchronizedMap(new HashMap());
 	private Map correct = Collections.synchronizedMap(new HashMap());
+	private Map checkedGame2 = Collections.synchronizedMap(new HashMap());
 
 	
 	// Tää on jäykkä tapa toimia.
 	@Deprecated
-	private List ownLotto = new ArrayList();
-	@Deprecated
-	private List checkedLotto = new ArrayList();
-
-	@Deprecated
-	private List ownJokeri = new ArrayList();
+	private List __checkedLotto = new ArrayList();
 	@Deprecated
 	private List checkedJokeri = new ArrayList();
-
-	@Deprecated
-	private List ownViking = new ArrayList();
 	@Deprecated
 	private List checkedViking = new ArrayList();
 	
@@ -168,9 +161,20 @@ public class OwnNumbersVO {
 	public List getOwnLines(String game) {
 		
 		List list = (List) own.get(game);
+		logger.debug(list);
 		return list;
 	}
 		
+	public void addCheckedGame2(String game,List lines) {
+		checkedGame2.put(game, lines);
+	}
+	
+	public List getCheckedGame(String game) {
+		
+		List list = (List) checkedGame2.get(game);
+		return list;
+	}
+	
 	/**
 	 * @return the ownLotto
 	 */
@@ -179,17 +183,18 @@ public class OwnNumbersVO {
 		return getOwnLines("lotto");
 	}
 
-	public void addCheckedLotto(List rivi) {
+	public void __addCheckedLotto(List rivi) {
 //		logger.debug("##rivi : " + rivi);
-		checkedLotto.addAll(rivi);
-		addCheckegGame("lotto");
+//		checkedLotto.addAll(rivi);
+		addCheckedGame2("lotto",rivi);
 	}
 
-	public List getCheckedLotto() {
-		return checkedLotto;
+	public List __getCheckedLotto() {
+//		return checkedLotto;
+		return getCheckedGame("lotto");
 	}
 		
-	public List getOwnJokeri() {
+	public List __getOwnJokeri() {
 //		return ownJokeri;
 		return getOwnLines("jokeri");
 	}
@@ -198,6 +203,7 @@ public class OwnNumbersVO {
 //		logger.debug("##rivi : " + rivi);
 		checkedJokeri.addAll(rivi);
 		addCheckegGame("jokeri");
+		addCheckedGame2("jokeri",rivi);
 	}
 
 	public List getCheckedJokeri() {
@@ -208,13 +214,15 @@ public class OwnNumbersVO {
 	 * @return the ownLotto
 	 */
 	public List getOwnViking() {
-		return ownViking;
+//		return ownViking;
+		return getOwnLines("viking");
 	}
 
 	public void addCheckedViking(List rivi) {
 //		logger.debug("##rivi : " + rivi);
 		checkedViking.addAll(rivi);
 		addCheckegGame("viking");
+		addCheckedGame2("viking",rivi);
 	}
 
 	public List getCheckedViking() {
@@ -247,18 +255,18 @@ public class OwnNumbersVO {
 
 			ret += " isLottoChecked :" + isGameChecked("lotto") + NEW_LINE;
 
-			ret += "Rivit: " + getOwnLotto().size() + " kpl" + NEW_LINE;	
+			ret += "Rivit: " + getOwnLines("lotto").size() + " kpl" + NEW_LINE;	
 			if (isGameChecked("lotto")) ret += " Parastulos : " + getBestLotto() + NEW_LINE;
 			
 			ret += NEW_LINE;
 			
 			int i = 0;
-			for (Iterator iter = getOwnLotto().iterator(); iter.hasNext();) {
+			for (Iterator iter = getOwnLines("lotto").iterator(); iter.hasNext();) {
 				List element = (List) iter.next();
 				ret += "Rivi "+ (i +1) +":" +  element + NEW_LINE;
 				
 				if (isGameChecked("lotto")) {
-					ret += "Osumat:" +  getCheckedLotto().get(i) + NEW_LINE + NEW_LINE;
+					ret += "Osumat:" +  getCheckedGame("lotto").get(i) + NEW_LINE + NEW_LINE;
 				}
 				i++ ;
 			}					
@@ -270,12 +278,12 @@ public class OwnNumbersVO {
 			
 			ret += " isJokeriChecked :" + isGameChecked("jokeri") + NEW_LINE;
 			
-			ret += "Rivit: " + getOwnJokeri().size() + " kpl" + NEW_LINE;	
+			ret += "Rivit: " + getOwnLines("jokeri").size() + " kpl" + NEW_LINE;	
 			
 			ret += NEW_LINE;
 			
 			int i = 0;
-			for (Iterator iter = getOwnJokeri().iterator(); iter.hasNext();) {
+			for (Iterator iter = getOwnLines("jokeri").iterator(); iter.hasNext();) {
 				List element = (List) iter.next();
 				ret += "Rivi "+ (i +1) +":" +  element + NEW_LINE;
 				
@@ -314,6 +322,7 @@ public class OwnNumbersVO {
 				i++ ;
 			}					
 		}
+
 		return ret;		
 	}
 

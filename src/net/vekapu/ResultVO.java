@@ -267,7 +267,7 @@ public class ResultVO {
 		
 		int size = 0;
 		int i = 0;
-		for (Iterator iter = ownNumbersVO.getOwnLotto().iterator(); iter.hasNext();) {
+		for (Iterator iter = ownNumbersVO.getOwnLines("lotto").iterator(); iter.hasNext();) {
 			List element = (List) iter.next();
 			int lkm = element.size();
 			
@@ -285,10 +285,10 @@ public class ResultVO {
 			for (int j = 0; j < lkm; j++) {
 				// Tähän pitää laittaa tiedot osumista
 
-				List tulos = (List) ownNumbersVO.getCheckedLotto().get(i);
+				List tulos = (List) ownNumbersVO.getCheckedGame("lotto").get(i);
 				String apu = (String) tulos.get(j);
 				
-				List numbers =  (List) ownNumbersVO.getOwnLotto().get(i);
+				List numbers =  (List) ownNumbersVO.getOwnLines("lotto").get(i);
 				String number = (String) numbers.get(j);
 				
 				ret.append((Integer.valueOf(number).intValue() < 10 ? " ":""));					
@@ -365,7 +365,7 @@ public class ResultVO {
 		
 		// Tarkistetut rivit
 		int i = 0;
-		for (Iterator iter = ownNumbersVO.getOwnJokeri().iterator(); iter.hasNext();) {
+		for (Iterator iter = ownNumbersVO.getOwnLines("jokeri").iterator(); iter.hasNext();) {
 			List element = (List) iter.next();
 
 			int lkm = element.size();
@@ -381,7 +381,7 @@ public class ResultVO {
 				List tulos = (List) ownNumbersVO.getCheckedJokeri().get(i);
 				String apu = (String) tulos.get(j);
 				
-				List numbers =  (List) ownNumbersVO.getOwnJokeri().get(i);
+				List numbers =  (List) ownNumbersVO.getOwnLines("jokeri").get(i);
 				String number = (String) numbers.get(j);
 				
 				ret.append((Integer.valueOf(number).intValue() < 10 ? " ":""));					
