@@ -110,7 +110,7 @@ public class GameMaster {
 		Checker checker = new Checker();
 		checker.setCorrectNumberVO(cLottoVO);		
 //		numbersVO.addCheckedLotto( checker.tarkistaRivit(numbersVO.getOwnLotto()) );
-		numbersVO.addCheckedGame2("lotto",checker.tarkistaRivit(numbersVO.getOwnLotto()));
+		numbersVO.addCheckedGame2("lotto",checker.tarkistaRivit(numbersVO.getOwnLines("lotto")));
 		numbersVO.setBestLotto(checker.getBestResult());
 				
 		resultVO.setLottobest(checker.getBestResult());
@@ -136,7 +136,7 @@ public class GameMaster {
 	
 		Checker checker = new Checker();
 		checker.setCorrectNumberVO(cJokeriVO);
-		numbersVO.addCheckedJokeri( checker.checkJokeri(numbersVO.getOwnLines("jokeri")) );
+		numbersVO.addCheckedGame2("jokeri", checker.checkJokeri(numbersVO.getOwnLines("jokeri")) );
 //		numbersVO.setBestLotto(checker.getBestResult());
 				
 		resultVO.setJokeribest(checker.getBestResult());
@@ -163,7 +163,7 @@ public class GameMaster {
 		
 		Checker checker = new Checker();
 		checker.setCorrectNumberVO(cVikingVO);		
-		numbersVO.addCheckedViking( checker.tarkistaRivit(numbersVO.getOwnViking()) );
+		numbersVO.addCheckedGame2("viking", checker.tarkistaRivit(numbersVO.getOwnLines("viking")) );
 		numbersVO.setBestLotto(checker.getBestResult());
 				
 		resultVO.setVikingbest(checker.getBestResult());

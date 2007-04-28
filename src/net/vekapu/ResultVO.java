@@ -9,7 +9,7 @@
 //
 // Purpose:  Transfer/Value object for Vekapu results.
 //
-// (c) Copyright J.Ilonen, 2006
+// (c) Copyright J.Ilonen, 2006-2007
 //
 // $Id$
 //
@@ -224,7 +224,7 @@ public class ResultVO {
 	 * @return
 	 */
 	public String printLotto() {
-		
+		// TODO muuta geneerisempään muotoon.
 		if (correctLottoVO == null) {
 			// Liinat kiini
 			return "";
@@ -378,7 +378,7 @@ public class ResultVO {
 				// Tähän pitää laittaa tiedot osumista
 				
 				
-				List tulos = (List) ownNumbersVO.getCheckedJokeri().get(i);
+				List tulos = (List) ownNumbersVO.getCheckedGame("jokeri").get(i);
 				String apu = (String) tulos.get(j);
 				
 				List numbers =  (List) ownNumbersVO.getOwnLines("jokeri").get(i);
@@ -457,7 +457,7 @@ public String printViking() {
 		
 		int size = 0;
 		int i = 0;
-		for (Iterator iter = ownNumbersVO.getOwnViking().iterator(); iter.hasNext();) {
+		for (Iterator iter = ownNumbersVO.getOwnLines("viking").iterator(); iter.hasNext();) {
 			List element = (List) iter.next();
 			int lkm = element.size();
 			
@@ -475,10 +475,10 @@ public String printViking() {
 			for (int j = 0; j < lkm; j++) {
 				// Tähän pitää laittaa tiedot osumista
 
-				List tulos = (List) ownNumbersVO.getCheckedViking().get(i);
+				List tulos = (List) ownNumbersVO.getCheckedGame("viking").get(i);
 				String apu = (String) tulos.get(j);
 				
-				List numbers =  (List) ownNumbersVO.getOwnViking().get(i);
+				List numbers =  (List) ownNumbersVO.getOwnLines("viking").get(i);
 				String number = (String) numbers.get(j);
 				
 				ret.append((Integer.valueOf(number).intValue() < 10 ? " ":""));					
