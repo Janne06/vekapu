@@ -14,7 +14,7 @@
 //
 //  (c) Copyright J.Ilonen, 2007
 //
-// $Id: VekapuData.java 423 2007-02-06 19:40:09Z janne $
+// $Id$
 //
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -42,13 +42,10 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.StringReader;
 
-import org.apache.log4j.Logger;
 import org.bs.mdi.Printer;
 import org.bs.mdi.RootData;
 
 public class VekapuData extends RootData {
-
-	private static Logger logger = Logger.getLogger(VekapuData.class);
 	
 	StringBuffer text = new StringBuffer();
 

@@ -14,7 +14,7 @@
 //
 //  (c) Copyright J.Ilonen, 2007
 //
-// $Id: VekapuAction.java 423 2007-02-06 19:40:09Z janne $
+// $Id$
 //
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -32,7 +32,6 @@
 
 package net.vekapu.gui3;
 
-import org.apache.log4j.Logger;
 import org.bs.mdi.Action;
 import org.bs.mdi.ActionObservable;
 import org.bs.mdi.Application;
@@ -40,8 +39,6 @@ import org.bs.mdi.Data;
 import org.bs.mdi.View;
 
 public class VekapuAction extends Action {
-
-	private static Logger logger = Logger.getLogger(VekapuAction.class);
 	
 	// It's quite ugly to distinguish between the different types
 	// of actions by using these constants. In a bigger project

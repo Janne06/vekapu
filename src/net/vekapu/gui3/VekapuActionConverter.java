@@ -92,13 +92,13 @@ public class VekapuActionConverter implements ActionConverter {
 	class EditorTransferable implements Transferable {
 		String text;
 
-		ArrayList flavors;
+		ArrayList<DataFlavor> flavors;
 
 		public EditorTransferable(VekapuAction action) {
 			logger.debug("VekapuAction " + action);
 			
 			text = action.getOldText();
-			flavors = new ArrayList();
+			flavors = new ArrayList<DataFlavor> ();
 			flavors.add(DataFlavor.stringFlavor);
 			try {
 				flavors.add(new DataFlavor("text/plain; charset=ISO-8859-1"));
