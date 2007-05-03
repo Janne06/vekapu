@@ -27,7 +27,6 @@
 
 package net.vekapu.game;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,7 +57,7 @@ public class GameMaster {
 	private SettingsVO settingsVO = null;
 	
 	// Correct numbers of the game	(kind of cache)
-	private Map correct = Collections.synchronizedMap(new HashMap());
+	private Map<String, CorrectNumberVO> correct = new HashMap<String, CorrectNumberVO> ();
 
 	
 	public GameMaster(SettingsVO settingsVO) {
@@ -111,8 +110,9 @@ public class GameMaster {
 		checker.setCorrectNumberVO(cLottoVO);		
 //		numbersVO.addCheckedLotto( checker.tarkistaRivit(numbersVO.getOwnLotto()) );
 		numbersVO.addCheckedGame2("lotto",checker.tarkistaRivit(numbersVO.getOwnLines("lotto")));
-		numbersVO.setBestLotto(checker.getBestResult());
-				
+//		numbersVO.setBestLotto(checker.getBestResult());
+		numbersVO.setGameBest("lotto", checker.getBestResult());
+		
 		resultVO.setLottobest(checker.getBestResult());
 		resultVO.setCorrectLottoVO(cLottoVO );
 		
@@ -164,7 +164,7 @@ public class GameMaster {
 		Checker checker = new Checker();
 		checker.setCorrectNumberVO(cVikingVO);		
 		numbersVO.addCheckedGame2("viking", checker.tarkistaRivit(numbersVO.getOwnLines("viking")) );
-		numbersVO.setBestLotto(checker.getBestResult());
+		numbersVO.setGameBest("viking",checker.getBestResult());
 				
 		resultVO.setVikingbest(checker.getBestResult());
 		resultVO.setCorrectVikingLottoVO( cVikingVO );
