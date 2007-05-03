@@ -14,7 +14,7 @@
 //
 //  (c) Copyright J.Ilonen, 2007
 //
-// $Id: VekapuView.java 423 2007-02-06 19:40:09Z janne $
+// $Id$
 //
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -45,13 +45,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-import org.apache.log4j.Logger;
 import org.bs.mdi.Application;
 import org.bs.mdi.swing.SwingRootView;
 
 public class VekapuView extends SwingRootView {
-
-	private static Logger logger = Logger.getLogger(VekapuView.class);
 	
 	/**
 	 * 
@@ -187,7 +184,8 @@ public class VekapuView extends SwingRootView {
 			if (!listenerActive)
 				return;
 			try {
-				VekapuData data = (VekapuData) getDocument().getData();
+				// TODO
+//				VekapuData data = (VekapuData) getDocument().getData();
 				String newText = e.getDocument().getText(e.getOffset(),
 						e.getLength());
 				String oldText = textArea.getSelectedText();
