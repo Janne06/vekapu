@@ -161,8 +161,6 @@ public class CorrectNumber {
 
 	public CorrectNumberVO getCorrectNumbers(String game) throws VekapuException {
 
-		CorrectNumberVO l_correctNumberVO = new CorrectNumberVO(game);
-		
 		String name = game;
 		String name_txt = "";
 		String dir = game + Constant.getFileSeparator();
@@ -217,8 +215,9 @@ public class CorrectNumber {
 			throw new VekapuException(messu);
 		}
 		
+		
 		// Asetetaan kierroksen numero mukaan rivien tietoihin.
-		l_correctNumberVO.setGameweek(getSettingsVO().getWeek());
+		CorrectNumberVO l_correctNumberVO = new CorrectNumberVO(game,getSettingsVO().getWeek());
 		
 		// Jos etsittävä merkkijono vaihtelee
 		String round = gameProps.getProperty("round");
@@ -265,11 +264,9 @@ public class CorrectNumber {
 		logger.debug("lisat: " + lisat);
 		lisat = lisat.replace(':', ' ').trim();
 		logger.debug("lisat: " + lisat);
-						
+
 		l_correctNumberVO.setDate(pvm);
-		l_correctNumberVO.setGameweek(viikko);
-		
-		
+
 		String delimeter = ",";
 		if (oikeat.indexOf(delimeter) < 0) delimeter = " ";
 		
