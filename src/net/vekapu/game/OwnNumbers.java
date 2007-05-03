@@ -56,7 +56,7 @@ public class OwnNumbers {
 	public OwnNumbers(String aFileName,SettingsVO settingsVO) throws VekapuException {
 		
 		fileName = Constant.getUserDir() +  Constant.getFileSeparator();
-		numbersVO = new OwnNumbersVO(aFileName);
+		
 
 		// MODE SERVER
 		if (settingsVO.isServer().booleanValue()) {
@@ -83,6 +83,8 @@ public class OwnNumbers {
 			logger.error(msg, e);
 			throw new VekapuException(msg, false, e);
 		}
+		
+		numbersVO = new OwnNumbersVO(aFileName,getGame());
 	}
 
 	/**
@@ -141,13 +143,13 @@ public class OwnNumbers {
 	 * @return
 	 *
 	 */
-	private String getMihinAsti() {
-		String asti = "";
+	private String getUntil() {
+		String until = "";
 		
-		asti = properties.getProperty("until").trim();
-		logger.debug("getMihinAsti(): " + asti);
+		until = properties.getProperty("until").trim();
+		logger.debug("getUntil(): " + until);
 	
-		return asti;
+		return until;
 	}
 
 	private List getGame() {
@@ -163,36 +165,12 @@ public class OwnNumbers {
 		
 		logger.info("Own numbers for game: " + game + " - games: " + games);
 
-		numbersVO.setGames(games);
-		
 		return games;
 	}
 
-	private boolean isJokeri() {
-
-		return numbersVO.isGame("jokeri");
-	}
-
-
-	private boolean isViking() {
-
-		return numbersVO.isGame("viking");
-	}
-
-	/**
-	 * @return
-	 */
-	private boolean isLotto() {
-		// TODO täähän pitää muuttaa erilaisex
-		// TODO Lisä kuponkeihin arvo 'game='
-
-		return numbersVO.isGame("lotto");
-
-	} 
-
 	/**
 	 * Get Own / group numbers & common info of the group
-	 * @return
+	 * @return OwnNumbersVO
 	 * @throws VekapuException 
 	 */
 	public OwnNumbersVO getOwnNumbers() throws VekapuException {	
@@ -202,33 +180,27 @@ public class OwnNumbers {
 		getTo();
 		getToSMS();
 		
-		numbersVO.setUntil(getMihinAsti());
+		numbersVO.setUntil(getUntil());
 		
 		List games = getGame();
-		// TODO Nää erilliskutsut pitää saada luuppiin. Tulis vähän joustoa hommaan
+
 		for (int i = 0; i < games.size(); i++) {
 			String gam = (String) games.get(i);
-			logger.info("game "+i+": " + gam);
-			numbersVO.addOwnLines(gam, getOwnNumbers(gam));
-			
+			logger.info("game '" + i + "': " + gam);
+			numbersVO.addOwnLines(gam, getOwnGameNumbers(gam));			
 		}
 
-		logger.debug(numbersVO.toString());
-		
+		logger.debug(numbersVO.toString());	
 		return numbersVO;
-
 	}
 	
 	
-	private List getOwnNumbers(String game) {
+	private List getOwnGameNumbers(String game) {
 		
 		// TODO Jokerin suunta pitäis vielä saada tähän mukaan.
 		
-		// Haetaan yleishakuna
-		// Lista mihin numerot ängetään.
-		
-		List rivit = new ArrayList();
-		List lista = null;
+		List <List> rivit = new ArrayList <List> ();
+		List <String> lista = null;
 		int lkm = Integer.parseInt(properties.getProperty(game));
 		
 		for (int i = 0; i < lkm; i++) {
@@ -236,7 +208,7 @@ public class OwnNumbers {
 			String rivi = properties.getProperty(game + "_" + (i + 1));
 			StringTokenizer toke = new StringTokenizer(rivi, ",");
 			
-			lista = new ArrayList ();
+			lista = new ArrayList <String> ();
 
 			int numero=0;
 			while (toke.hasMoreTokens()) {
@@ -244,7 +216,7 @@ public class OwnNumbers {
 				lista.add(String.valueOf(numero));
 				
 			}			
-			// Laitetaankin suoraa OwnNumbersVO:hon. (kaiki samaan)
+
 			rivit.add(lista);
 		}
 		return rivit;
