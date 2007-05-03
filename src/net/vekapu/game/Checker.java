@@ -97,8 +97,8 @@ public class Checker {
 		
 		logger.debug("Tarkistetaan osumat: " + omaRivi.size() + ":sta rivistä");
 		
-		List tarkastetutRivit = new ArrayList();
-		List rivinOsumat = null;
+		List<List> tarkastetutRivit = new ArrayList<List>();
+		List<String> rivinOsumat = null;
 		
 		int paras = 0;
 		int paraslisa = 0;
@@ -115,7 +115,7 @@ public class Checker {
 			boolean lbOsuma = false;
 			boolean lbLisa = false;
 
-			rivinOsumat = new ArrayList();
+			rivinOsumat = new ArrayList<String>();
 
 			// Oman rivin rastien lukumäärä
 			for (Iterator iterator = rivi.iterator(); iterator.hasNext();) {
@@ -185,15 +185,15 @@ public class Checker {
 	protected List checkJokeri(List omaRivi) {
 		logger.debug("Tarkistetaan osumat: " + omaRivi.size() + ":sta rivistä");
 		
-		List tarkastetutRivit = new ArrayList();
-		List rivinOsumat = null;
+		List<List> tarkastetutRivit = new ArrayList<List> ();
+		List<String> rivinOsumat = null;
 		int i = 0;		
 
 		for (Iterator iter = omaRivi.iterator(); iter.hasNext();) {
 			List rivi = (List) iter.next();
 			
 			logger.debug(rivi);
-			rivinOsumat = new ArrayList();
+			rivinOsumat = new ArrayList<String>();
 			i = 0;
 
 			// Oman rivin rastien lukumäärä
