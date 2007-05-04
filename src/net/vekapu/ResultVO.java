@@ -33,14 +33,16 @@
 
 package net.vekapu;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.log4j.Logger;
+import java.util.Map;
 
 import net.vekapu.game.Checker;
 import net.vekapu.util.Constant;
 import net.vekapu.util.DayHelper;
+
+import org.apache.log4j.Logger;
 
 /**
  * @author janne
@@ -50,18 +52,9 @@ public class ResultVO {
 
 	static Logger logger = Logger.getLogger(ResultVO.class);
 	
-	private String lotto = "";
-	private String lottobest = "";
-	private String jokeri = "";
-	private String jokeribest = "";
-	private String viking = "";
-	private String vikingbest = "";
-	
 	private OwnNumbersVO ownNumbersVO = null;
-	// Pelien oikeat numerot
-	private CorrectNumberVO correctLottoVO = null;
-	private CorrectNumberVO correctJokeriVO = null;
-	private CorrectNumberVO correctVikingLottoVO = null;
+	
+	private Map<String, CorrectNumberVO> correct = new HashMap<String, CorrectNumberVO>();
 	
 	private Boolean server = Boolean.FALSE;
 	private String NEW_LINE = Constant.getLineSeparator();
@@ -74,20 +67,11 @@ public class ResultVO {
 		this.server = abServer;
 	}
 	
-	/**
-	 * @param correctLottoVO the correctLottoVO to set
-	 */
-	public void setCorrectLottoVO(CorrectNumberVO correctLottoVO) {
-		this.correctLottoVO = correctLottoVO;
-	}
-
-	public void setCorrectJokeriVO(CorrectNumberVO correctJokeriVO) {
-		this.correctJokeriVO = correctJokeriVO;
+	
+	public void addCorrectNumber(String game,CorrectNumberVO correctNumberVO) {
+		correct.put(game, correctNumberVO);
 	}
 	
-	public void setCorrectVikingLottoVO(CorrectNumberVO correctVikingLottoVO) {
-		this.correctVikingLottoVO = correctVikingLottoVO;
-	}
 	/**
 	 * @return the ownNumbersVO
 	 */
@@ -110,89 +94,6 @@ public class ResultVO {
 		return ownNumbersVO.getGroup();
 	}
 
-	/**
-	 * @return Returns the jokeri.
-	 */
-	public String getJokeri() {
-		return jokeri;
-	}
-
-	/**
-	 * @return Returns the jokeribest.
-	 */
-	public String getJokeribest() {
-		return jokeribest;
-	}
-
-	/**
-	 * @return Returns the lotto.
-	 */
-	public String getLotto() {
-		return lotto;
-	}
-
-	/**
-	 * @return Returns the lottobest.
-	 */
-	public String getLottobest() {
-		return lottobest;
-	}
-
-	/**
-	 * @return Returns the viking.
-	 */
-	public String getViking() {
-		return viking;
-	}
-
-	/**
-	 * @return Returns the vikingbest.
-	 */
-	public String getVikingbest() {
-		return vikingbest;
-	}
-
-	/**
-	 * @param jokeri The jokeri to set.
-	 */
-	public void setJokeri(String jokeri) {
-		this.jokeri = jokeri;
-	}
-
-	/**
-	 * @param jokeribest The jokeribest to set.
-	 */
-	public void setJokeribest(String jokeribest) {
-		this.jokeribest = jokeribest;
-	}
-
-	/**
-	 * @param lotto The lotto to set.
-	 */
-	public void setLotto(String lotto) {
-		this.lotto = lotto;
-	}
-
-	/**
-	 * @param lottobest The lottobest to set.
-	 */
-	public void setLottobest(String lottobest) {
-		this.lottobest = lottobest;
-	}
-
-	/**
-	 * @param viking The viking to set.
-	 */
-	public void setViking(String viking) {
-		this.viking = viking;
-	}
-
-	/**
-	 * @param vikingbest The vikingbest to set.
-	 */
-	public void setVikingbest(String vikingbest) {
-		this.vikingbest = vikingbest;
-	}
 
 	public String getHeader() {
 		return getHeader(server);
@@ -218,14 +119,9 @@ public class ResultVO {
 		return tulos.toString();
 	}
 	
-	/**
-	 * String kierros
-	 * Printing checked lottery.
-	 * @return
-	 */
-	public String printLotto() {
-		// TODO muuta geneerisempään muotoon.
-		if (correctLottoVO == null) {
+	public String printGame(String game) {
+		// FIXME Tää metodi EI kuulu tähän luokkaan..
+		if (correct.get(game) == null) {
 			// Liinat kiini
 			return "";
 		}
@@ -247,19 +143,19 @@ public class ResultVO {
 
 		// Tarkistuksen tiedot
 		ret.append("Kierros: ");
-		ret.append(correctLottoVO.getGameweek());
+		ret.append(correct.get(game).getGameRound());
 		ret.append(" Arvontapäivä: " );
-		ret.append(correctLottoVO.getDate());
+		ret.append(correct.get(game).getDate());
 		ret.append(NEW_LINE);
 		ret.append(NEW_LINE);
 					
 		// Oikea rivi & lisänumerot
-		ret.append("Oikea lotto rivi: ");
-		ret.append(correctLottoVO.getCorrectNumbersString());
+		ret.append("Oikea " + game + " rivi: ");
+		ret.append(correct.get(game).getCorrectNumbersString());
 		
 		ret.append(NEW_LINE);
 		ret.append("Lisänumerot: ");
-		ret.append(correctLottoVO.getExtraNumbersString());
+		ret.append(correct.get(game).getExtraNumbersString());
 		ret.append(NEW_LINE);
 		
 		// Tarkistetut rivit
@@ -267,7 +163,7 @@ public class ResultVO {
 		
 		int size = 0;
 		int i = 0;
-		for (Iterator iter = ownNumbersVO.getOwnLines("lotto").iterator(); iter.hasNext();) {
+		for (Iterator iter = ownNumbersVO.getOwnLines(game).iterator(); iter.hasNext();) {
 			List element = (List) iter.next();
 			int lkm = element.size();
 			
@@ -278,17 +174,21 @@ public class ResultVO {
 				size = lkm;
 			}
 			
+			// Lotto
 			int hit = 0;
 			int extra = 0;
+			// Jokeri
+			int hitA = 0;
+			int hitB = 0;
 			ret.append("Rivi " + (i < 9 ? " " : "") + (i + 1) + ". | ");
 							
 			for (int j = 0; j < lkm; j++) {
 				// Tähän pitää laittaa tiedot osumista
 
-				List tulos = (List) ownNumbersVO.getCheckedGame("lotto").get(i);
+				List tulos = (List) ownNumbersVO.getCheckedGame(game).get(i);
 				String apu = (String) tulos.get(j);
 				
-				List numbers =  (List) ownNumbersVO.getOwnLines("lotto").get(i);
+				List numbers =  (List) ownNumbersVO.getOwnLines(game).get(i);
 				String number = (String) numbers.get(j);
 				
 				ret.append((Integer.valueOf(number).intValue() < 10 ? " ":""));					
@@ -312,23 +212,40 @@ public class ResultVO {
 					ret.append(number);
 					ret.append(" ");
 				}
-				ret.append((j < lkm - 1) ? ", " : " | Osumia " + hit + " + " + extra);
+				// FIXME Pelityyppin huomiointi järkeväx
+				if (game.equalsIgnoreCase("jokeri")) {
+					
+					hitA = Checker.countJokeriA(tulos);
+					hitB = Checker.countJokeriB(tulos);
+					ret.append((j < lkm - 1) ? ", " : " | Osumia " + hitA + " + " + hitB);
+					
+				} else {
+					ret.append((j < lkm - 1) ? ", " : " | Osumia " + hit + " + " + extra);
+				}
 				
 			}
-			if (hit > 3) {
-				ret.append(NEW_LINE + "  <==== VOITTO ====>");
+			
+			// FIXME Voittoilmoitukset pitäis saada määriteltyjen filujen kautta.
+			if (game.equalsIgnoreCase("jokeri")) {
+				if (hitA > 1 || hitB > 1) {
+					ret.append("  <==== VOITTO ====>");
+				}
+			} else {
+				if (hit > 3) {
+					ret.append(NEW_LINE + "  <==== VOITTO ====>");
+				}
 			}
 			
 			ret.append( NEW_LINE);
 			i++ ;
 		}
-		
 		return ret.toString();
 	}
 	
-	public String printJokeri(boolean header) {
+	// FIXME Tän voi kohta  poistaa turhana.
+	public String __printJokeri(boolean header) {
 		
-		if (correctJokeriVO == null) {
+		if (correct.get("jokeri") == null) {
 			// Ei tehdä mitään
 			return "";
 		}
@@ -360,7 +277,7 @@ public class ResultVO {
 			
 		// Oikea rivi & lisänumerot
 		ret.append("Oikea Jokeri rivi: ");
-		ret.append(correctJokeriVO.getCorrectNumbersString());			
+		ret.append(correct.get("jokeri").getCorrectNumbersString());			
 		ret.append(NEW_LINE + NEW_LINE);
 		
 		// Tarkistetut rivit
@@ -413,112 +330,12 @@ public class ResultVO {
 		return ret.toString();
 	}
 	
-public String printViking() {
-		
-		if (correctVikingLottoVO == null) {
-			// Liinat kiini
-			return "";
-		}
-		StringBuffer ret = new StringBuffer();
-
-		ret.append(NEW_LINE);
-		
-		// Lottoporuken tiedot
-		ret.append("Vikinglottoporukka: ");
-		ret.append(ownNumbersVO.getGroup());
-		ret.append(" ");
-		ret.append("Voimassa: ");
-		ret.append(ownNumbersVO.getUntil());
-		ret.append(NEW_LINE);
-		ret.append("Tarkastettu: ");
-		ret.append(DayHelper.now());
-		ret.append(NEW_LINE);
-		ret.append(NEW_LINE);
-
-		// Tarkistuksen tiedot
-		ret.append("Kierros: ");
-		ret.append(correctVikingLottoVO.getGameweek());
-		ret.append(" Arvontapäivä: " );
-		ret.append(correctVikingLottoVO.getDate());
-		ret.append(NEW_LINE);
-		ret.append(NEW_LINE);
-					
-		// Oikea rivi & lisänumerot
-		ret.append("Oikea Vikinglotto rivi: ");
-		ret.append(correctVikingLottoVO.getCorrectNumbersString());
-		
-		ret.append(NEW_LINE);
-		ret.append("Lisänumerot: ");
-		ret.append(correctVikingLottoVO.getExtraNumbersString());
-		ret.append(NEW_LINE);
-		
-		// Tarkistetut rivit
-		//TODO tarkista loopissa.
-		
-		int size = 0;
-		int i = 0;
-		for (Iterator iter = ownNumbersVO.getOwnLines("viking").iterator(); iter.hasNext();) {
-			List element = (List) iter.next();
-			int lkm = element.size();
-			
-			if (size != lkm) {
-				ret.append(NEW_LINE);
-				ret.append("Tarkistetaan " + lkm + " rastin rivit.");
-				ret.append(NEW_LINE);
-				size = lkm;
-			}
-			
-			int hit = 0;
-			int extra = 0;
-			ret.append("Rivi " + (i < 9 ? " " : "") + (i + 1) + ". | ");
-							
-			for (int j = 0; j < lkm; j++) {
-				// Tähän pitää laittaa tiedot osumista
-
-				List tulos = (List) ownNumbersVO.getCheckedGame("viking").get(i);
-				String apu = (String) tulos.get(j);
-				
-				List numbers =  (List) ownNumbersVO.getOwnLines("viking").get(i);
-				String number = (String) numbers.get(j);
-				
-				ret.append((Integer.valueOf(number).intValue() < 10 ? " ":""));					
-				
-				if (apu.equals(Constant.getHit())) {
-					
-					ret.append(Constant.getHitOpen());
-					ret.append(number);
-					ret.append(Constant.getHitClose());
-					hit ++;
-				}
-				else if (apu.equals(Constant.getExtra())) {
-					
-					ret.append(Constant.getExtraOpen());
-					ret.append(number);
-					ret.append(Constant.getExtraClose());
-					extra ++;
-				}
-				else {
-					ret.append(" ");
-					ret.append(number);
-					ret.append(" ");
-				}
-				ret.append((j < lkm - 1) ? ", " : " | Osumia " + hit + " + " + extra);
-				
-			}
-			if (hit > 2) {
-				ret.append(NEW_LINE + "  <==== VOITTO ====>");
-			}
-			
-			ret.append( NEW_LINE);
-			i++ ;
-		}
-		
-		return ret.toString();
-	}
 	@Override
 	public String toString() {
-
-		String ret = NEW_LINE + getHeader() + printLotto() + printJokeri(false) + printViking();
+		
+		String ret = NEW_LINE + getHeader();
+		ret += printGame("lotto") +printGame("jokeri") + printGame("viking");		
+		
 		return ret;
 	}
 }
