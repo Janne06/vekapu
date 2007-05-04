@@ -86,104 +86,28 @@ public class GameMaster {
 	 * 
 	 * @throws VekapuException
 	 */
-	public void tarkista(String game) throws VekapuException {
+	public ResultVO checkGame(String game, ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
 		getGameCorrectNumbers(game);
 		
-	}
-	
+		CorrectNumberVO correctNumVO = (CorrectNumberVO) correct.get(game);
 		
-	/**
-	 * 
-	 * @param resultVO
-	 * @return
-	 * @throws VekapuException
-	 */
-	public ResultVO checkLotto(ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
-				
-		getGameCorrectNumbers("lotto");
-		
-		CorrectNumberVO cLottoVO = (CorrectNumberVO) correct.get("lotto");
-		
-		logger.debug(cLottoVO);
+		logger.debug(correctNumVO);
 		
 		Checker checker = new Checker();
-		checker.setCorrectNumberVO(cLottoVO);		
-//		numbersVO.addCheckedLotto( checker.tarkistaRivit(numbersVO.getOwnLotto()) );
-		numbersVO.addCheckedGame2("lotto",checker.tarkistaRivit(numbersVO.getOwnLines("lotto")));
-//		numbersVO.setBestLotto(checker.getBestResult());
-		numbersVO.setGameBest("lotto", checker.getBestResult());
+		checker.setCorrectNumberVO(correctNumVO);
 		
-		resultVO.setLottobest(checker.getBestResult());
-		resultVO.setCorrectLottoVO(cLottoVO );
-		
-		return resultVO;
-		
-	}
-	
-	/**
-	 * 
-	 * @param resultVO
-	 * @return
-	 * @throws VekapuException
-	 */
-	public ResultVO checkJokeri(ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
-		
-		getGameCorrectNumbers("jokeri");
-		
-		CorrectNumberVO cJokeriVO = (CorrectNumberVO) correct.get("jokeri");
-		
-		logger.debug(cJokeriVO);
-	
-		Checker checker = new Checker();
-		checker.setCorrectNumberVO(cJokeriVO);
-		numbersVO.addCheckedGame2("jokeri", checker.checkJokeri(numbersVO.getOwnLines("jokeri")) );
-//		numbersVO.setBestLotto(checker.getBestResult());
-				
-		resultVO.setJokeribest(checker.getBestResult());
-		resultVO.setCorrectJokeriVO( cJokeriVO );
-				
-		return resultVO;
-		
-	}
-	
-	/**
-	 * 
-	 * @param resultVO
-	 * @return
-	 * @throws VekapuException
-	 */
-	public ResultVO checkVikingLotto(ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
-		
-//		alustaViking();
-		getGameCorrectNumbers("viking");
-		
-		CorrectNumberVO cVikingVO = (CorrectNumberVO) correct.get("viking");
-		logger.debug(cVikingVO);
-		logger.debug(numbersVO);
-		
-		Checker checker = new Checker();
-		checker.setCorrectNumberVO(cVikingVO);		
-		numbersVO.addCheckedGame2("viking", checker.tarkistaRivit(numbersVO.getOwnLines("viking")) );
-		numbersVO.setGameBest("viking",checker.getBestResult());
-				
-		resultVO.setVikingbest(checker.getBestResult());
-		resultVO.setCorrectVikingLottoVO( cVikingVO );
-		
-		////////////////////////////////
-		
-///		CheckViking vlotto = new CheckViking(cVikingVO);
-//		CheckViking vlotto = new CheckViking(cviking);
-		
-//		vlotto.tarkista(numbersVO);
-		
-//		resultVO.setVikingbest(vlotto.getParasTulos());
-//		resultVO.setCorrectVikingLottoVO(cVikingVO );
-		
+		// FIXME Pelityyppi kuntoon
+		if (game.equalsIgnoreCase("jokeri")) {
+			numbersVO.addCheckedGame2(game, checker.checkJokeri(numbersVO.getOwnLines(game)) );
+		} else {
+			numbersVO.addCheckedGame2(game,checker.tarkistaRivit(numbersVO.getOwnLines(game)));
+		}
+		numbersVO.setGameBest(game, checker.getBestResult());
+		resultVO.addCorrectNumber(game, correctNumVO);
 		
 		return resultVO;
-		
 	}
-	
+
 	private void getGameCorrectNumbers(String game) throws VekapuException {
 		CorrectNumberVO correctVO = null;
 		
@@ -198,13 +122,13 @@ public class GameMaster {
 					
 		logger.info( correct.toString() );
 	}
-	
+
 
 	private void test() {
 		logger.info("CorrectNumber test Start");
 
 		try {
-			tarkista("lotto");
+//			tarkista("lotto");
 //			getOikeaRiviLotto();
 //			getLisaNumerot();
 //			getLottoWeek();
