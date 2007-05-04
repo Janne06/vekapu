@@ -3,8 +3,10 @@
 
 ==Kehitys versio==
 
-*Parannuksia*
+*Kehitys version 2.0+ parannuksia*
+Päivitetty 4.5.07
 
+ * Sisäinen Java otetutus geneerisempään muotoon jotta uusien pelien lisääminen onnistuu parametrisoinnilla.
  * Omat rivit pitää nyt nimetä tyyliin `pelinnimi_n` misä `n` on juokseva numero. Esim. `lotto_1 = 1,2,3,4,5,6,7`
  * Tiedot tarkistettavista peleistä `./game` hakemistoon omiin pelikohtaisiin `.properties` -tiedostoihin. Jokohan nyt sain tästä parametriohjatun tarkistuksen ?
 
