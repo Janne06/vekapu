@@ -58,11 +58,6 @@ public class Vekapu {
 	/**
 	 * 
 	 */
-	private GameMaster gameMaster = null;
-
-	/**
-	 * 
-	 */
 	private static SettingsVO settingsVO = null;
 
 	/**
@@ -164,7 +159,6 @@ public class Vekapu {
 		if (test)
 			settingsVO.setTest(Boolean.TRUE);
 
-		gameMaster = new GameMaster(settingsVO);
 
 		if (settingsVO.getGroupInfo().equals("")) {
 			logger.debug(settingsVO.toString());
@@ -175,7 +169,7 @@ public class Vekapu {
 				kierros = dayhelper.getWeek();
 			}
 
-			tarkista(kierros);
+			checkAll(kierros);
 		} else {
 
 			// Mikäli infotaan porukkaa niin mitään ei tarkisteta.
@@ -189,11 +183,11 @@ public class Vekapu {
 	}
 
 	/**
-	 * Suoritetaan rivien tarkistus.
+	 * Checkin every group lines.
 	 * 
 	 * @throws VekapuException
 	 */
-	public void tarkista(String kierros) throws VekapuException {
+	public void checkAll(String kierros) throws VekapuException {
 
 		tulos = "";
 
@@ -207,10 +201,7 @@ public class Vekapu {
 
 			checkGroup(group, kierros);
 			
-			// Katotaan kuinka tarkistus menis tällätavalla
-			logger.debug(resultVO.getHeader() + resultVO.printLotto()
-					+ resultVO.printJokeri(true) + resultVO.printViking());
-
+			logger.debug(resultVO.toString());		
 			tulos += resultVO.toString();
 		}
 
@@ -253,9 +244,8 @@ public class Vekapu {
 			settingsVO = pr.getSettingsVO();	
 		}
 
-		if (gameMaster == null) {
-			gameMaster = new GameMaster(settingsVO);
-		}	
+		GameMaster gameMaster = new GameMaster(settingsVO);
+
 		if (dayhelper == null) {
 			dayhelper = new DayHelper();
 		}	
@@ -321,21 +311,19 @@ public class Vekapu {
 					logger.debug("resultVO: " + resultVO);
 					logger.debug("numbersVO: " + numbersVO);
 					
-					resultVO = gameMaster.checkLotto(resultVO, numbersVO);
+					resultVO = gameMaster.checkGame("lotto",resultVO, numbersVO);
 					kierros = settingsVO.getWeek();
 					logger.debug("kierros: " + kierros);
-					parasTulos = resultVO.getLottobest();
-
-					logger.debug(resultVO.getLotto());
-					logger.debug("LottoBest: " + resultVO.getLottobest());
-
+					
+					parasTulos = numbersVO.getGameBest("lotto");
+					
 				}
 			}
 			// Jokerin tarkistua
 			if (numbersVO.isGame("jokeri")) {
-				resultVO = gameMaster.checkJokeri(resultVO, numbersVO);
+				resultVO = gameMaster.checkGame("jokeri",resultVO, numbersVO);
 				parasJokeri = " Jokeri '"
-						+ String.valueOf(resultVO.getJokeribest())
+						+ String.valueOf(numbersVO.getGameBest("jokeri"))
 						+ "' kpl";
 
 				lkmJokeri++;
@@ -356,8 +344,8 @@ public class Vekapu {
 				ohi = false;
 				checked = true;
 
-				resultVO = gameMaster.checkVikingLotto(resultVO, numbersVO);
-				parasTulos = resultVO.getVikingbest();
+				resultVO = gameMaster.checkGame("viking",resultVO, numbersVO);
+				parasTulos = numbersVO.getGameBest("viking");
 
 				lkmviking++;
 			}
