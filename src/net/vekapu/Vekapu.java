@@ -201,8 +201,9 @@ public class Vekapu {
 
 			checkGroup(group, kierros);
 			
-			logger.debug(resultVO.toString());		
-			tulos += resultVO.toString();
+			ResultFormater formater = new ResultFormater(resultVO,settingsVO.isServer().booleanValue());
+			logger.debug(formater.toString());		
+			tulos += formater.toString();
 		}
 
 		if (ohi) {
@@ -258,13 +259,11 @@ public class Vekapu {
 		// TODO Meniskähän koko tää luuppi GameMasteriin ??
 		// Jos ei kokonaan niin ainakin eri pelien tarkastuksien kutsut
 
-//		String otsikko = "";
-
 		logger.info("Tarkistettava porukka: '" + group + "' & kierros: '" + kierros + "'.");
 
 		OwnNumbersVO numbersVO = new OwnNumbers(group, settingsVO).getOwnNumbers();
-
-		resultVO = new ResultVO(numbersVO, settingsVO.isServer());
+		
+		resultVO = new ResultVO(numbersVO);
 		checked = false;
 
 		// Mikäli manual == true niin tarkistetaan kaikki
@@ -374,9 +373,7 @@ public class Vekapu {
 
 			// Lähetetään lopuksi loppumisilmoitus mikäli aihetta.
 			// TODO Onx järkee näin ??
-			// FIXME Nyt tutkitaan vain Loton loppumisajankohta. Tosin
-			// VO:ssa katotaan
-			// viikkari jos lotto on tyhjä.
+
 			if (dayhelper.isToday(numbersVO.getUntil())
 					|| settingsVO.isTest().booleanValue()) {
 				Messenger.sendEndMail("Lotto", group, numbersVO.getTo(),
@@ -405,8 +402,10 @@ public class Vekapu {
 			   + Constant.getResultFileExt();
 			logger.debug("resultFile: " + resultFile);
 			
+			ResultFormater formater = new ResultFormater(resultVO,settingsVO.isServer().booleanValue());
 			StoreFile sf2 = new StoreFile(dir2, group + "-" + weeknbr
-					+ Constant.getResultFileExt(), resultVO.toString());
+					+ Constant.getResultFileExt(), formater.toString());
+			
 			logger.debug(sf2.toString());
 
 			
@@ -444,8 +443,9 @@ public class Vekapu {
 
 		logger.debug("Otsikko: " + otsikko);
 
+		ResultFormater formater = new ResultFormater(resultVO,settingsVO.isServer().booleanValue());
 		Messenger.sendEMail(otsikko, numbersVO.getGroup(), numbersVO.getTo(),
-				resultVO.toString(), settingsVO);
+				formater.toString(), settingsVO);
 		
 	}
 	
