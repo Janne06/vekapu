@@ -31,10 +31,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
 import net.vekapu.VekapuException;
-import net.vekapu.game.CorrectNumber;
+
+import org.apache.log4j.Logger;
 
 /**
  * Reading all props files.
@@ -82,8 +81,8 @@ public class PropsReader {
 			throw new VekapuException("File: '" + name, e);
 		}
 		
-		logger.info(name);
-		logger.info(props);
+		logger.debug(name);
+		logger.debug(props);
 		
 		return props;
 	}
