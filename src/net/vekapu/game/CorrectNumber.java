@@ -32,8 +32,6 @@
  */
 package net.vekapu.game;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
@@ -42,6 +40,7 @@ import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
 import net.vekapu.util.Constant;
 import net.vekapu.util.DayHelper;
+import net.vekapu.util.PropsReader;
 import net.vekapu.util.SettingsReader;
 import net.vekapu.util.StoreFile;
 import net.vekapu.web.Html2txt;
@@ -98,13 +97,20 @@ public class CorrectNumber {
 		try {
 			SettingsReader pr = new SettingsReader();
 			SettingsVO settingsVO = pr.getSettingsVO();
-
-			// lotto, jokeri, viking
-			String game = "jokeri";
+			
+			String allgames = Constant.getGamePropsDir()+ "games.properties";
+			Properties games = PropsReader.read(allgames);
+			
+			int max = Integer.parseInt(games.getProperty("count"));
+			
+			for (int i = 0; i < max; i++) {
+				String game = games.getProperty("game_" + (i + 1));
+				
+				CorrectNumber cn = new CorrectNumber(settingsVO,game);
+				cn.getCorrectNumbers(game);	
+			}
 			
 			
-			CorrectNumber cn = new CorrectNumber(settingsVO,game);
-			cn.getCorrectNumbers(game);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -166,16 +172,7 @@ public class CorrectNumber {
 		String dir = game + Constant.getFileSeparator();
 
 		String gameSettings = Constant.getGamePropsDir()+ game + ".properties";
-		
-		try {
-			gameProps.load(new FileInputStream(gameSettings));
-		} catch (IOException e) {
-			logger.error("IOException", e);
-			throw new VekapuException(e);
-		}
-		
-		logger.info(gameSettings);
-		logger.info(gameProps);
+		gameProps = PropsReader.read(gameSettings);
 		
 		// Tarkistettava kierrros 
 		logger.debug("getSettingsVO().getCorrect() : " + getSettingsVO().getCorrect());
@@ -324,8 +321,6 @@ public class CorrectNumber {
 		String fullname = Constant.getWwwDir() + dir + name;
 		String userdir = System.getProperty("user.dir");
 		
-		logger.debug("fullname: " + fullname);
-		logger.debug("Here we are: " + userdir);
 		logger.info("Real fullname: " +  userdir + fullname);
 
 		// Poistetaan vanha versio jos tarpeen
@@ -343,7 +338,7 @@ public class CorrectNumber {
 		// TODO jos tarkistettavaksi on annetu joku mu kuin 'auto' niin ei haeta
 		// netistä
 		// ainakaan tekstiTV:n sivuilta. Joskus vois ehkä hakee kopion vekapun
-		// omilta sivuilta !!
+		// omilta sivuilta !! FIXME
 		// Vois olla aika hyvä.
 		if (!StoreFile.isFileExist(fullname)) {
 			logger.info("Haetaan oikea " + name + " rivi ja talleteaan se "

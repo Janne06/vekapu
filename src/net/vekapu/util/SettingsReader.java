@@ -7,7 +7,7 @@
 //
 // Purpose:  Reading settings from vekapu.properties-file to SettingsVO.
 //
-// (c) Copyright J.Ilonen, 2003-2006
+// (c) Copyright J.Ilonen, 2006-2007
 //
 // $Id$
 //
@@ -82,20 +82,10 @@ public class SettingsReader  {
 	 * @throws VekapuException 
 	 */
 	private void readProperties() throws VekapuException {
-		// Read properties file.
-		try {
-			properties.load(new FileInputStream(fileName));
-			
-			fillVO();
-			
-		} catch (IOException e) {
-			// Mikäli filettä ei ole niin se luodaan
-			logger.error("Here we are: " + System.getProperty("user.dir"));
-			System.out.println(System.getProperty("user.dir"));
-			logger.error("IOException - " + e, e);
-			e.printStackTrace();
-			throw new VekapuException(e);
-		}
+		
+		properties = PropsReader.read(fileName);
+		fillVO();
+
 	}
 
 	/*

@@ -27,8 +27,6 @@
 
 package net.vekapu.game;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -38,6 +36,7 @@ import net.vekapu.OwnNumbersVO;
 import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
 import net.vekapu.util.Constant;
+import net.vekapu.util.PropsReader;
 
 import org.apache.log4j.Logger;
 
@@ -71,18 +70,7 @@ public class OwnNumbers {
 		fileName += Constant.getCouponDir() + 
 			        aFileName + ".properties";
 
-		logger.debug("fileName : " + fileName);
-		
-		// Read properties file.
-		try {
-			properties.load(new FileInputStream(fileName));
-			logger.debug("File for own numbers & setting: " + fileName);
-		} catch (IOException e) {
-			// Mikäli filettä ei ole
-			String msg = "Tiedostoa '" + fileName + "' ei löydy";
-			logger.error(msg, e);
-			throw new VekapuException(msg, false, e);
-		}
+		properties = PropsReader.read(fileName);
 		
 		numbersVO = new OwnNumbersVO(aFileName,getGame());
 	}
@@ -134,7 +122,6 @@ public class OwnNumbers {
 				toSms.add(properties.getProperty("sms_" + (i + 1)));
 			}
 		}
-
 		numbersVO.setToSms(toSms);
 	}
 	
@@ -176,7 +163,6 @@ public class OwnNumbers {
 	public OwnNumbersVO getOwnNumbers() throws VekapuException {	
 
 		// Fill common info
-		
 		getTo();
 		getToSMS();
 		
@@ -195,6 +181,10 @@ public class OwnNumbers {
 	}
 	
 	
+	/**
+	 * @param game
+	 * @return
+	 */
 	private List getOwnGameNumbers(String game) {
 		
 		// TODO Jokerin suunta pitäis vielä saada tähän mukaan.
