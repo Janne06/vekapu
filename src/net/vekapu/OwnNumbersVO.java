@@ -88,6 +88,14 @@ public class OwnNumbersVO {
 	}
 	
 	/**
+	 * What games is in one chesked props file.
+	 * @return <String> List of the groups games
+	 */
+	public List getGames() {
+		return games;
+	}
+	
+	/**
 	 * @return
 	 */
 	public String getUntil() {
