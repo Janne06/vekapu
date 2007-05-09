@@ -35,6 +35,7 @@ package net.vekapu;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import net.vekapu.util.Constant;
 
@@ -51,6 +52,7 @@ public class CorrectNumberVO {
 	private String date = "";
 	private List<Integer> correctNumber = new ArrayList<Integer> ();
 	private List<Integer> extraNumber = new ArrayList<Integer>();
+	private Properties gameProps = null;
 	
 	// TODO Pitäiskö myös kierros laittaa mukaan muodostimeen ????? Eipävän muuttuis turhaan.
 	/**
@@ -119,6 +121,20 @@ public class CorrectNumberVO {
 	}
 
 	/**
+	 * @return the gameProps
+	 */
+	public Properties getGameProps() {
+		return gameProps;
+	}
+
+	/**
+	 * @param gameProps the gameProps to set
+	 */
+	public void setGameProps(Properties gameProps) {
+		this.gameProps = gameProps;
+	}
+
+	/**
 	 * Returns correct numbers at ','-separeted String. For printing.
 	 * @return
 	 */
@@ -163,7 +179,8 @@ public class CorrectNumberVO {
 		 "gameRound : " + gameRound + NEW_LINE +
 		 "date     : " + date + NEW_LINE +
 		 "Correct numbers : " + getCorrectNumbersString() + NEW_LINE +
-		 "Extra numbers   : " + getExtraNumbersString() + NEW_LINE; 	    
+		 "Extra numbers   : " + getExtraNumbersString() + NEW_LINE +
+		 "Game properties : " + getGameProps().toString();
 
 		return rc;
 	}
