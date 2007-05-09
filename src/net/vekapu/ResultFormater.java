@@ -91,7 +91,8 @@ public class ResultFormater {
 		
 		for (int count = 0; count < games.size(); count++) {
 			String game = (String) games.get(count);
-	
+			String gametype = resultVO.getCorrect(game).getGameProps().getProperty("type");
+			int win = Integer.parseInt( resultVO.getCorrect(game).getGameProps().getProperty("win") );
 	
 			ret.append(NEW_LINE);
 			
@@ -118,14 +119,13 @@ public class ResultFormater {
 			// Oikea rivi & lisänumerot
 			ret.append("Oikea " + game + " rivi: ");
 			ret.append(resultVO.getCorrect(game).getCorrectNumbersString());
-			
-			ret.append(NEW_LINE);
-			ret.append("Lisänumerot: ");
-			ret.append(resultVO.getCorrect(game).getExtraNumbersString());
 			ret.append(NEW_LINE);
 			
-			// Tarkistetut rivit
-			//TODO tarkista loopissa.
+			if (!resultVO.getCorrect(game).getGameProps().getProperty("extra").equals("")) {
+				ret.append("Lisänumerot: ");
+				ret.append(resultVO.getCorrect(game).getExtraNumbersString());
+				ret.append(NEW_LINE);
+			}
 			
 			int size = 0;
 			int i = 0;
@@ -139,7 +139,7 @@ public class ResultFormater {
 					ret.append(NEW_LINE);
 					size = lkm;
 				}
-				
+
 				// Lotto
 				int hit = 0;
 				int extra = 0;
@@ -147,10 +147,10 @@ public class ResultFormater {
 				int hitA = 0;
 				int hitB = 0;
 				ret.append("Rivi " + (i < 9 ? " " : "") + (i + 1) + ". | ");
-								
+
 				for (int j = 0; j < lkm; j++) {
 					// Tähän pitää laittaa tiedot osumista
-	
+
 					List tulos = (List) resultVO.getOwnNumbersVO().getCheckedGame(game).get(i);
 					String apu = (String) tulos.get(j);
 					
@@ -178,8 +178,8 @@ public class ResultFormater {
 						ret.append(number);
 						ret.append(" ");
 					}
-					// FIXME Pelityyppin huomiointi järkeväx
-					if (game.equalsIgnoreCase("jokeri")) {
+
+					if (gametype.equals("jokeri")) {
 						
 						hitA = Checker.countJokeriA(tulos);
 						hitB = Checker.countJokeriB(tulos);
@@ -190,15 +190,15 @@ public class ResultFormater {
 					}
 					
 				}
-				
-				// FIXME Voittoilmoitukset pitäis saada määriteltyjen filujen kautta.
-				if (game.equalsIgnoreCase("jokeri")) {
-					if (hitA > 1 || hitB > 1) {
+				// FIXME Jokerin suunta kuntoon
+				if (gametype.equals("jokeri")) {
+					if (hitA >= win || hitB >= win) {
 						ret.append("  <==== VOITTO ====>");
 					}
 				} else {
-					if (hit > 3) {
-						ret.append(NEW_LINE + "  <==== VOITTO ====>");
+					if (hit >= win) {
+//						ret.append(NEW_LINE + "  <==== VOITTO ====>");
+						ret.append("  <==== VOITTO ====>");
 					}
 				}
 				
@@ -210,95 +210,6 @@ public class ResultFormater {
 		return ret.toString();
 	}
 	
-	/*
-	// FIXME Tän voi kohta  poistaa turhana.
-	public String __printJokeri(boolean header) {
-		
-		if (correct.get("jokeri") == null) {
-			// Ei tehdä mitään
-			return "";
-		}
-		StringBuffer ret = new StringBuffer();
-
-		ret.append(NEW_LINE);
-		
-		if (header) {
-			// Porukan tiedot
-			ret.append("Jokeriporukka: ");
-			ret.append(ownNumbersVO.getGroup());
-			ret.append(" ");
-			ret.append("Voimassa: ");
-			ret.append(ownNumbersVO.getUntil());
-			ret.append(NEW_LINE);
-			ret.append("Tarkastettu: ");
-			ret.append(DayHelper.now());
-			ret.append(NEW_LINE);
-			ret.append(NEW_LINE);
-	
-			// Tarkistuksen tiedot
-			ret.append("Kierros: ");
-	//		ret.append(correctJokeriVO.getGameweek());
-	//		ret.append(" Arvontapäivä: " );
-	//		ret.append(correctJokeriVO.getDate());
-			ret.append(NEW_LINE);
-			ret.append(NEW_LINE);
-		}
-			
-		// Oikea rivi & lisänumerot
-		ret.append("Oikea Jokeri rivi: ");
-		ret.append(correct.get("jokeri").getCorrectNumbersString());			
-		ret.append(NEW_LINE + NEW_LINE);
-		
-		// Tarkistetut rivit
-		int i = 0;
-		for (Iterator iter = ownNumbersVO.getOwnLines("jokeri").iterator(); iter.hasNext();) {
-			List element = (List) iter.next();
-
-			int lkm = element.size();
-
-			int hitA = 0;
-			int hitB = 0;
-			ret.append("Rivi " + (i < 9 ? " " : "") + (i + 1) + ". | ");
-			
-			for (int j = 0; j < lkm; j++) {
-				// Tähän pitää laittaa tiedot osumista
-				
-				
-				List tulos = (List) ownNumbersVO.getCheckedGame("jokeri").get(i);
-				String apu = (String) tulos.get(j);
-				
-				List numbers =  (List) ownNumbersVO.getOwnLines("jokeri").get(i);
-				String number = (String) numbers.get(j);
-				
-				ret.append((Integer.valueOf(number).intValue() < 10 ? " ":""));					
-				
-				if (apu.equals(Constant.getHit())) {
-					
-					ret.append(Constant.getHitOpen());
-					ret.append(number);
-					ret.append(Constant.getHitClose());
-				}					
-				else {
-					ret.append(" ");
-					ret.append(number);
-					ret.append(" ");
-				}
-				hitA = Checker.countJokeriA(tulos);
-				hitB = Checker.countJokeriB(tulos);
-				ret.append((j < lkm - 1) ? ", " : " | Osumia " + hitA + " + " + hitB);
-				
-			}
-			if (hitA > 1 || hitB > 1) {
-				ret.append("  <==== VOITTO ====>");
-			}
-			
-			ret.append( NEW_LINE);
-			i++ ;
-		}
-		
-		return ret.toString();
-	}
-	*/
 	@Override
 	public String toString() {
 		
