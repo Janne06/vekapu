@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.vekapu.util.Constant;
+import net.vekapu.util.PropsReader;
 
 import org.apache.log4j.Logger;
 
@@ -50,12 +51,12 @@ public class OwnNumbersVO {
 	private String until = "";
 
 	private List games = new ArrayList();
-		
+
 	private List<String> checkedGame = new ArrayList<String>();
-		
+
 	private List to = new ArrayList();
 	private List toSms = new ArrayList();
-		
+
 	private Map<String, List> own = new HashMap<String, List>();
 	private Map<String, List> checkedGame2 = new HashMap<String, List>();
 	private Map<String, String> gameBest = new HashMap <String, String>();
@@ -211,7 +212,7 @@ public class OwnNumbersVO {
 		ret += " group : " + group + NEW_LINE;
 		ret += " until : " + until + NEW_LINE;
 		ret += " getTo() : " + getTo().toString() + NEW_LINE; 
-		ret += " getToSms() : " + getToSms().toString() + NEW_LINE;		
+		ret += " getToSms() : " + getToSms().toString() + NEW_LINE;
 		ret += NEW_LINE;
 		ret += " Game numbers:" + NEW_LINE;
 		ret += "========================" + NEW_LINE;
@@ -219,6 +220,8 @@ public class OwnNumbersVO {
 		for (int i = 0; i < games.size(); i++) {
 			String game = (String) games.get(i);
 			List list = getOwnLines(game);
+			List direction = getOwnLines(game + "_direction");
+			
 			ret += "Game '" + game + "' has '" + list.size()+ "' lines." + NEW_LINE;
 			
 			if (isGameChecked(game)) ret += " Best results : " + getGameBest(game) + NEW_LINE;			
@@ -232,11 +235,22 @@ public class OwnNumbersVO {
 				if (isGameChecked(game)) {
 					ret += "Hit:" +  getCheckedGame(game).get(j) + NEW_LINE + NEW_LINE;
 				}
+				
 				j++ ;
-			}			
+			}
+
+			if (PropsReader.getGameType(game).equals("jokeri")) {
+				int k = 0;
+				for (Iterator diter = direction.iterator(); diter.hasNext();) {
+					List element = (List) diter.next();
+					ret += "Check direction for line '" + (k + 1) + "' is: " + element  + NEW_LINE;
+					
+					k++ ;
+				}
+			}
 			ret += NEW_LINE + "========================" + NEW_LINE;
 		}
-		return ret;		
+		return ret;
 	}
 
 	/**
