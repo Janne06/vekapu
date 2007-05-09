@@ -215,6 +215,7 @@ public class CorrectNumber {
 		
 		// Asetetaan kierroksen numero mukaan rivien tietoihin.
 		CorrectNumberVO l_correctNumberVO = new CorrectNumberVO(game,getSettingsVO().getWeek());
+		l_correctNumberVO.setGameProps(gameProps);
 		
 		// Jos etsittävä merkkijono vaihtelee
 		String round = gameProps.getProperty("round");
