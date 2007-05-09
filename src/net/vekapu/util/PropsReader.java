@@ -86,4 +86,17 @@ public class PropsReader {
 		
 		return props;
 	}
+	
+	public static String getGameType(String game) {
+
+		String gameSettings = Constant.getGamePropsDir()+ game + ".properties";
+		String type = "-";
+		try {
+			type = PropsReader.read(gameSettings).getProperty("type");
+		} catch (VekapuException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return type;
+	}
 }
