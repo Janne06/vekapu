@@ -173,7 +173,12 @@ public class OwnNumbers {
 		for (int i = 0; i < games.size(); i++) {
 			String gam = (String) games.get(i);
 			logger.info("game '" + i + "': " + gam);
-			numbersVO.addOwnLines(gam, getOwnGameNumbers(gam));			
+			numbersVO.addOwnLines(gam, getOwnGameNumbers(gam));	
+			
+			// Jokeri checkin direction
+			if (PropsReader.getGameType(gam).equals("jokeri")) {
+				numbersVO.addOwnLines(gam + "_direction", getOwnJokeriDirection(gam));	
+			}
 		}
 
 		logger.debug(numbersVO.toString());	
@@ -186,8 +191,6 @@ public class OwnNumbers {
 	 * @return
 	 */
 	private List getOwnGameNumbers(String game) {
-		
-		// TODO Jokerin suunta pitäis vielä saada tähän mukaan.
 		
 		List <List> rivit = new ArrayList <List> ();
 		List <String> lista = null;
@@ -205,6 +208,30 @@ public class OwnNumbers {
 				numero = Integer.parseInt(toke.nextToken().trim());				
 				lista.add(String.valueOf(numero));
 				
+			}			
+
+			rivit.add(lista);
+		}
+		return rivit;
+	}
+	
+	private List getOwnJokeriDirection(String game) {
+		
+		List <List> rivit = new ArrayList <List> ();
+		List <String> lista = null;
+		int lkm = Integer.parseInt(properties.getProperty(game));
+		
+		for (int i = 0; i < lkm; i++) {
+
+			String rivi = properties.getProperty(game + "_" + (i + 1) + "_direction");			
+			StringTokenizer toke = new StringTokenizer(rivi, ",");
+			
+			lista = new ArrayList <String> ();
+
+			String direction = "-";
+			while (toke.hasMoreTokens()) {
+				direction = toke.nextToken().trim();				
+				lista.add(direction);
 			}			
 
 			rivit.add(lista);
