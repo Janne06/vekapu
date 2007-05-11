@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Filename: ResultVO.java
+// Filename: ResultFormater.java
 //
 // Author:   Janne Ilonen
 // Project:  Vekapu
@@ -93,7 +93,7 @@ public class ResultFormater {
 			String game = (String) games.get(count);
 			String gametype = resultVO.getCorrect(game).getGameProps().getProperty("type");
 			int win = Integer.parseInt( resultVO.getCorrect(game).getGameProps().getProperty("win") );
-	
+			
 			ret.append(NEW_LINE);
 			
 			// Lottoporuken tiedot
@@ -135,17 +135,35 @@ public class ResultFormater {
 				
 				if (size != lkm) {
 					ret.append(NEW_LINE);
-					ret.append("Tarkistetaan " + lkm + " rastin rivit.");
+					if (gametype.equals("jokeri")) {
+						ret.append("Tarkistetaan " + game + " rivit.");
+					} else {
+						ret.append("Tarkistetaan " + lkm + " rastin " + game + " rivit.");
+					}
 					ret.append(NEW_LINE);
 					size = lkm;
 				}
 
+				boolean winmsg = false;
+				
 				// Lotto
 				int hit = 0;
 				int extra = 0;
 				// Jokeri
-				int hitA = 0;
-				int hitB = 0;
+				boolean dirA = false;
+				boolean dirB = false;	
+				String direction = "";
+				String hitA = "-";
+				String hitB = "-";
+				
+				if (gametype.equals("jokeri")) {
+					List directions = (List) resultVO.getOwnNumbersVO().getOwnLines(game + "_direction").get(i);
+					direction = directions.toString();
+					if (direction.indexOf("a") > 0) dirA = true;
+					if (direction.indexOf("b") > 0) dirB = true;
+					logger.debug("direction: " + direction + " dirA: " + dirA + " dirB: " + dirB);
+				}
+				
 				ret.append("Rivi " + (i < 9 ? " " : "") + (i + 1) + ". | ");
 
 				for (int j = 0; j < lkm; j++) {
@@ -181,9 +199,11 @@ public class ResultFormater {
 
 					if (gametype.equals("jokeri")) {
 						
-						hitA = Checker.countJokeriA(tulos);
-						hitB = Checker.countJokeriB(tulos);
-						ret.append((j < lkm - 1) ? ", " : " | Osumia " + hitA + " + " + hitB);
+						hitA = "-";
+						hitB = "-";
+						if (dirA) hitA = String.valueOf( Checker.countJokeriA(tulos) );
+						if (dirB) hitB = String.valueOf( Checker.countJokeriB(tulos) );
+						ret.append((j < lkm - 1) ? ", " : " | Osumia " + hitA + " / " + hitB);
 						
 					} else {
 						ret.append((j < lkm - 1) ? ", " : " | Osumia " + hit + " + " + extra);
@@ -192,15 +212,18 @@ public class ResultFormater {
 				}
 				// FIXME Jokerin suunta kuntoon
 				if (gametype.equals("jokeri")) {
-					if (hitA >= win || hitB >= win) {
-						ret.append("  <==== VOITTO ====>");
+					ret.append(" suunta " + direction);
+					if (dirA) {
+						if (Integer.parseInt(hitA) >= win) winmsg = true;
+					}
+					if (dirB) {
+						if (Integer.parseInt(hitB) >= win) winmsg = true;
 					}
 				} else {
-					if (hit >= win) {
-//						ret.append(NEW_LINE + "  <==== VOITTO ====>");
-						ret.append("  <==== VOITTO ====>");
-					}
+					if (hit >= win) winmsg = true;
 				}
+				
+				if (winmsg) ret.append("  <==== VOITTO ====>");
 				
 				ret.append( NEW_LINE);
 				i++ ;
