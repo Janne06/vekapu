@@ -4,6 +4,8 @@ Vekapu on mainittu ainakin suraavissa yhteyksissä
 
 ==MikroPC==
 
+[http://mikropc.net/nettilehti/artikkeli.jsp?id=ect_1MDFtdeC0Z MikroPC 6/2007] (10.5.2007) s. 55. Softapankki: Kokeile ja käytä -listalla Vekapu 2.0
+
 Vekapu versio 2.0 on päässyt [http://mikropc.net/tiedostot/tiedosto.jsp?fileId=w5586 MikroPC:n] tiedosto jakeluun 11.4.2007.
 
 
@@ -19,3 +21,4 @@ Päivän ohjelmistona: 28.7.2006
  * [http://www.118.fi/links.php?cat=164 118] Linkit -> Uhkapelit -> Kotimaa  
  * [http://www.abc.fi/linkit.php?cat=164 ABC] Linkit > Uhkapelit  > Kotimaa
  * [http://www.voxoctava.nu/urheilu/veikkaus-lotto.html voxoctava.nu] ?? - veikkaus lotto
+
