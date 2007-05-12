@@ -99,8 +99,8 @@ public class ResultFormater {
 			// Lottoporuken tiedot
 			ret.append("Lottoporukka: ");
 			ret.append(resultVO.getOwnNumbersVO().getGroup());
-			ret.append(" ");
-			ret.append("Voimassa: ");
+			ret.append(" Peli: " + game);
+			ret.append(" Voimassa: ");
 			ret.append(resultVO.getOwnNumbersVO().getUntil());
 			ret.append(NEW_LINE);
 			ret.append("Tarkastettu: ");
