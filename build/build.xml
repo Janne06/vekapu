@@ -5,7 +5,7 @@
       http://ant.apache.org/
 
    $Id$
-   $Rev$
+   $URL$
 -->
 <project name="Vekapu" default="usage" basedir="." >
 
@@ -80,7 +80,8 @@
 
 <!--
  ==================================================================
-   Here we compile the project
+   Here we compile the project. Task core is base for every 3 
+   differen 'client'.
  ==================================================================
 -->	
   <target name="c" depends="compile" description="Shortcut to compile"/>
