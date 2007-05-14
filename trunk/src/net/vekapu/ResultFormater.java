@@ -161,7 +161,6 @@ public class ResultFormater {
 					direction = directions.toString();
 					if (direction.indexOf("a") > 0) dirA = true;
 					if (direction.indexOf("b") > 0) dirB = true;
-					logger.debug("direction: " + direction + " dirA: " + dirA + " dirB: " + dirB);
 				}
 				
 				ret.append("Rivi " + (i < 9 ? " " : "") + (i + 1) + ". | ");
@@ -210,7 +209,7 @@ public class ResultFormater {
 					}
 					
 				}
-				// FIXME Jokerin suunta kuntoon
+
 				if (gametype.equals("jokeri")) {
 					ret.append(" suunta " + direction);
 					if (dirA) {
