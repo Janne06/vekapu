@@ -27,7 +27,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-package net.vekapu.util;
+package net.vekapu.gui;
+
+import net.vekapu.util.Constant;
 
 
 public class GuiConstant {

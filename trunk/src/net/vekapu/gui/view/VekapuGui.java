@@ -46,7 +46,7 @@ import javax.swing.JTextArea;
 
 import net.vekapu.VekapuException;
 import net.vekapu.gui.model.VekapuModel;
-import net.vekapu.util.GuiConstant;
+import net.vekapu.gui.GuiConstant;
 
 import org.apache.log4j.Logger;
 

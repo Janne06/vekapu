@@ -38,7 +38,7 @@ import java.util.Observable;
 import javax.swing.JOptionPane;
 
 import net.vekapu.Vekapu;
-import net.vekapu.util.GuiConstant;
+import net.vekapu.gui.GuiConstant;
 
 import org.apache.log4j.Logger;
 

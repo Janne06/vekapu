@@ -21,7 +21,7 @@ import javax.swing.JTable;
 import net.vekapu.VekapuException;
 import net.vekapu.gui.model.RowsTableModel;
 import net.vekapu.gui.model.VekapuModel;
-import net.vekapu.util.GuiConstant;
+import net.vekapu.gui.GuiConstant;
 
 /**
  * @author Jukka

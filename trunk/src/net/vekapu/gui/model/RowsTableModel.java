@@ -38,7 +38,7 @@ import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 
 import net.vekapu.VekapuException;
-import net.vekapu.util.GuiConstant;
+import net.vekapu.gui.GuiConstant;
 import net.vekapu.util.SettingsReader;
 
 /**
