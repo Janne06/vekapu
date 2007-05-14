@@ -45,9 +45,10 @@ public class Checker {
 	// Oikearivi
 	private CorrectNumberVO correctNumberVO = null;
 	
-	protected String parasTulos;
+	protected String bestResult;
 
-	public Checker() {
+	public Checker(CorrectNumberVO correctNumberVO) {
+		this.correctNumberVO = correctNumberVO;
 	}
 
 	public static int countJokeriA(List list) {
@@ -66,7 +67,6 @@ public class Checker {
 				lbA = false;
 			}
 		}
-//		logger.debug(list + "Osumia: " + hit);
 		return hit;
 	}
 	
@@ -86,16 +86,16 @@ public class Checker {
 				lbB = false;
 			}
 		}
-//		logger.debug(list + "Osumia: " + hit);
 		return hit;
 	}
+	
 	protected String getBestResult() {
-		return parasTulos;
+		return bestResult;
 	}
 
-	protected List tarkistaRivit(List omaRivi) {
+	protected List checkLotto(List omaRivi) {
 		
-		logger.debug("Tarkistetaan osumat: " + omaRivi.size() + ":sta rivistä");
+		logger.info("Checkin hits for " + omaRivi.size() + " rows.");
 		
 		List<List> tarkastetutRivit = new ArrayList<List>();
 		List<String> rivinOsumat = null;
@@ -103,7 +103,7 @@ public class Checker {
 		int paras = 0;
 		int paraslisa = 0;
 		
-		logger.debug(correctNumberVO.getCorrectNumbersString());
+		logger.debug("Correct numbers: " + correctNumberVO.getCorrectNumbersString());
 		// Omien rivien lukumäärä
 		for (Iterator iter = omaRivi.iterator(); iter.hasNext();) {
 
@@ -163,27 +163,21 @@ public class Checker {
 			
 			// Pidetään kirjaa parhaasta tuloksesta
 			if (osumat > paras) {
-				parasTulos = osumat + "+" + lisaNumero;
+				bestResult = osumat + "+" + lisaNumero;
 				paras = osumat;
 				paraslisa = 0;
 			} else if (osumat == paras && lisaNumero > paraslisa) {
-				parasTulos = osumat + "+" + lisaNumero;
+				bestResult = osumat + "+" + lisaNumero;
 				paraslisa = lisaNumero;
 			}			
 		}
 		return tarkastetutRivit;
 	}
 
-
-	/**
-	 * @param correctNumberVO the correctNumberVO to set
-	 */
-	protected void setCorrectNumberVO(CorrectNumberVO correctNumberVO) {
-		this.correctNumberVO = correctNumberVO;
-	}
 	
 	protected List checkJokeri(List omaRivi) {
-		logger.debug("Tarkistetaan osumat: " + omaRivi.size() + ":sta rivistä");
+		
+		logger.info("Checkin hits for " + omaRivi.size() + " rows.");
 		
 		List<List> tarkastetutRivit = new ArrayList<List> ();
 		List<String> rivinOsumat = null;
