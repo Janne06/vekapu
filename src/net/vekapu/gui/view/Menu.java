@@ -43,7 +43,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import net.vekapu.gui.model.VekapuModel;
-import net.vekapu.util.GuiConstant;
+import net.vekapu.gui.GuiConstant;
 
 public class Menu extends JMenuBar implements Observer {
 	private VekapuModel model;

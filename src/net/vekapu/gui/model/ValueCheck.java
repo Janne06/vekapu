@@ -31,7 +31,7 @@ package net.vekapu.gui.model;
 
 import javax.swing.JOptionPane;
 
-import net.vekapu.util.GuiConstant;
+import net.vekapu.gui.GuiConstant;
 
 public class ValueCheck {
 	
