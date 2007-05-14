@@ -35,11 +35,9 @@ import net.vekapu.OwnNumbersVO;
 import net.vekapu.ResultVO;
 import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
-import net.vekapu.util.Constant;
-import net.vekapu.util.SettingsReader;
+import net.vekapu.util.PropsReader;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 /**
  * Master class off the game rules.
@@ -48,7 +46,6 @@ import org.apache.log4j.PropertyConfigurator;
  * 
  * @author janne
  */
-//TODO Muuta oikeiden numeroiden palautusmetodien paluu tyyppiksi: List
 //TODO Tännepitäis vissiinkin saada päättely siitä mikä/mitkä pelit tarkistetaan.
 
 public class GameMaster {
@@ -65,21 +62,6 @@ public class GameMaster {
 		this.settingsVO = settingsVO;
 	}
 
-	public static void main(String s[]) {
-		PropertyConfigurator.configure(Constant.getLog4JConfigFileName());
-		logger.info("CorrectNumber main Start");
-
-		try {
-			SettingsReader pr = new SettingsReader();
-			SettingsVO settingsVO = pr.getSettingsVO();
-
-			GameMaster gm = new GameMaster(settingsVO);
-			gm.test();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
 	/**
 	 * Eri pelien tarkistamin hoidetaan tän metodin kautta.
 	 * (ehkä, siis kait se on niin, oiskohan ehkä järkevää ?? en tiä arvotaan)
@@ -87,20 +69,17 @@ public class GameMaster {
 	 * @throws VekapuException
 	 */
 	public ResultVO checkGame(String game, ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
-		getGameCorrectNumbers(game);
-		
-		CorrectNumberVO correctNumVO = (CorrectNumberVO) correct.get(game);
-		
-		logger.debug(correctNumVO);
-		
-		Checker checker = new Checker();
-		checker.setCorrectNumberVO(correctNumVO);
-		
-		// FIXME Pelityyppi kuntoon
-		if (game.equalsIgnoreCase("jokeri")) {
-			numbersVO.addCheckedGame2(game, checker.checkJokeri(numbersVO.getOwnLines(game)) );
+
+		CorrectNumberVO correctNumVO = getGameCorrectNumbers(game);	
+		Checker checker = new Checker(correctNumVO);
+
+		String gametype = PropsReader.getGameType(game);
+		logger.info("game: " + game + " & gametype: " + gametype);
+
+		if (gametype.equals("jokeri")) {
+			numbersVO.addCheckedGame2(game, checker.checkJokeri(numbersVO.getOwnLines(game)));
 		} else {
-			numbersVO.addCheckedGame2(game,checker.tarkistaRivit(numbersVO.getOwnLines(game)));
+			numbersVO.addCheckedGame2(game,checker.checkLotto(numbersVO.getOwnLines(game)));
 		}
 		numbersVO.setGameBest(game, checker.getBestResult());
 		resultVO.addCorrectNumber(game, correctNumVO);
@@ -108,40 +87,24 @@ public class GameMaster {
 		return resultVO;
 	}
 
-	private void getGameCorrectNumbers(String game) throws VekapuException {
+	
+	private CorrectNumberVO getGameCorrectNumbers(String game) throws VekapuException {
 		CorrectNumberVO correctVO = null;
 		
+		// 'Cache' or not is handled only by this method.
 		// If empty for game
 		if (!correct.containsKey(game)) {
 
 			CorrectNumber correctNumber = new CorrectNumber(settingsVO,game);
 			correctVO = correctNumber.getCorrectNumbers(game);			
 			correct.put(game, correctVO);
+			
+			logger.info( correct.toString() );
+			
+		} else {
+			correctVO = (CorrectNumberVO) correct.get(game);	
+		}							
 		
-		}		
-					
-		logger.info( correct.toString() );
+		return correctVO;
 	}
-
-
-	private void test() {
-		logger.info("CorrectNumber test Start");
-
-		try {
-//			tarkista("lotto");
-//			getOikeaRiviLotto();
-//			getLisaNumerot();
-//			getLottoWeek();
-//			getKierrosLotto();
-			// getKierrosViking();
-			// getOikeaRiviViking();
-			// getOikeaRivi();
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		logger.info("CorrectNumber test Stop");
-	}
-
 }
