@@ -256,8 +256,6 @@ public class CorrectNumber {
 		end = Integer.valueOf( gameProps.getProperty("extraEndPosition") ).intValue();
 		
 		logger.debug("lisanro: " + lisanro);
-
-		// TODO Kato tää loppu kuntoon
 		String lisat = sivu.substring(lisanro + start, lisanro + end).trim();
 		logger.debug("lisat: " + lisat);
 		lisat = lisat.replace(':', ' ').trim();
@@ -337,10 +335,11 @@ public class CorrectNumber {
 
 		// Jos tekstiteeveen sivusta ei vielä ole paikallista kopiota
 		// TODO jos tarkistettavaksi on annetu joku mu kuin 'auto' niin ei haeta
-		// netistä
-		// ainakaan tekstiTV:n sivuilta. Joskus vois ehkä hakee kopion vekapun
-		// omilta sivuilta !! FIXME
+		// netistä ainakaan tekstiTV:n sivuilta.
+		//  
+		// FIXME Joskus vois ehkä hakee kopion vekapun omilta sivuilta !! 
 		// Vois olla aika hyvä.
+		
 		if (!StoreFile.isFileExist(fullname)) {
 			logger.info("Haetaan oikea " + name + " rivi ja talleteaan se "
 					+ Constant.getWwwDir() + dir + " hakemistoon.");
