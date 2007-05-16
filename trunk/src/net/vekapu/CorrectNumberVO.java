@@ -65,63 +65,63 @@ public class CorrectNumberVO {
 	}
 
 	/**
-	 * @return Returns the correctNumber.
+	 * @return Returns correctNumber.
 	 */
 	public List getCorrectNumber() {
 		return correctNumber;
 	}
 
 	/**
-	 * @return Returns the extraNumber.
+	 * @return Returns extraNumber.
 	 */
 	public List getExtraNumber() {
 		return extraNumber;
 	}
 
 	/**
-	 * @return Returns the game.
+	 * @return Returns game.
 	 */
 	public String getGame() {
 		return game;
 	}
 
 	/**
-	 * @return Returns the gameRound.
+	 * @return Returns gameRound.
 	 */
 	public String getGameRound() {
 		return gameRound;
 	}
 
 	/**
-	 * @param correctNumber The correctNumber to set.
+	 * @param number The correctNumber to set.
 	 */
 	public void addCorrectNumber(Integer number) {
 		correctNumber.add(number);
 	}
 
 	/**
-	 * @param extraNumber The extraNumber to set.
+	 * @param extra The extraNumber to set.
 	 */
 	public void addExtraNumber(Integer extra) {
 		extraNumber.add(extra);
 	}
 	
 	/**
-	 * @return Returns the date when correct line of game numbers is publiched.
+	 * @return Returns date when correct line of game numbers is publiched.
 	 */
 	public String getDate() {
 		return date;
 	}
 
 	/**
-	 * @param date Set the date when correct line of game numbers is publiched.
+	 * @param date Set date when correct line of game numbers is publiched.
 	 */
 	public void setDate(String date) {
 		this.date = date;
 	}
 
 	/**
-	 * @return the gameProps
+	 * @return game properties
 	 */
 	public Properties getGameProps() {
 		return gameProps;
@@ -135,8 +135,7 @@ public class CorrectNumberVO {
 	}
 
 	/**
-	 * Returns correct numbers at ','-separeted String. For printing.
-	 * @return
+	 * @return correct numbers at ','-separeted String. For printing.
 	 */
 	public String getCorrectNumbersString() {
 		String rs ="";
@@ -152,8 +151,7 @@ public class CorrectNumberVO {
 	}
 	
 	/**
-	 * Returns extra numbers at ','-separeted String. For printing.
-	 * @return
+	 * @return extra numbers at ','-separeted String. For printing.
 	 */
 	public String getExtraNumbersString() {
 		String rs ="";

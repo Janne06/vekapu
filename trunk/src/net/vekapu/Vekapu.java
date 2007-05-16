@@ -234,7 +234,7 @@ public class Vekapu {
 	 * 
 	 * @param group
 	 * @param kierros
-	 * @return
+	 * @return file locatin where is checked resutls 
 	 * @throws VekapuException
 	 */
 	public String checkGroup(String group, String kierros) throws VekapuException { 

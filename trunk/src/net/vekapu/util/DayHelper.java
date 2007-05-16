@@ -72,35 +72,30 @@ public class DayHelper {
 	}
 
 	/**
-	 * @return
 	 */
 	public boolean isSaturday() {
 		return (day == Calendar.SATURDAY);
 	}
 
 	/**
-	 * @return
 	 */
 	public boolean isSunday() {
 		return (day == Calendar.SUNDAY);
 	}
 
 	/**
-	 * @return
 	 */
 	public boolean isMonday() {
 		return (day == Calendar.MONDAY);
 	}
 
 	/**
-	 * @return
 	 */
 	public boolean isTuesday() {
 		return (day == Calendar.TUESDAY);
 	}
 
 	/**
-	 * @return
 	 */
 	public boolean isWednesday() {
 		return (day == Calendar.WEDNESDAY);
@@ -108,7 +103,6 @@ public class DayHelper {
 
 	/**
 	 * @param aDate
-	 * @return
 	 * @throws VekapuException
 	 */
 	public boolean isToday(String aDate) throws VekapuException {
@@ -140,7 +134,6 @@ public class DayHelper {
 
 	/**
 	 * @param aDate
-	 * @return
 	 * @throws VekapuException
 	 */
 	public boolean isExpired(String aDate) throws VekapuException {
@@ -171,7 +164,6 @@ public class DayHelper {
 	}
 
 	/**
-	 * @return
 	 */
 	public String getYearWeek() {
 		String ret = getYear() + "-" + week;
@@ -180,14 +172,12 @@ public class DayHelper {
 	}
 
 	/**
-	 * @return
 	 */
 	public String getWeek() {
 		return String.valueOf(week);
 	}
 
 	/**
-	 * @return
 	 */
 	public String getLastWeek() {
 		int week2 = week - 1;
@@ -200,14 +190,12 @@ public class DayHelper {
 	}
 
 	/**
-	 * @return
 	 */
 	public String getYear() {
 		return String.valueOf(year);
 	}
 
 	/**
-	 * @return
 	 */
 	public static String now() {
 		String DATE_FORMAT = "dd.MM.yyyy HH:mm:ss";
@@ -219,9 +207,9 @@ public class DayHelper {
 	}
 
 	/**
-	 * Returns current weekdays 'normal' number. Week start at monday and ends at sunday.
+	 * Getting current weekdays 'normal' number. Week start at monday and ends at sunday.
 	 * Monday = 1,..., Sunday = 7
-	 * @return
+	 * @return current weekdays 'normal' number.
 	 */
 	public int getWeekDayNumber() {
 		int rc = day - 1;

@@ -48,10 +48,6 @@ public class RowsTablePanel extends JPanel implements Observer {
 
 	/**
 	 * Constructor
-	 * 
-	 * @return void
-	 * @throws VekapuException 
-	 * @exception
 	 */
 	public RowsTablePanel(VekapuModel vekapuModel) throws VekapuException {
 		this.setLayout(new BorderLayout());

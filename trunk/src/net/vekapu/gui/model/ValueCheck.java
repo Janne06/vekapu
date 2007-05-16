@@ -43,7 +43,6 @@ public class ValueCheck {
 	 * @param values
 	 * @param row
 	 * @param col
-	 * @return
 	 */
 	public boolean valueOK(Object newValue, int[][] values, int row, int col) {
 		int intValue = Integer.parseInt(newValue.toString());

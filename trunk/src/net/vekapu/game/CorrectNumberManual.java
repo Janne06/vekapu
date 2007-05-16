@@ -54,8 +54,6 @@ public class CorrectNumberManual {
 
 	/**
 	 * @throws VekapuException 
-	 * 
-	 *
 	 */	
 	public CorrectNumberManual() throws VekapuException {
 		
@@ -66,9 +64,7 @@ public class CorrectNumberManual {
 
 
 	/**
-	 * 
 	 * @param arg
-	 * @return
 	 */
 	public String geArg(String arg) {
 		String ret = properties.getProperty(arg).trim();

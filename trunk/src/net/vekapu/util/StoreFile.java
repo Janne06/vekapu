@@ -54,6 +54,10 @@ import net.vekapu.VekapuException;
 import org.apache.log4j.Logger;
 
 /**
+ * Original & real Vekapu file i/o handling.
+ * TODO this class maybe merged with: {@link net.vekapu.gui3.util.VekapuFileIOModule}.
+ * Class {@link net.vekapu.gui3.util.VekapuFileIOModule} uses this class servises.
+ * 
  * @author janne
  * 
  */
@@ -66,6 +70,8 @@ public class StoreFile {
 		this(subdir, file, "");
 	}
 
+	// FIXME Kato tää luokka kuntoon
+	
 	/**
 	 * 
 	 * @param subdir
@@ -194,9 +200,8 @@ public class StoreFile {
 	}
 
 	/**
-	 * 
+	 * Read file from disc.
 	 * @param fileName
-	 * @return
 	 * @throws Exception 
 	 */
 	public static String getFile(String fileName) throws VekapuException {
@@ -257,7 +262,6 @@ public class StoreFile {
 
 	/**
 	 * @param fileName
-	 * @return
 	 */
 	public static boolean isFileExist(String fileName) {
 		File f = new File(fileName);
@@ -266,7 +270,6 @@ public class StoreFile {
 
 	/**
 	 * @param fileName
-	 * @return
 	 */
 	public static boolean deleteFile(String fileName) {
 		logger.debug("Poistetaan file: " + fileName);
