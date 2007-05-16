@@ -6,7 +6,7 @@ Vekapu on mainittu ainakin suraavissa yhteyksissä
 
 [http://mikropc.net/nettilehti/artikkeli.jsp?id=ect_1MDFtdeC0Z MikroPC 6/2007] (10.5.2007) s. 55. Softapankki: Kokeile ja käytä -listalla Vekapu 2.0
 
-Vekapu versio 2.0 on päässyt [http://mikropc.net/tiedostot/tiedosto.jsp?fileId=w5586 MikroPC:n] tiedosto jakeluun 11.4.2007.
+Vekapu versio 2.0 on päässyt [http://mikropc.net/tiedostot/tiedosto.jsp?fileId=w5586 MikroPC:n] tiedosto jakeluun 11.4.2007. *Päivän ohjelmisto 16.5.07.*
 
 
 Vekapu versio 1.5.11 on päässyt [http://mikropc.net/tiedostot/tiedosto.jsp?fileId=w4913 MikroPC:n] tiedosto jakeluun 18.7.2006.
@@ -22,3 +22,5 @@ Päivän ohjelmistona: 28.7.2006
  * [http://www.abc.fi/linkit.php?cat=164 ABC] Linkit > Uhkapelit  > Kotimaa
  * [http://www.voxoctava.nu/urheilu/veikkaus-lotto.html voxoctava.nu] ?? - veikkaus lotto
 
+==Muuta havainnot==
+ * [http://www.huuto.net/fi/forum/show_message.php3?cat=atk&id=1029128&lastreply=1179308606 Huuto.net] keskustelu. Tuli MikroPC:n päivän ohjelmisto valinnan jälkeen. Ihan kiva mainos ;) 
