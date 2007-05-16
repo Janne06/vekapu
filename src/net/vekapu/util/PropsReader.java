@@ -62,7 +62,6 @@ public class PropsReader {
 
 	/**
 	 * @param name Path & name to the props file. 
-	 * @return 
 	 * @throws VekapuException
 	 */
 	public static Properties read(String name) throws VekapuException {

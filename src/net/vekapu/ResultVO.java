@@ -67,7 +67,7 @@ public class ResultVO {
 	/**
 	 * 
 	 * @param game
-	 * @return
+	 * @return Games correct numbers.
 	 */
 	public CorrectNumberVO getCorrect(String game) {
 	 

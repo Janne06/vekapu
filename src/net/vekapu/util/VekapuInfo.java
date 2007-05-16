@@ -66,7 +66,6 @@ public class VekapuInfo {
 	
 	/**
 	 * Version information
-	 * @return 
 	 */
 	public static String getVesionInfo() {
 		String NEW_LINE = Constant.getLineSeparator();

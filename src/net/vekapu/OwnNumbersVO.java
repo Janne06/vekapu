@@ -73,7 +73,7 @@ public class OwnNumbersVO {
 	}
 
 	/**
-	 * @return
+	 * @return Group name.
 	 */
 	public String getGroup() {
 		return group;
@@ -81,7 +81,7 @@ public class OwnNumbersVO {
 	
 	/**
 	 * @param game
-	 * @return
+	 * @return is game valid
 	 */
 	public boolean isGame(String game) {
 		
@@ -97,17 +97,17 @@ public class OwnNumbersVO {
 	}
 	
 	/**
-	 * @return
+	 * @return How long game is valid
 	 */
 	public String getUntil() {
 		return until;
 	}
 
 	/**
-	 * @param mihinAstiLotto
+	 * @param until
 	 */
-	public void setUntil(String mihinAstiLotto) {
-		this.until = mihinAstiLotto;
+	public void setUntil(String until) {
+		this.until = until;
 	}	
 	
 	/**
@@ -119,8 +119,9 @@ public class OwnNumbersVO {
 	}
 	
 	/**
+	 * This works only games wich type is 'lotto'.
 	 * @param game
-	 * @return
+	 * @return Best result of the checked game
 	 */
 	public String getGameBest(String game) {
 		String best = (String) gameBest.get(game);
@@ -135,7 +136,7 @@ public class OwnNumbersVO {
 	}
 
 	/**
-	 * @return the to
+	 * @return List of email addresses.
 	 */
 	public List getTo() {
 		return to;
@@ -149,7 +150,7 @@ public class OwnNumbersVO {
 	}
 
 	/**
-	 * @return the toSms
+	 * @return List on email addresses for SMS messages.
 	 */
 	public List getToSms() {
 		return toSms;
@@ -172,7 +173,7 @@ public class OwnNumbersVO {
 
 	/**
 	 * @param game
-	 * @return
+	 * @return List of own lines.
 	 */
 	public List getOwnLines(String game) {
 		
@@ -190,7 +191,7 @@ public class OwnNumbersVO {
 	
 	/**
 	 * @param game
-	 * @return
+	 * @return List of checked games
 	 */
 	public List getCheckedGame(String game) {
 		

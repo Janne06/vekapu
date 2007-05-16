@@ -52,6 +52,13 @@ import org.bs.mdi.FileLoader;
 import org.bs.mdi.FileSaver;
 import org.bs.mdi.RootData;
 
+/**
+ * 
+ * Usin class {@link net.vekapu.util.StoreFile} methods for 'real work'.
+ * TODO this class maybe merged with: {@link net.vekapu.util.StoreFile}
+ * @author janne
+ *
+ */
 public class VekapuFileIOModule implements FileLoader, FileSaver {
 
 	private static Logger logger = Logger.getLogger(VekapuFileIOModule.class);

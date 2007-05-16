@@ -124,7 +124,6 @@ public class CorrectNumber {
 
 	/**
 	 * 
-	 * @return
 	 */
 	protected boolean isManual() {
 		return getSettingsVO().isManual().booleanValue();
