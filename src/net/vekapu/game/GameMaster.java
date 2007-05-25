@@ -29,12 +29,14 @@ package net.vekapu.game;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import net.vekapu.CorrectNumberVO;
 import net.vekapu.OwnNumbersVO;
 import net.vekapu.ResultVO;
 import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
+import net.vekapu.util.Constant;
 import net.vekapu.util.PropsReader;
 
 import org.apache.log4j.Logger;
@@ -53,10 +55,9 @@ public class GameMaster {
 	
 	private SettingsVO settingsVO = null;
 	
-	// Correct numbers of the game	(kind of cache)
-	private Map<String, CorrectNumberVO> correct = new HashMap<String, CorrectNumberVO> ();
+	// Game properties	(kind of cache)
+	private Map<String, Properties> gameProps = new HashMap<String, Properties> ();
 
-	
 	public GameMaster(SettingsVO settingsVO) {
 		logger.debug("Haetaan oikeat rivit. abManual = " + settingsVO.isManual());
 		this.settingsVO = settingsVO;
@@ -87,23 +88,30 @@ public class GameMaster {
 		return resultVO;
 	}
 
-	
-	private CorrectNumberVO getGameCorrectNumbers(String game) throws VekapuException {
-		CorrectNumberVO correctVO = null;
+	// FIXME Minne ihmeeseen sijoittais tän pelien omat propsi-cachet ??
+	private Properties getGameProperties(String game) throws VekapuException {
+		Properties props = null;
 		
 		// 'Cache' or not is handled only by this method.
 		// If empty for game
-		if (!correct.containsKey(game)) {
+		if (!gameProps.containsKey(game)) {
 
-			CorrectNumber correctNumber = new CorrectNumber(settingsVO,game);
-			correctVO = correctNumber.getCorrectNumbers(game);			
-			correct.put(game, correctVO);
+			props = PropsReader.read(Constant.getGamePropsDir()+ game);
+			gameProps.put(game, props);
 			
-			logger.info( correct.toString() );
+			logger.info( gameProps.toString() );
 			
 		} else {
-			correctVO = (CorrectNumberVO) correct.get(game);	
-		}							
+			props = (Properties) gameProps.get(game);	
+		}
+		
+		return props;
+	}
+	
+	private CorrectNumberVO getGameCorrectNumbers(String game) throws VekapuException {
+
+		CorrectNumber correctNumber = new CorrectNumber(settingsVO,game);
+		CorrectNumberVO correctVO = correctNumber.getCorrectNumbers(game);		
 		
 		return correctVO;
 	}
