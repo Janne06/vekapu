@@ -10,6 +10,8 @@ Listaan tänne yleisellä tasolla ideoituja lisäpiirteitä. Pitäisköhän näi
   * arvonta päivä & aika
   * URL missä oikea rivi
   * numeroiden määrä & monella voittaa
+
+- Tää alkaa melkein oleen tehtynä. (25.5.07)
    
 2) Vekapusta kännykä versio. (3.4.07)
   * java me:llä vois (pitäis) väsätä versio Vekapusta. (Ton luulis kiinnostavan ihmisiä)
