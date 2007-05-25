@@ -80,9 +80,6 @@ public class PropsReader {
 			throw new VekapuException("File: '" + name, e);
 		}
 		
-		logger.debug(name);
-		logger.debug(props);
-		
 		return props;
 	}
 	
