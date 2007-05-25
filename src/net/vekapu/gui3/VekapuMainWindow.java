@@ -134,7 +134,7 @@ public class VekapuMainWindow extends SwingMainWindow {
 
 			int count = VekapuMdiGui.getSettingsVO().getGroupCount().intValue();
 			couponsMenu.removeAll();
-			for (int i=0; i<=count; i++) {
+			for (int i=1; i<=count; i++) {
 				JMenuItem item = new JMenuItem(VekapuMdiGui.getSettingsVO().getGroupName(i));
 				item.addActionListener(listener);
 				couponsMenu.add(item);
@@ -169,7 +169,7 @@ public class VekapuMainWindow extends SwingMainWindow {
 
 			int count = VekapuMdiGui.getSettingsVO().getGroupCount().intValue();
 			checkedMenu.removeAll();
-			for (int i=0; i<=count; i++) {
+			for (int i=1; i<=count; i++) {
 				JMenuItem item = new JMenuItem(VekapuMdiGui.getSettingsVO().getGroupName(i));
 				item.addActionListener(listener);
 				checkedMenu.add(item);
@@ -195,8 +195,15 @@ public class VekapuMainWindow extends SwingMainWindow {
 	
 			try {
 				DayHelper dayHelper = new DayHelper();
-				String file = vekapu.checkGroup(event.getActionCommand(),dayHelper.getWeek());
-			
+				
+				// TODO Ok ??
+				// Tää pistää kaikki sekasin
+//				SettingsReader pr = new SettingsReader();
+//				SettingsVO settingsVO = pr.getSettingsVO();
+//				String week = settingsVO.getCheckedRound();
+				String file = vekapu.checkGroup(event.getActionCommand(), dayHelper.getWeek());
+				// dayHelper.getWeek() / week
+				
 				logger.debug("fullName : " + fullName);	
 				logger.debug("file : " + file);	
 				
