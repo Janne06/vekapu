@@ -306,9 +306,7 @@ public class Vekapu {
 					//						
 				} else {
 					// Tarkistetaan lotto
-					logger.debug("gameMaster: " + gameMaster);
 					logger.debug("resultVO: " + resultVO);
-					logger.debug("numbersVO: " + numbersVO);
 					
 					resultVO = gameMaster.checkGame("lotto",resultVO, numbersVO);
 					kierros = settingsVO.getWeek();
