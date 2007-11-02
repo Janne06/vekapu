@@ -239,193 +239,200 @@ public class Vekapu {
 	 */
 	public String checkGroup(String group, String kierros) throws VekapuException { 
 	
-		// Taidetaan kutsua tätä luokkaa GUI:sta joten alustetaan arvot
-		if (settingsVO == null) {	
-			SettingsReader pr = new SettingsReader();
-			settingsVO = pr.getSettingsVO();	
-		}
-
-		GameMaster gameMaster = new GameMaster(settingsVO);
-
-		if (dayhelper == null) {
-			dayhelper = new DayHelper();
-		}	
-
-		
-		String resultFile = "";
-		String parasTulos = "";
-		String parasJokeri = "";
+		try {
+			
+			// Taidetaan kutsua tätä luokkaa GUI:sta joten alustetaan arvot
+			if (settingsVO == null) {	
+				SettingsReader pr = new SettingsReader();
+				settingsVO = pr.getSettingsVO();	
+			}
 	
-		// TODO Meniskähän koko tää luuppi GameMasteriin ??
-		// Jos ei kokonaan niin ainakin eri pelien tarkastuksien kutsut
-
-		logger.info("Tarkistettava porukka: '" + group + "' & kierros: '" + kierros + "'.");
-
-		OwnNumbersVO numbersVO = new OwnNumbers(group, settingsVO).getOwnNumbers();
+			GameMaster gameMaster = new GameMaster(settingsVO);
+	
+			if (dayhelper == null) {
+				dayhelper = new DayHelper();
+			}	
+	
+			
+			String resultFile = "";
+			String parasTulos = "";
+			String parasJokeri = "";
 		
-		resultVO = new ResultVO(numbersVO);
-		checked = false;
-
-		// Mikäli manual == true niin tarkistetaan kaikki
-		// Jos ei ajastettu == tarkistetaan kaikki
-		// Lauantai (ajastettuna) => tarkistetaan lotto ja jokeri
-		boolean tarkista = false;
-
-		if (settingsVO.isTest().booleanValue()) {
-			logger.info("test = yes ==> tarkistetaan kaikki");
-			tarkista = true;
-		} else if (settingsVO.isManual().booleanValue()) {
-			logger.info("manual = yes ==> tarkistetaan kaikki");
-			tarkista = true;
-		} else if (!settingsVO.isCronJob().booleanValue()) {
-			logger.info("CronJob = no ==> tarkistetaan kaikki");
-			tarkista = true;
-		}
-		if (dayhelper.isSaturday() && settingsVO.isCronJob().booleanValue()) {
-			logger.info("Lauantai cronilla == true ==> tarkistetaan "
-					+ "lauantain pelit (Lotto & Jokeri)");
-			tarkista = true;
-		}
-
-		if (tarkista) {
-
-			ohi = false;
-			parasTulos = "";
-
-			// Onko porukalla Lottorivejä
-			if (numbersVO.isGame("lotto")) {
-				lkmLotto++;
-				checked = true;
-
-				// Tarkistetaan onko rivi vielä voimassa
-				if (dayhelper.isExpired(numbersVO.getUntil())) {
-					Messenger.sendEndMail("Lotto", group,
-							numbersVO.getTo(), settingsVO);
-					logger.warn("<======== PORUKAN " + group
-							+ " LOTTO ON VANHENTUNUT ========>");
-					//						
-				} else {
-					// Tarkistetaan lotto
-					logger.debug("resultVO: " + resultVO);
-					
-					resultVO = gameMaster.checkGame("lotto",resultVO, numbersVO);
-					kierros = settingsVO.getWeek();
-					logger.debug("kierros: " + kierros);
-					
-					parasTulos = numbersVO.getGameBest("lotto");
-					
+			// TODO Meniskähän koko tää luuppi GameMasteriin ??
+			// Jos ei kokonaan niin ainakin eri pelien tarkastuksien kutsut
+	
+			logger.info("Tarkistettava porukka: '" + group + "' & kierros: '" + kierros + "'.");
+	
+			OwnNumbersVO numbersVO = new OwnNumbers(group, settingsVO).getOwnNumbers();
+			
+			resultVO = new ResultVO(numbersVO);
+			checked = false;
+	
+			// Mikäli manual == true niin tarkistetaan kaikki
+			// Jos ei ajastettu == tarkistetaan kaikki
+			// Lauantai (ajastettuna) => tarkistetaan lotto ja jokeri
+			boolean tarkista = false;
+	
+			if (settingsVO.isTest().booleanValue()) {
+				logger.info("test = yes ==> tarkistetaan kaikki");
+				tarkista = true;
+			} else if (settingsVO.isManual().booleanValue()) {
+				logger.info("manual = yes ==> tarkistetaan kaikki");
+				tarkista = true;
+			} else if (!settingsVO.isCronJob().booleanValue()) {
+				logger.info("CronJob = no ==> tarkistetaan kaikki");
+				tarkista = true;
+			}
+			if (dayhelper.isSaturday() && settingsVO.isCronJob().booleanValue()) {
+				logger.info("Lauantai cronilla == true ==> tarkistetaan "
+						+ "lauantain pelit (Lotto & Jokeri)");
+				tarkista = true;
+			}
+	
+			if (tarkista) {
+	
+				ohi = false;
+				parasTulos = "";
+	
+				// Onko porukalla Lottorivejä
+				if (numbersVO.isGame("lotto")) {
+					lkmLotto++;
+					checked = true;
+	
+					// Tarkistetaan onko rivi vielä voimassa
+					if (dayhelper.isExpired(numbersVO.getUntil())) {
+						Messenger.sendEndMail("Lotto", group,
+								numbersVO.getTo(), settingsVO);
+						logger.warn("<======== PORUKAN " + group
+								+ " LOTTO ON VANHENTUNUT ========>");
+						//						
+					} else {
+						// Tarkistetaan lotto
+						logger.debug("resultVO: " + resultVO);
+						
+						resultVO = gameMaster.checkGame("lotto",resultVO, numbersVO);
+						kierros = settingsVO.getWeek();
+						logger.debug("kierros: " + kierros);
+						
+						parasTulos = numbersVO.getGameBest("lotto");
+						
+					}
+				}
+				// Jokerin tarkistua
+				if (numbersVO.isGame("jokeri")) {
+					resultVO = gameMaster.checkGame("jokeri",resultVO, numbersVO);
+					parasJokeri = " Jokeri '"
+							+ String.valueOf(numbersVO.getGameBest("jokeri"))
+							+ "' kpl";
+	
+					lkmJokeri++;
+					checked = true;
 				}
 			}
-			// Jokerin tarkistua
-			if (numbersVO.isGame("jokeri")) {
-				resultVO = gameMaster.checkGame("jokeri",resultVO, numbersVO);
-				parasJokeri = " Jokeri '"
-						+ String.valueOf(numbersVO.getGameBest("jokeri"))
-						+ "' kpl";
-
-				lkmJokeri++;
-				checked = true;
+	
+			// Keskiviikko tai muuten vaan => Vikinglotto
+			if (dayhelper.isWednesday() && settingsVO.isCronJob().booleanValue()) {
+				logger.info("Keskiviikko cronilla == true ==> tarkistetaan "
+						+ "keskiviikon peli (VikingLotto)");
+				tarkista = true;
 			}
-		}
-
-		// Keskiviikko tai muuten vaan => Vikinglotto
-		if (dayhelper.isWednesday() && settingsVO.isCronJob().booleanValue()) {
-			logger.info("Keskiviikko cronilla == true ==> tarkistetaan "
-					+ "keskiviikon peli (VikingLotto)");
-			tarkista = true;
-		}
-
-		if (tarkista) {
-
-			if (numbersVO.isGame("viking")) {
-				ohi = false;
-				checked = true;
-
-				resultVO = gameMaster.checkGame("viking",resultVO, numbersVO);
-				parasTulos = numbersVO.getGameBest("viking");
-
-				lkmviking++;
+	
+			if (tarkista) {
+	
+				if (numbersVO.isGame("viking")) {
+					ohi = false;
+					checked = true;
+	
+					resultVO = gameMaster.checkGame("viking",resultVO, numbersVO);
+					parasTulos = numbersVO.getGameBest("viking");
+	
+					lkmviking++;
+				}
 			}
-		}
-
-		if (checked) {
-			logger.info("Porukan '" + group + "' rivejä on tarkistettu.");
-			// Talletetaan parhaat tulokset
-			logger.info("Talleteaan kierroksen parhaat tulokset.");
-			String dir = "";
-			if (settingsVO.isServer().booleanValue()) {
-				dir = settingsVO.getGroupDir()
-						+ Constant.getFileSeparator() + group;
-			} else {
-				dir = ".";
+	
+			if (checked) {
+				logger.info("Porukan '" + group + "' rivejä on tarkistettu.");
+				// Talletetaan parhaat tulokset
+				logger.info("Talleteaan kierroksen parhaat tulokset.");
+				String dir = "";
+				if (settingsVO.isServer().booleanValue()) {
+					dir = settingsVO.getGroupDir()
+							+ Constant.getFileSeparator() + group;
+				} else {
+					dir = ".";
+				}
+				dir += Constant.getBestDir();
+	
+				StoreFile sf = new StoreFile(dir, group
+						+ Constant.getBestFileExt());
+				String jokeri = "";
+				if (numbersVO.isGame("jokeri"))
+					jokeri = " -" + parasJokeri;
+	
+				sf.store(kierros + " - " + parasTulos + jokeri);
+	
+				// Lähetetään lopuksi loppumisilmoitus mikäli aihetta.
+				// TODO Onx järkee näin ??
+	
+				if (dayhelper.isToday(numbersVO.getUntil())
+						|| settingsVO.isTest().booleanValue()) {
+					Messenger.sendEndMail("Lotto", group, numbersVO.getTo(),
+							settingsVO);
+					sf.rename(dayhelper.getYearWeek());
+				}
+	
+				// =========================================
+				// Nyt talletetaan kaikki rivit.
+				logger.info("Talleteaan tulokset kierrokselta: "
+						+ settingsVO.getWeek());
+				String weeknbr = settingsVO.getCheckedRound();
+	
+				// Talletetaan tarkistuksen tiedot
+				String dir2 = "";
+				if (settingsVO.isServer().booleanValue()) {
+					dir2 = settingsVO.getGroupDir();
+					dir2 += Constant.getFileSeparator() + group;
+				} else {
+					dir2 = ".";
+				}
+				dir2 += Constant.getResultDir();
+				logger.debug("Group & week: " + group + "-" + weeknbr);
+				
+				resultFile = dir2 + group + "-" + weeknbr
+				   + Constant.getResultFileExt();
+				logger.debug("resultFile: " + resultFile);
+				
+				ResultFormater formater = new ResultFormater(resultVO,settingsVO.isServer().booleanValue());
+				StoreFile sf2 = new StoreFile(dir2, group + "-" + weeknbr
+						+ Constant.getResultFileExt(), formater.toString());
+				
+				logger.debug(sf2.toString());
+	
+				
+				if (settingsVO.isConsole().booleanValue()
+						|| settingsVO.isTest().booleanValue()) {
+					System.out.println(resultVO.toString());
+					System.out.println();
+				}
+	
+				// Lähetetäänkö sähköpostia ???????
+				if (settingsVO.isEmail().booleanValue()
+						|| settingsVO.isTest().booleanValue()) {
+					sendMail(kierros, numbersVO, parasTulos, parasJokeri);				
+				}
+	
+				// Lähetetäänkö tekstivietejä ??????????????????
+				if (settingsVO.isSms().booleanValue()
+						|| settingsVO.isTest().booleanValue()) {
+					sendSms(kierros, numbersVO, parasTulos, parasJokeri);
+				}
 			}
-			dir += Constant.getBestDir();
-
-			StoreFile sf = new StoreFile(dir, group
-					+ Constant.getBestFileExt());
-			String jokeri = "";
-			if (numbersVO.isGame("jokeri"))
-				jokeri = " -" + parasJokeri;
-
-			sf.store(kierros + " - " + parasTulos + jokeri);
-
-			// Lähetetään lopuksi loppumisilmoitus mikäli aihetta.
-			// TODO Onx järkee näin ??
-
-			if (dayhelper.isToday(numbersVO.getUntil())
-					|| settingsVO.isTest().booleanValue()) {
-				Messenger.sendEndMail("Lotto", group, numbersVO.getTo(),
-						settingsVO);
-				sf.rename(dayhelper.getYearWeek());
-			}
-
-			// =========================================
-			// Nyt talletetaan kaikki rivit.
-			logger.info("Talleteaan tulokset kierrokselta: "
-					+ settingsVO.getWeek());
-			String weeknbr = settingsVO.getCheckedRound();
-
-			// Talletetaan tarkistuksen tiedot
-			String dir2 = "";
-			if (settingsVO.isServer().booleanValue()) {
-				dir2 = settingsVO.getGroupDir();
-				dir2 += Constant.getFileSeparator() + group;
-			} else {
-				dir2 = ".";
-			}
-			dir2 += Constant.getResultDir();
-			logger.debug("Group & week: " + group + "-" + weeknbr);
+			return resultFile;
 			
-			resultFile = dir2 + group + "-" + weeknbr
-			   + Constant.getResultFileExt();
-			logger.debug("resultFile: " + resultFile);
-			
-			ResultFormater formater = new ResultFormater(resultVO,settingsVO.isServer().booleanValue());
-			StoreFile sf2 = new StoreFile(dir2, group + "-" + weeknbr
-					+ Constant.getResultFileExt(), formater.toString());
-			
-			logger.debug(sf2.toString());
-
-			
-			if (settingsVO.isConsole().booleanValue()
-					|| settingsVO.isTest().booleanValue()) {
-				System.out.println(resultVO.toString());
-				System.out.println();
-			}
-
-			// Lähetetäänkö sähköpostia ???????
-			if (settingsVO.isEmail().booleanValue()
-					|| settingsVO.isTest().booleanValue()) {
-				sendMail(kierros, numbersVO, parasTulos, parasJokeri);				
-			}
-
-			// Lähetetäänkö tekstivietejä ??????????????????
-			if (settingsVO.isSms().booleanValue()
-					|| settingsVO.isTest().booleanValue()) {
-				sendSms(kierros, numbersVO, parasTulos, parasJokeri);
-			}
+		} catch (VekapuException ve) {
+			logger.error(ve);
+			throw ve;
 		}
-		return resultFile;
 	}
 	
 	private void sendMail(String kierros,OwnNumbersVO numbersVO, String parasTulos, String parasJokeri) throws VekapuException {
