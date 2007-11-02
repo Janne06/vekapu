@@ -13,9 +13,11 @@ Listaan tänne yleisellä tasolla ideoituja lisäpiirteitä. Pitäisköhän näi
 
 - Tää alkaa melkein oleen tehtynä. (25.5.07)
    
+
 2) Vekapusta kännykä versio. (3.4.07)
   * java me:llä vois (pitäis) väsätä versio Vekapusta. (Ton luulis kiinnostavan ihmisiä)
   * lähdekoodiin tarvii varmaankin tehä oma paketti (./me) tota varten
+
      
 3) build.xml:llä vois kasata useampia jar:reja. (3.4.07)
   * vekapu-core.jar misää olis kaikille yhteinen toiminta
