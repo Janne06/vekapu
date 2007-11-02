@@ -70,22 +70,27 @@ public class GameMaster {
 	 * @throws VekapuException
 	 */
 	public ResultVO checkGame(String game, ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
-
-		CorrectNumberVO correctNumVO = getGameCorrectNumbers(game);	
-		Checker checker = new Checker(correctNumVO);
-
-		String gametype = PropsReader.getGameType(game);
-		logger.info("game: " + game + " & gametype: " + gametype);
-
-		if (gametype.equals("jokeri")) {
-			numbersVO.addCheckedGame2(game, checker.checkJokeri(numbersVO.getOwnLines(game)));
-		} else {
-			numbersVO.addCheckedGame2(game,checker.checkLotto(numbersVO.getOwnLines(game)));
-		}
-		numbersVO.setGameBest(game, checker.getBestResult());
-		resultVO.addCorrectNumber(game, correctNumVO);
 		
-		return resultVO;
+		try {
+			CorrectNumberVO correctNumVO = getGameCorrectNumbers(game);	
+			Checker checker = new Checker(correctNumVO);
+	
+			String gametype = PropsReader.getGameType(game);
+			logger.info("game: " + game + " & gametype: " + gametype);
+	
+			if (gametype.equals("jokeri")) {
+				numbersVO.addCheckedGame2(game, checker.checkJokeri(numbersVO.getOwnLines(game)));
+			} else {
+				numbersVO.addCheckedGame2(game,checker.checkLotto(numbersVO.getOwnLines(game)));
+			}
+			numbersVO.setGameBest(game, checker.getBestResult());
+			resultVO.addCorrectNumber(game, correctNumVO);
+			
+			return resultVO;
+		} catch (VekapuException ve) {
+			logger.error(ve);
+			throw ve;
+		}
 	}
 
 	// FIXME Minne ihmeeseen sijoittais tän pelien omat propsi-cachet ??
@@ -110,9 +115,14 @@ public class GameMaster {
 	
 	private CorrectNumberVO getGameCorrectNumbers(String game) throws VekapuException {
 
-		CorrectNumber correctNumber = new CorrectNumber(settingsVO,game);
-		CorrectNumberVO correctVO = correctNumber.getCorrectNumbers(game);		
-		
-		return correctVO;
+		try {
+			CorrectNumber correctNumber = new CorrectNumber(settingsVO,game);
+			CorrectNumberVO correctVO = correctNumber.getCorrectNumbers(game);		
+			
+			return correctVO;
+		} catch (VekapuException ve) {
+			logger.error(ve);
+			throw ve;
+		}
 	}
 }
