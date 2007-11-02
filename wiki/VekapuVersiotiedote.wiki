@@ -3,9 +3,13 @@
 
 ==Kehitys versio==
 
-*Kehitys version 2.0+ parannuksia*
-Päivitetty 11.5.07
+*Kehitys version 2.1+ parannuksia*
 
+
+==Vekapu 2.1==
+Päivitetty 2.11.07
+
+ * Texti TV:n sivut on muuttunu (Jokeri & viikkari)
  * Sisäinen Java otetutus geneerisempään muotoon jotta uusien pelien lisääminen onnistuu parametrisoinnilla.
  * Omat rivit pitää nyt nimetä tyyliin `pelinnimi_n` misä `n` on juokseva numero. Esim. `lotto_1 = 1,2,3,4,5,6,7`
  * Jokerin tarkistussuunta määritellään parametrilla: `jokeri_n_direction=a,b`
@@ -259,8 +263,6 @@ Julkaistu 28.11.02
 Julkaistu 26.11.02
 
 - Tarkastetun rivin postitus lottoporukan jäsenille.
-
-
 
 
 
