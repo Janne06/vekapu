@@ -9,6 +9,8 @@
 ==Vekapu 2.1==
 Päivitetty 2.11.07
 
+_*HUOM* Jos omat rivisi ovat vanhemmalla versiolla niin ne täytyy nyt asettaa uudelleen !!!_
+
  * Texti TV:n sivut on muuttunu (Jokeri & viikkari)
  * Sisäinen Java otetutus geneerisempään muotoon jotta uusien pelien lisääminen onnistuu parametrisoinnilla.
  * Omat rivit pitää nyt nimetä tyyliin `pelinnimi_n` misä `n` on juokseva numero. Esim. `lotto_1 = 1,2,3,4,5,6,7`
@@ -263,8 +265,6 @@ Julkaistu 28.11.02
 Julkaistu 26.11.02
 
 - Tarkastetun rivin postitus lottoporukan jäsenille.
-
-
 
 
 
