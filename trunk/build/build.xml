@@ -149,7 +149,7 @@
                   excludes="**/junit.jar"
                   prefix="${zip.dir}/${lib.dir}"/>
       <zipfileset dir="../."
-                  includes="**/*.properties,**/*.xml,**/*.sh,**/*.bat,**/info.txt,**/*.log4j,**/version.txt"
+                  includes="**/*.properties,**/*.xml,**/*.sh,**/*.bat,**/info.txt,**/*.log4j,**/version.txt,**/vekapu.ico"
                   excludes="group/**/*.properties,**/build.xml,**/translations/**"
                   prefix="${zip.dir}"/>
 
@@ -162,7 +162,7 @@
                   includes="**/*.jar"
                   prefix="${zip.dir}/gnu/${lib.dir}"/>
       <zipfileset dir="../."
-                  includes="**/*.properties,**/*.xml,**/*.sh,**/*.bat,**/info.txt,**/*.log4j,**/*.java,**/version.txt"
+                  includes="**/*.properties,**/*.xml,**/*.sh,**/*.bat,**/info.txt,**/*.log4j,**/*.java,**/version.txt,**/vekapu.ico"
                   excludes="group/**/*.properties"
                   prefix="${zip.dir}/gnu"/>
 
