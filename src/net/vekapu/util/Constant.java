@@ -48,7 +48,7 @@ public class Constant {
 
 	private final static String HEADER = "[Vekapu]";
 
-	private final static String FILE_MANUAL = "OikeaRivi.properties";
+	private final static String FILE_MANUAL = "correctnumbers.properties";
 
 	private final static String LOG4J_CONFIGURE = "log4j.properties";
 
