@@ -64,12 +64,6 @@ public class CorrectNumber {
 	 * Kuluvan päivän hahmotus => mikä kierrokselle numeroksi ?
 	 */
 	protected DayHelper dayhelper = new DayHelper();
-
-
-	/**
-	 * Game spesifig setting
-	 */
-	protected Properties gameProps = new Properties();
 	
 
 	/**
@@ -169,130 +163,149 @@ public class CorrectNumber {
 		String name = game;
 		String name_txt = "";
 		String dir = game + Constant.getFileSeparator();
-
+		String sivu = "";
+		
+		Properties gameProps = new Properties();
 		String gameSettings = Constant.getGamePropsDir()+ game + ".properties";
 		gameProps = PropsReader.read(gameSettings);
 		
-		// Tarkistettava kierrros 
-		logger.debug("getSettingsVO().getCorrect() : " + getSettingsVO().getCorrect());
-		if (getSettingsVO().getCorrect().equals("auto")) {	
-			// ===============================================================
-			// Päätellään tarkistettava kierros ja asetetaan se SettingsVO:hon
-			// 
-			int day = Integer.valueOf( gameProps.getProperty("day") ).intValue();
+		///////////////////////////////////////////////////////////////////////////////////////
+		if (!settingsVO.isManual()) {
 			
-			logger.debug("Weekday: " + day);
+			// Tarkistettava kierrros 
+			logger.debug("getSettingsVO().getCorrect() : " + getSettingsVO().getCorrect());
+			if (getSettingsVO().getCorrect().equals("auto")) {	
+				// ===============================================================
+				// Päätellään tarkistettava kierros ja asetetaan se SettingsVO:hon
+				// 
+				int day = Integer.valueOf( gameProps.getProperty("day") ).intValue();
+				
+				logger.debug("Weekday: " + day);
+				
+				if ( day <= dayhelper.getWeekDayNumber()) {
+					currentWeek();
+				} else {
+					// Pitää tutkia viimeviikon kierrosta
+					lastWeek();
+				}
+			}
 			
-			if ( day <= dayhelper.getWeekDayNumber()) {
-				currentWeek();
-			} else {
-				// Pitää tutkia viimeviikon kierrosta
-				lastWeek();
+			// Haetaan sivu missä oikeat numrot. 
+			name_txt = getPage(name, gameProps.getProperty("url"));
+			
+			logger.debug("getSettingsVO().getCorrect() : " + getSettingsVO().getCorrect());
+			logger.debug("getSettingsVO().getKierros() : " + getSettingsVO().getWeek());
+			logger.debug("Name: " + name_txt);	
+			
+			sivu = StoreFile.getFile(Constant.getWwwDir() + dir + name_txt);
+			// Poistetaan html tägit varmuuden vuoksi.
+			sivu = Html2txt.HtmlPage2txt(new StringBuffer(sivu));
+			
+			// logger.debug(sivu);
+			
+			if (sivu.indexOf(gameProps.getProperty("pass")) > 0) {
+				// Oikeita numeroita ei vielä ole julkaistu
+				String messu = "Oikeita " + game + "-numeroita ei vielä ole julkaistu.";
+				logger.warn(messu);
+				throw new VekapuException(messu);
 			}
 		}
-		
-		// Haetaan sivu missä oikeat numrot. 
-		name_txt = getPage(name, gameProps.getProperty("url"));
-		
-		logger.debug("getSettingsVO().getCorrect() : " + getSettingsVO().getCorrect());
-		logger.debug("getSettingsVO().getKierros() : " + getSettingsVO().getWeek());
-		logger.debug("Name: " + name_txt);	
-		String sivu = "";
-		sivu = StoreFile.getFile(Constant.getWwwDir() + dir + name_txt);
-		// Poistetaan html tägit varmuuden vuoksi.
-		sivu = Html2txt.HtmlPage2txt(new StringBuffer(sivu));
-		
-		// logger.debug(sivu);
-		
-		if (sivu.indexOf(gameProps.getProperty("pass")) > 0) {
-			// Oikeita numeroita ei vielä ole julkaistu
-			String messu = "Oikeita " + game + "-numeroita ei vielä ole julkaistu.";
-			logger.warn(messu);
-			throw new VekapuException(messu);
-		}
-		
 		
 		// Asetetaan kierroksen numero mukaan rivien tietoihin.
 		CorrectNumberVO l_correctNumberVO = new CorrectNumberVO(game,getSettingsVO().getWeek());
 		l_correctNumberVO.setGameProps(gameProps);
 		
-		try {
-			// Jos etsittävä merkkijono vaihtelee
-			String round = gameProps.getProperty("round");
-			logger.debug("round: " + round);
-	
-			int kierros_int = 0;
-			kierros_int = sivu.indexOf(round);
-	
-			int start = Integer.valueOf( gameProps.getProperty("roundStartPosition") ).intValue();
-			int end = Integer.valueOf( gameProps.getProperty("roundEndPosition") ).intValue();
-	
-			String viikko = sivu.substring(kierros_int + start , kierros_int + end).trim();
-			viikko = viikko.replace('<', ' ').trim();
-			logger.debug("viikko: " + viikko);
-	
-			start = Integer.valueOf( gameProps.getProperty("dateStartPosition") ).intValue();
-			end = Integer.valueOf( gameProps.getProperty("dateEndPosition") ).intValue();
-			
-			String pvm = sivu.substring(kierros_int + start, kierros_int + end).trim();
-			l_correctNumberVO.setDate(pvm);
-			logger.debug("date: " + pvm);
-			
-			int alku = sivu.indexOf(gameProps.getProperty("startCorrect"));
-			logger.debug("OIKEAT NUMEROT alkaakohdasta " + alku);
-	
-			start = Integer.valueOf( gameProps.getProperty("corrctStartPosition") ).intValue();
-			end = Integer.valueOf( gameProps.getProperty("corrctEndPosition") ).intValue();
-			
-			String oikeat = sivu.substring(alku + start, alku + end).trim();
-			logger.debug("oikeat: " + oikeat);
-			
-			start = Integer.valueOf( gameProps.getProperty("startExtraFirstPosition") );
-			logger.debug("startExtra: " + gameProps.getProperty("startExtra"));
-			int lisanro = sivu.indexOf(gameProps.getProperty("startExtra"),start);
-			start = Integer.valueOf( gameProps.getProperty("extraStartPosition") ).intValue();
-			end = Integer.valueOf( gameProps.getProperty("extraEndPosition") ).intValue();
-			
-			logger.debug("lisanro: " + lisanro);
-			String lisat = sivu.substring(lisanro + start, lisanro + end).trim();
-			logger.debug("lisat: " + lisat);
-			lisat = lisat.replace(':', ' ').trim();
-			logger.debug("lisat: " + lisat);
-	
-			l_correctNumberVO.setDate(pvm);
-	
-			String delimeter = ",";
-			if (oikeat.indexOf(delimeter) < 0) delimeter = " ";
-			
-			StringTokenizer toke = new StringTokenizer(oikeat, delimeter);
-			Integer number = null;
-	
-			while (toke.hasMoreTokens()) {
-				number = Integer.valueOf(toke.nextToken().trim());
-				l_correctNumberVO.addCorrectNumber(number);
+		String oikeat = "";
+		String lisat = "";
+		
+		if (!settingsVO.isManual()) {
+			try {
+				// Jos etsittävä merkkijono vaihtelee
+				String round = gameProps.getProperty("round");
+				logger.debug("round: " + round);
+		
+				int kierros_int = 0;
+				kierros_int = sivu.indexOf(round);
+		
+				int start = Integer.valueOf( gameProps.getProperty("roundStartPosition") ).intValue();
+				int end = Integer.valueOf( gameProps.getProperty("roundEndPosition") ).intValue();
+		
+				String viikko = sivu.substring(kierros_int + start , kierros_int + end).trim();
+				viikko = viikko.replace('<', ' ').trim();
+				logger.debug("viikko: " + viikko);
+		
+				start = Integer.valueOf( gameProps.getProperty("dateStartPosition") ).intValue();
+				end = Integer.valueOf( gameProps.getProperty("dateEndPosition") ).intValue();
+				
+				String pvm = sivu.substring(kierros_int + start, kierros_int + end).trim();
+				l_correctNumberVO.setDate(pvm);
+				logger.debug("date: " + pvm);
+				
+				int alku = sivu.indexOf(gameProps.getProperty("startCorrect"));
+				logger.debug("OIKEAT NUMEROT alkaakohdasta " + alku);
+		
+				start = Integer.valueOf( gameProps.getProperty("corrctStartPosition") ).intValue();
+				end = Integer.valueOf( gameProps.getProperty("corrctEndPosition") ).intValue();
+				
+				oikeat = sivu.substring(alku + start, alku + end).trim();
+				
+				start = Integer.valueOf( gameProps.getProperty("startExtraFirstPosition") );
+				logger.debug("startExtra: " + gameProps.getProperty("startExtra"));
+				int lisanro = sivu.indexOf(gameProps.getProperty("startExtra"),start);
+				start = Integer.valueOf( gameProps.getProperty("extraStartPosition") ).intValue();
+				end = Integer.valueOf( gameProps.getProperty("extraEndPosition") ).intValue();
+				
+				logger.debug("lisanro: " + lisanro);
+				lisat = sivu.substring(lisanro + start, lisanro + end).trim();
+				logger.debug("lisat: " + lisat);
+				lisat = lisat.replace(':', ' ').trim();
+				
+		
+				l_correctNumberVO.setDate(pvm);
+				
+			} catch (RuntimeException re) {
+				
+				logger.error(re);
+				String messu = "TextiTV:n sivut on varmaankin muuttuneet ?? Ongelmia pelissä: " + game;
+				throw new VekapuException(messu,re);
 			}
-			
-			delimeter = ",";
-			if (lisat.indexOf(delimeter) < 0) delimeter = " ";
-			
-			toke = new StringTokenizer(lisat, delimeter);
-			number = null;
-	
-			while (toke.hasMoreTokens()) {
-				number = Integer.valueOf(toke.nextToken().trim());
-				l_correctNumberVO.addExtraNumber(number);
-			}
-			
-			logger.debug(l_correctNumberVO.toString());
-			
-			return l_correctNumberVO;
-			
-		} catch (RuntimeException re) {
-			
-			logger.error(re);
-			String messu = "TextiTV:n sivut on varmaankin muuttuneet ?? Ongelmia pelissä: " + game;
-			throw new VekapuException(messu,re);
+		} else {
+			CorrectNumberManual manual = new CorrectNumberManual();
+			oikeat = manual.getArg("correct");
+			lisat = manual.getArg("extra");
+			l_correctNumberVO.setDate(manual.getArg("info"));
 		}
+	
+		logger.debug("oikeat: " + oikeat);
+		logger.debug("lisat: " + lisat);
+		
+		String delimeter = ",";
+		if (oikeat.indexOf(delimeter) < 0) delimeter = " ";
+		
+		StringTokenizer toke = new StringTokenizer(oikeat, delimeter);
+		Integer number = null;
+
+		while (toke.hasMoreTokens()) {
+			number = Integer.valueOf(toke.nextToken().trim());
+			l_correctNumberVO.addCorrectNumber(number);
+		}
+		
+		delimeter = ",";
+		if (lisat.indexOf(delimeter) < 0) delimeter = " ";
+		
+		toke = new StringTokenizer(lisat, delimeter);
+		number = null;
+
+		while (toke.hasMoreTokens()) {
+			number = Integer.valueOf(toke.nextToken().trim());
+			l_correctNumberVO.addExtraNumber(number);
+		}
+		
+		logger.debug(l_correctNumberVO.toString());
+		
+		return l_correctNumberVO;
+			
+		
 	}
 	
 	
