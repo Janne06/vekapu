@@ -3,8 +3,13 @@
 
 ==Kehitys versio==
 
-*Kehitys version 2.1+ parannuksia*
+*Kehitys version 2.2+ parannuksia*
 
+==Vekapu 2.2==
+Päivitetty 29.11.07
+
+ * Lisänumeroiden tarkistus lotossa kohdalleen.
+ * Oikeiden numeroiden käsin syöttö tiedostoon `./correctnumbers/correctnumbers.properties`. Eli nyt voi tarkistaa myös muiden kierrosten tuloksia kuin TextiTV:n sivuilla olevat. [http://code.google.com/p/vekapu/issues/detail?id=3 Issue 3].
 
 ==Vekapu 2.1==
 Päivitetty 2.11.07
@@ -265,8 +270,6 @@ Julkaistu 28.11.02
 Julkaistu 26.11.02
 
 - Tarkastetun rivin postitus lottoporukan jäsenille.
-
-
 
 
 
