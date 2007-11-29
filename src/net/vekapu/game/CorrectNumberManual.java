@@ -57,7 +57,7 @@ public class CorrectNumberManual {
 	 */	
 	public CorrectNumberManual() throws VekapuException {
 		
-		logger.info("Gettin Correct numbers from props-file");
+		logger.info("Gettin Correct numbers from " + Constant.getCorrectNumberFile() + "-file");
 		getManualFile();
 
 	}
@@ -66,7 +66,7 @@ public class CorrectNumberManual {
 	/**
 	 * @param arg
 	 */
-	public String geArg(String arg) {
+	public String getArg(String arg) {
 		String ret = properties.getProperty(arg).trim();
 		return ret;
 
