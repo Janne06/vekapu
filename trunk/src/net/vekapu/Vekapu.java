@@ -76,7 +76,7 @@ public class Vekapu {
 	private boolean test = false;
 		
 	// Uusia instanssimuuttujia kun tietyn porukan tarkistus omaan metodiin
-	private boolean ohi = true;
+	private boolean miss = true;
 	private boolean checked = false;
 
 	private int lkmLotto = 0;
@@ -206,7 +206,7 @@ public class Vekapu {
 			tulos += formater.toString();
 		}
 
-		if (ohi) {
+		if (miss) {
 			String NEW_LINE = Constant.getLineSeparator();
 
 			String messu = "Yhtään riviä ei tarkastettu !" + NEW_LINE
@@ -291,7 +291,7 @@ public class Vekapu {
 	
 			if (tarkista) {
 	
-				ohi = false;
+				miss = false;
 				parasTulos = "";
 	
 				// Onko porukalla Lottorivejä
@@ -308,8 +308,7 @@ public class Vekapu {
 						//						
 					} else {
 						// Tarkistetaan lotto
-						logger.debug("resultVO: " + resultVO);
-						
+						logger.info("Tarkistetaan lotto");
 						resultVO = gameMaster.checkGame("lotto",resultVO, numbersVO);
 						kierros = settingsVO.getWeek();
 						logger.debug("kierros: " + kierros);
@@ -320,6 +319,7 @@ public class Vekapu {
 				}
 				// Jokerin tarkistua
 				if (numbersVO.isGame("jokeri")) {
+					logger.info("Tarkistetaan jokeri");
 					resultVO = gameMaster.checkGame("jokeri",resultVO, numbersVO);
 					parasJokeri = " Jokeri '"
 							+ String.valueOf(numbersVO.getGameBest("jokeri"))
@@ -340,7 +340,8 @@ public class Vekapu {
 			if (tarkista) {
 	
 				if (numbersVO.isGame("viking")) {
-					ohi = false;
+					logger.info("Tarkistetaan vikinglotto");
+					miss = false;
 					checked = true;
 	
 					resultVO = gameMaster.checkGame("viking",resultVO, numbersVO);
