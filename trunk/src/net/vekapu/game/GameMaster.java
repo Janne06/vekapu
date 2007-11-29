@@ -27,16 +27,11 @@
 
 package net.vekapu.game;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
 import net.vekapu.CorrectNumberVO;
 import net.vekapu.OwnNumbersVO;
 import net.vekapu.ResultVO;
 import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
-import net.vekapu.util.Constant;
 import net.vekapu.util.PropsReader;
 
 import org.apache.log4j.Logger;
@@ -48,16 +43,12 @@ import org.apache.log4j.Logger;
  * 
  * @author janne
  */
-//TODO Tännepitäis vissiinkin saada päättely siitä mikä/mitkä pelit tarkistetaan.
 
 public class GameMaster {
 	static Logger logger = Logger.getLogger(GameMaster.class);
 	
 	private SettingsVO settingsVO = null;
 	
-	// Game properties	(kind of cache)
-	private Map<String, Properties> gameProps = new HashMap<String, Properties> ();
-
 	public GameMaster(SettingsVO settingsVO) {
 		logger.debug("Haetaan oikeat rivit. abManual = " + settingsVO.isManual());
 		this.settingsVO = settingsVO;
@@ -65,14 +56,18 @@ public class GameMaster {
 
 	/**
 	 * Eri pelien tarkistamin hoidetaan tän metodin kautta.
-	 * (ehkä, siis kait se on niin, oiskohan ehkä järkevää ?? en tiä arvotaan)
 	 * 
+	 * @param game
+	 * @param resultVO
+	 * @param numbersVO
+	 * @return
 	 * @throws VekapuException
 	 */
 	public ResultVO checkGame(String game, ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
 		
 		try {
 			CorrectNumberVO correctNumVO = getGameCorrectNumbers(game);	
+			
 			Checker checker = new Checker(correctNumVO);
 	
 			String gametype = PropsReader.getGameType(game);
@@ -87,32 +82,19 @@ public class GameMaster {
 			resultVO.addCorrectNumber(game, correctNumVO);
 			
 			return resultVO;
+			
 		} catch (VekapuException ve) {
 			logger.error(ve);
 			throw ve;
 		}
 	}
-
-	// FIXME Minne ihmeeseen sijoittais tän pelien omat propsi-cachet ??
-	private Properties getGameProperties(String game) throws VekapuException {
-		Properties props = null;
-		
-		// 'Cache' or not is handled only by this method.
-		// If empty for game
-		if (!gameProps.containsKey(game)) {
-
-			props = PropsReader.read(Constant.getGamePropsDir()+ game);
-			gameProps.put(game, props);
-			
-			logger.info( gameProps.toString() );
-			
-		} else {
-			props = (Properties) gameProps.get(game);	
-		}
-		
-		return props;
-	}
 	
+	/**
+	 * 
+	 * @param game
+	 * @return
+	 * @throws VekapuException
+	 */
 	private CorrectNumberVO getGameCorrectNumbers(String game) throws VekapuException {
 
 		try {
