@@ -139,7 +139,7 @@ public class OwnNumbers {
 		return until;
 	}
 
-	private List getGame() {
+	private List<String> getGame() {
 
 		List <String> games = new ArrayList <String> ();
 		
@@ -168,7 +168,7 @@ public class OwnNumbers {
 		
 		numbersVO.setUntil(getUntil());
 		
-		List games = getGame();
+		List<String> games = getGame();
 
 		for (int i = 0; i < games.size(); i++) {
 			String gam = (String) games.get(i);
@@ -192,7 +192,7 @@ public class OwnNumbers {
 	 */
 	private List getOwnGameNumbers(String game) {
 		
-		List <List> rivit = new ArrayList <List> ();
+		List rivit = new ArrayList ();
 		List <String> lista = null;
 		int lkm = Integer.parseInt(properties.getProperty(game));
 		
@@ -217,7 +217,7 @@ public class OwnNumbers {
 	
 	private List getOwnJokeriDirection(String game) {
 		
-		List <List> rivit = new ArrayList <List> ();
+		List rivit = new ArrayList ();
 		List <String> lista = null;
 		int lkm = Integer.parseInt(properties.getProperty(game));
 		
