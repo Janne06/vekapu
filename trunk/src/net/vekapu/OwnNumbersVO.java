@@ -50,12 +50,12 @@ public class OwnNumbersVO {
 	private String group = "";
 	private String until = "";
 
-	private List games = new ArrayList();
+	private List<String> games = new ArrayList<String>();
 
 	private List<String> checkedGame = new ArrayList<String>();
 
-	private List to = new ArrayList();
-	private List toSms = new ArrayList();
+	private List<String> to = new ArrayList<String>();
+	private List toSms = new ArrayList<String>();
 
 	private Map<String, List> own = new HashMap<String, List>();
 	private Map<String, List> checkedGame2 = new HashMap<String, List>();

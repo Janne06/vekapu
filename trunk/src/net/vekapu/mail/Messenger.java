@@ -58,12 +58,12 @@ public class Messenger {
 	 * @param settingsVO
 	 * @throws VekapuException
 	 */
-	public static void sendEMail(String otsikko, String group, List to,
+	public static void sendEMail(String otsikko, String group, List<String> to,
 			String tulos,  SettingsVO settingsVO) throws VekapuException {
 		
 		String[] to2 = new String[to.size()];
 		
-		Iterator it = to.iterator();
+		Iterator<String> it = to.iterator();
 		for (int i = 0; i < to.size(); i++) {
 			to2[i] = (String) it.next();
 			logger.debug(to2[i]);
@@ -98,10 +98,10 @@ public class Messenger {
 	 * @param settingsVO
 	 * @throws VekapuException
 	 */
-	public static void sendSMS(String otsikko, String group, List to, SettingsVO settingsVO) throws VekapuException {
+	public static void sendSMS(String otsikko, String group, List<String> to, SettingsVO settingsVO) throws VekapuException {
 		String[] to2 = new String[to.size()];
 		
-		Iterator it = to.iterator();
+		Iterator<String> it = to.iterator();
 		for (int i = 0; i < to.size(); i++) {
 			to2[i] = (String) it.next();
 			logger.debug(to2[i]);
@@ -133,11 +133,11 @@ public class Messenger {
 	 * @param settingsVO
 	 * @throws VekapuException
 	 */
-	public static void sendEndMail(String game, String group, List to, SettingsVO settingsVO) throws VekapuException {
+	public static void sendEndMail(String game, String group, List<String> to, SettingsVO settingsVO) throws VekapuException {
 	
 		String[] to2 = new String[to.size()];
 		
-		Iterator it = to.iterator();
+		Iterator<String> it = to.iterator();
 		for (int i = 0; i < to.size(); i++) {
 			to2[i] = (String) it.next();
 			logger.debug(to2[i]);
@@ -227,12 +227,12 @@ public class Messenger {
 	 * @param settingsVO
 	 * @throws VekapuException
 	 */
-	public static void sendInfo(String group, List to, List toSms, SettingsVO settingsVO) throws VekapuException {
+	public static void sendInfo(String group, List<String> to, List<String> toSms, SettingsVO settingsVO) throws VekapuException {
 		
 		String[] to2 = new String[to.size()];
 		String[] toSms2 = new String[toSms.size()];
 		
-		Iterator it = to.iterator();
+		Iterator<String> it = to.iterator();
 		for (int i = 0; i < to.size(); i++) {
 			to2[i] = (String) it.next();
 			logger.debug(to2[i]);

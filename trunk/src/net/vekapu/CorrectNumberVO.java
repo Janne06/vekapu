@@ -67,7 +67,7 @@ public class CorrectNumberVO {
 	/**
 	 * @return Returns correctNumber.
 	 */
-	public List getCorrectNumber() {
+	public List<Integer> getCorrectNumber() {
 		return correctNumber;
 	}
 
