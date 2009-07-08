@@ -281,13 +281,26 @@ public class CorrectNumber {
 		
 		String delimeter = ",";
 		if (oikeat.indexOf(delimeter) < 0) delimeter = " ";
-		
-		StringTokenizer toke = new StringTokenizer(oikeat, delimeter);
+				
+		StringTokenizer toke;
+		try {
+			toke = new StringTokenizer(oikeat, delimeter);
+		} catch (Exception e) {
+			logger.error(e);
+			String messu = "TextiTV:n sivut on varmaankin muuttuneet ?? Ongelmia pelissä: " + game;
+			throw new VekapuException(messu,e);
+		}
+				
 		Integer number = null;
-
-		while (toke.hasMoreTokens()) {
-			number = Integer.valueOf(toke.nextToken().trim());
-			l_correctNumberVO.addCorrectNumber(number);
+		try {
+			while (toke.hasMoreTokens()) {
+				number = Integer.valueOf(toke.nextToken().trim());
+				l_correctNumberVO.addCorrectNumber(number);
+			}
+		} catch (Exception e) {
+			logger.error(e);
+			String messu = "TextiTV:n sivut on varmaankin muuttuneet ?? Ongelmia pelissä: " + game;
+			throw new VekapuException(messu,e);
 		}
 		
 		delimeter = ",";
@@ -356,7 +369,7 @@ public class CorrectNumber {
 		// netistä ainakaan tekstiTV:n sivuilta.
 		//  
 		// FIXME Joskus vois ehkä hakee kopion vekapun omilta sivuilta !! 
-		// Vois olla aika hyvä.
+		// Vois olla aika hyvä. Tai sitten tulis vaan yks turha ylläpidettävä osa lisää :(
 		
 		if (!StoreFile.isFileExist(fullname)) {
 			logger.info("Haetaan oikea " + name + " rivi ja talleteaan se "
