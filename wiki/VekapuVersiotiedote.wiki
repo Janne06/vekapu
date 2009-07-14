@@ -3,7 +3,15 @@
 
 ==Kehitys versio==
 
-*Kehitys version 2.3 parannuksia*
+*Kehitys version 2.5.1 parannuksia*
+
+
+==Vekapu 2.5==
+Päivitetty 14.07.09
+
+ * Muuttuneet textiTV:n sivujaot kohalleen. 
+ * Pientä parannusta virheenkäsittelyyn.
+ * Olipas tossa pitkään taukoa välissä.
 
 ==Vekapu 2.2==
 Päivitetty 29.11.07
