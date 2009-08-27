@@ -7,7 +7,7 @@
 //
 // Purpose:  Giving correct lotto numbers.
 //
-// (c) Copyright J.Ilonen, 2003-2007
+// (c) Copyright J.Ilonen, 2003-2009
 //
 // $Id$
 //
@@ -169,6 +169,13 @@ public class CorrectNumber {
 		String gameSettings = Constant.getGamePropsDir()+ game + ".properties";
 		gameProps = PropsReader.read(gameSettings);
 		
+		// Asetetaan kierroksen numero mukaan rivien tietoihin.
+		CorrectNumberVO l_correctNumberVO = new CorrectNumberVO(game,getSettingsVO().getWeek());
+		l_correctNumberVO.setGameProps(gameProps);
+		
+		String oikeat = "";
+		String lisat = "";
+
 		///////////////////////////////////////////////////////////////////////////////////////
 		if (!settingsVO.isManual()) {
 			
@@ -210,13 +217,6 @@ public class CorrectNumber {
 				throw new VekapuException(messu);
 			}
 		}
-		
-		// Asetetaan kierroksen numero mukaan rivien tietoihin.
-		CorrectNumberVO l_correctNumberVO = new CorrectNumberVO(game,getSettingsVO().getWeek());
-		l_correctNumberVO.setGameProps(gameProps);
-		
-		String oikeat = "";
-		String lisat = "";
 		
 		if (!settingsVO.isManual()) {
 			try {
@@ -270,10 +270,11 @@ public class CorrectNumber {
 				throw new VekapuException(messu,re);
 			}
 		} else {
+			// Manual mode
 			CorrectNumberManual manual = new CorrectNumberManual();
-			oikeat = manual.getArg("correct");
-			lisat = manual.getArg("extra");
-			l_correctNumberVO.setDate(manual.getArg("info"));
+			oikeat = manual.getArg("correct_" + game);
+			if (game != "jokeri") lisat = manual.getArg("extra_" + game);
+			l_correctNumberVO.setDate(manual.getArg("info_" + game));
 		}
 	
 		logger.debug("oikeat: " + oikeat);
