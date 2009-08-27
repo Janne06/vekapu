@@ -7,7 +7,7 @@
 //
 // Purpose:  Giving correct lotto numbers.
 //
-// (c) Copyright J.Ilonen, 2003-2007
+// (c) Copyright J.Ilonen, 2003-2009
 //
 // $Id$
 //
@@ -43,6 +43,8 @@ import org.apache.log4j.Logger;
 
 /**
  * 
+ * Actual this in normal / typical 'props reader' class.
+ * 
  * @author janne
  * 
  */
@@ -57,7 +59,8 @@ public class CorrectNumberManual {
 	 */	
 	public CorrectNumberManual() throws VekapuException {
 		
-		logger.info("Gettin Correct numbers from " + Constant.getCorrectNumberFile() + "-file");
+		logger.info("Gettin Correct numbers from " + 
+				Constant.getCorrectNumberFile() + "-file");
 		getManualFile();
 
 	}
@@ -65,9 +68,21 @@ public class CorrectNumberManual {
 
 	/**
 	 * @param arg
+	 * @throws VekapuException 
 	 */
-	public String getArg(String arg) {
-		String ret = properties.getProperty(arg).trim();
+	public String getArg(String arg) throws VekapuException {
+		String ret = "";
+		try {
+			ret = properties.getProperty(arg).trim();
+		} catch (Exception e) {
+			
+			String msg = "Haettua atribuuttia '" + arg + "' ei löydy !!" + 
+			Constant.getLineSeparator() + "Tarkista tiedosto: " + 
+			Constant.getUserDir() +  Constant.getCorrectNumberFile();
+			
+			logger.error(msg,e);
+			throw new VekapuException(msg,e);
+		}
 		return ret;
 
 	}
