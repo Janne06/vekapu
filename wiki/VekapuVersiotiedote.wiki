@@ -3,8 +3,14 @@
 
 ==Kehitys versio==
 
-*Kehitys version 2.5.1 parannuksia*
+*Kehitys version 2.5.2 parannuksia*
+ 
+ * lottoplus mukaan tarkistuksiin
 
+==Vekapu 2.5.1==
+Päivitetty 27.08.09
+
+ * Korjattu Issue #3 - eli manuaali moodissa huomioidaan eri pelien tulokset.
 
 ==Vekapu 2.5==
 Päivitetty 14.07.09
