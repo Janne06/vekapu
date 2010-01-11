@@ -7,7 +7,7 @@
 //
 // Purpose:  Project constants.
 //
-// (c) Copyright J.Ilonen, 2003-2007
+// (c) Copyright J.Ilonen, 2003-2010
 //
 // $Id$
 //
@@ -41,7 +41,7 @@ public class Constant {
 	 */
 	private final static String VERSION = "2.5.2";
 
-	private final static String URL = "http://www.vekapu.net/";
+	private final static String URL = "https://code.google.com/p/vekapu/";
 
 	private final static String EMAIL = "vekapu@vekapu.net";
 	private final static String EMAIL_BUGS = "bugs@vekapu.net";
