@@ -1,3 +1,3 @@
-#Vekapun versio numero
+#Vekapun versio numero.
 #Tue Jul 14 21:47:29 EEST 2009
 version=2.5
