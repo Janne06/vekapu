@@ -76,7 +76,7 @@ public class VekapuInfo {
 		rc += "Veikkausapuri lotto- ja jokeririven tarkistamiseen.";
 		rc += NEW_LINE + Constant.getUrlHomePage();
 		rc += NEW_LINE + NEW_LINE;
-		rc += "(C) Janne Ilonen 2002 - 2009";
+		rc += "(C) Janne Ilonen 2002 - 2011";
 
 		return rc;
 	}
