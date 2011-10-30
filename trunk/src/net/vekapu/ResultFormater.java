@@ -9,7 +9,7 @@
 //
 // Purpose:  Vekapu results layout formater.
 //
-// (c) Copyright J.Ilonen, 2007
+// (c) Copyright J.Ilonen, 2007-2011
 //
 // $Id$
 //
@@ -89,10 +89,19 @@ public class ResultFormater {
 		StringBuffer ret = new StringBuffer();
 		List games = resultVO.getOwnNumbersVO().getGames();
 		
+		logger.debug(resultVO.toString());
+		
 		for (int count = 0; count < games.size(); count++) {
 			String game = (String) games.get(count);
 			String gametype = resultVO.getCorrect(game).getGameProps().getProperty("type");
 			int win = Integer.parseInt( resultVO.getCorrect(game).getGameProps().getProperty("win") );
+			int win_extra = 0;
+			
+			if (gametype.equals("lotto"))
+				{
+				win_extra = Integer.parseInt( resultVO.getCorrect(game).getGameProps().getProperty("win_extra") );
+				}
+			
 			
 			ret.append(NEW_LINE);
 			
@@ -149,6 +158,7 @@ public class ResultFormater {
 				// Lotto
 				int hit = 0;
 				int extra = 0;
+				
 				// Jokeri
 				boolean dirA = false;
 				boolean dirB = false;	
@@ -219,7 +229,9 @@ public class ResultFormater {
 						if (Integer.parseInt(hitB) >= win) winmsg = true;
 					}
 				} else {
-					if (hit >= win) winmsg = true;
+					if (hit > win) winmsg = true;
+					else 
+						if ((hit == win) && (extra >= win_extra)) winmsg = true;
 				}
 				
 				if (winmsg) ret.append("  <==== VOITTO ====>");
