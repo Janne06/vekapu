@@ -7,7 +7,7 @@
 //
 // Purpose:  Project constants.
 //
-// (c) Copyright J.Ilonen, 2003-2010
+// (c) Copyright J.Ilonen, 2003-2011
 //
 // $Id$
 //
@@ -37,9 +37,9 @@ public class Constant {
 
 	/*
 	 Päivitä molemmat (versio & VERSION) numerot AINA SAMOIKSI. 
-	 versio = 2.5.2
+	 versio = 3.0
 	 */
-	private final static String VERSION = "2.5.2";
+	private final static String VERSION = "3.0";
 
 	private final static String URL = "http://www.vekapu.net/";
 
