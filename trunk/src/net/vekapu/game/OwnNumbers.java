@@ -224,6 +224,8 @@ public class OwnNumbers {
 		for (int i = 0; i < lkm; i++) {
 
 			String rivi = properties.getProperty(game + "_" + (i + 1) + "_direction");			
+			if (rivi == null) rivi = ""; 
+						
 			StringTokenizer toke = new StringTokenizer(rivi, ",");
 			
 			lista = new ArrayList <String> ();
