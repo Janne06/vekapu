@@ -161,7 +161,8 @@ public class ResultFormater {
 				
 				// Jokeri
 				boolean dirA = false;
-				boolean dirB = false;	
+				boolean dirB = false;
+				boolean any = true; // Hit any number correct position
 				String direction = "";
 				String hitA = "-";
 				String hitB = "-";
@@ -171,6 +172,8 @@ public class ResultFormater {
 					direction = directions.toString();
 					if (direction.indexOf("a") > 0) dirA = true;
 					if (direction.indexOf("b") > 0) dirB = true;
+					
+					if (dirA || dirB) any = false;
 				}
 				
 				ret.append("Rivi " + (i < 9 ? " " : "") + (i + 1) + ". | ");
@@ -207,13 +210,18 @@ public class ResultFormater {
 					}
 
 					if (gametype.equals("jokeri")) {
-						
-						hitA = "-";
-						hitB = "-";
-						if (dirA) hitA = String.valueOf( Checker.countJokeriA(tulos) );
-						if (dirB) hitB = String.valueOf( Checker.countJokeriB(tulos) );
-						ret.append((j < lkm - 1) ? ", " : " | Osumia " + hitA + " / " + hitB);
-						
+						if (any)
+						{
+							ret.append((j < lkm - 1) ? ", " : " | Osumia " + hit);
+						}
+						else
+						{
+							hitA = "-";
+							hitB = "-";
+							if (dirA) hitA = String.valueOf( Checker.countJokeriA(tulos) );
+							if (dirB) hitB = String.valueOf( Checker.countJokeriB(tulos) );
+							ret.append((j < lkm - 1) ? ", " : " | Osumia " + hitA + " / " + hitB);
+						}
 					} else {
 						ret.append((j < lkm - 1) ? ", " : " | Osumia " + hit + " + " + extra);
 					}
@@ -221,12 +229,19 @@ public class ResultFormater {
 				}
 
 				if (gametype.equals("jokeri")) {
-					ret.append(" suunta " + direction);
-					if (dirA) {
-						if (Integer.parseInt(hitA) >= win) winmsg = true;
+					if (any)
+					{
+						if (hit >= win) winmsg = true;
 					}
-					if (dirB) {
-						if (Integer.parseInt(hitB) >= win) winmsg = true;
+					else
+					{
+						ret.append(" suunta " + direction);
+						if (dirA) {
+							if (Integer.parseInt(hitA) >= win) winmsg = true;
+						}
+						if (dirB) {
+							if (Integer.parseInt(hitB) >= win) winmsg = true;
+						}
 					}
 				} else {
 					if (hit > win) winmsg = true;
