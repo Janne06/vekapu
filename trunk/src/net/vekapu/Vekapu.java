@@ -261,7 +261,10 @@ public class Vekapu {
 			// TODO Meniskähän koko tää luuppi GameMasteriin ??
 			// Jos ei kokonaan niin ainakin eri pelien tarkastuksien kutsut
 	
+			settingsVO.setWeek(kierros);
+			
 			logger.info("Tarkistettava porukka: '" + group + "' & kierros: '" + kierros + "'.");
+			logger.debug(settingsVO);
 	
 			OwnNumbersVO numbersVO = new OwnNumbers(group, settingsVO).getOwnNumbers();
 			
