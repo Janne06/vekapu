@@ -7,9 +7,9 @@
 //
 // Feedback: palaute@vekapu.net
 //
-// Purpose:  Checkin lottery like games.
+// Purpose:  Checking lottery like games.
 //
-// (c) Copyright J.Ilonen, 2003-2007
+// (c) Copyright J.Ilonen, 2003-2011
 //
 // $Id$
 //
@@ -42,7 +42,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 /**
- * Checkin lottery like games.
+ * Checking lottery like games.
  *   
  * @author janne
  *
@@ -64,11 +64,6 @@ public class Vekapu {
 	 * 
 	 */
 	private ResultVO resultVO = null;
-
-	/**
-	 * @deprecated
-	 */
-	private String tulos = "";
 
 	/**
 	 * 
@@ -183,13 +178,11 @@ public class Vekapu {
 	}
 
 	/**
-	 * Checkin every group lines.
+	 * Checking every group lines.
 	 * 
 	 * @throws VekapuException
 	 */
 	public void checkAll(String kierros) throws VekapuException {
-
-		tulos = "";
 
 		// Kelataan läpi lottoporukat.
 		for (int i = 1; i <= settingsVO.getGroupCount().intValue(); i++) {
@@ -203,7 +196,6 @@ public class Vekapu {
 			
 			ResultFormater formater = new ResultFormater(resultVO,settingsVO.isServer().booleanValue());
 			logger.debug(formater.toString());		
-			tulos += formater.toString();
 		}
 
 		if (miss) {
@@ -223,18 +215,12 @@ public class Vekapu {
 		}
 	}
 
-	/**
-	 * @deprecated
-	 */
-	public String getTulos() {
-		return tulos;
-	}
 	
 	/**
 	 * 
 	 * @param group
 	 * @param kierros
-	 * @return file locatin where is checked resutls 
+	 * @return file locating where is checked results 
 	 * @throws VekapuException
 	 */
 	public String checkGroup(String group, String kierros) throws VekapuException { 
@@ -260,9 +246,7 @@ public class Vekapu {
 		
 			// TODO Meniskähän koko tää luuppi GameMasteriin ??
 			// Jos ei kokonaan niin ainakin eri pelien tarkastuksien kutsut
-	
-			settingsVO.setWeek(kierros);
-			
+				
 			logger.info("Tarkistettava porukka: '" + group + "' & kierros: '" + kierros + "'.");
 			logger.debug(settingsVO);
 	
