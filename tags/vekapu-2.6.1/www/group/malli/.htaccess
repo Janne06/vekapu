@@ -1,0 +1,4 @@
+AuthUserFile /home/vekapu/public_html/group/malli/.salasana
+AuthName "malli - Lottoporukan sivusto"
+AuthType Basic
+require valid-user

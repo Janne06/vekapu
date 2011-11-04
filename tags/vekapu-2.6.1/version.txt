@@ -1,0 +1,5 @@
+#Vekapun versio numero
+#Fri, 04 Nov 2011 20:26:43 +0200
+#Vekapun versio numero.
+#Tue Jul 14 21:47:29 EEST 2009
+version=2.6.1
