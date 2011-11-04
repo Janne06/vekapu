@@ -9,7 +9,7 @@
 //
 // Purpose:  Checking lottery like games.
 //
-// (c) Copyright J.Ilonen, 2003-2011
+// (c) Copyright J.Ilonen, 2003 =>
 //
 // $Id$
 //
@@ -184,20 +184,24 @@ public class Vekapu {
 	 */
 	public void checkAll(String kierros) throws VekapuException {
 
-		// Kelataan läpi lottoporukat.
+		// Checking every group
 		for (int i = 1; i <= settingsVO.getGroupCount().intValue(); i++) {
 
 			String group = settingsVO.getGroupName(i);
 			if (group == null) {
+				// Something wrong.
 				VekapuInfo.groupNull();
 			}
-
-			checkGroup(group, kierros);
 			
+			// Here we go. Checking lottery lines.
+			this.checkGroup(group, kierros);
+			
+			// Here we print results.
 			ResultFormater formater = new ResultFormater(resultVO,settingsVO.isServer().booleanValue());
 			logger.debug(formater.toString());		
 		}
 
+		// Nothing to check. :(
 		if (miss) {
 			String NEW_LINE = Constant.getLineSeparator();
 
@@ -209,6 +213,8 @@ public class Vekapu {
 			logger.warn(messu);
 			System.out.println(messu);
 		} else {
+			// TODO Lokille tieto siitämitä tarkistettiin.
+			// Let's print to the log what we scheck.
 			logger.info("<===== TARKISTETTU " + lkmLotto  + " LOTTO RIVIA =====>");
 			logger.info("<===== TARKISTETTU " + lkmJokeri + " JOKERI RIVIA =====>");
 			logger.info("<===== TARKISTETTU " + lkmviking + " VIKING LOTTOPORUKAN RIVIT =====>");
@@ -217,6 +223,7 @@ public class Vekapu {
 
 	
 	/**
+	 * Checking one lottery group lines.
 	 * 
 	 * @param group
 	 * @param kierros
@@ -426,6 +433,7 @@ public class Vekapu {
 	private void sendMail(String kierros,OwnNumbersVO numbersVO, String parasTulos, String parasJokeri) throws VekapuException {
 		
 //		 TODO Porukka mukaan ??
+//		 TODO JOs refaktorois ja jättäis vaan ktsut tänne. Muun kaman vois siirtää muualle.		
 		String otsikko = "Kierros " + kierros;
 
 		if (numbersVO.isGame("lotto"))
