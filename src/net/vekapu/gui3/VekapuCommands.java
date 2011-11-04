@@ -12,7 +12,7 @@
 // Thanks:   Bernhard Stiftner - Java MDI Application Framework
 //           http://jmdiframework.sourceforge.net/
 //
-//  (c) Copyright J.Ilonen, 2007
+//  (c) Copyright J.Ilonen, 2007-2011
 //
 // $Id:VekapuCommands.java 30 2007-02-25 20:21:49Z janne.ilonen $
 //
@@ -110,13 +110,13 @@ public class VekapuCommands extends SwingDefaultCommands {
 			
 		}
 
-		protected void doExecute() {
-			logger.debug("Ladataan asetukset");
-
-			String doku = Constant.getUserDir() + Constant.getFileSeparator();
-			doku += "vekapu.properties";
-			Application.getInstance().openDocument(doku);
-
+		public void processMessage(Object source, int type, Object argument) {
+			switch (type) {
+			case MessageDispatcher.APP_INIT:
+				// Pitää vissiin olla aina valittavissa
+				setAvailable(true);
+				break;
+			}
 		}
 
 		public KeyStroke getAccelerator() {
