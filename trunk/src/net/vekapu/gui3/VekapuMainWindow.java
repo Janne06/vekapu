@@ -12,7 +12,7 @@
 // Thanks:   Bernhard Stiftner - Java MDI Application Framework
 //           http://jmdiframework.sourceforge.net/
 //
-//  (c) Copyright J.Ilonen, 2007
+//  (c) Copyright J.Ilonen, 2007-2011
 //
 // $Id$
 //
@@ -65,8 +65,11 @@ public class VekapuMainWindow extends SwingMainWindow {
 
 	VekapuContextMenu contextMenu;
 	
+	// Own submenus.
+	protected JMenu preferencesMenu;
 	protected JMenu couponsMenu;
 	protected JMenu checkedMenu;
+//	protected JMenu correctMenu;
 	
 	
 	public VekapuMainWindow() {
@@ -79,13 +82,26 @@ public class VekapuMainWindow extends SwingMainWindow {
 		return contextMenu;
 	}
 
+	/**
+	 * Vekapu Menu
+	 */
 	protected void constructMenu() {
+		//=========================================================
 		JMenu vekapuMenu = SwingCommandMenu
 				.createMenu(((VekapuCommands) getCommands())
 						.getShowVekapuMenuCommand()); 
-		vekapuMenu.add(SwingCommandButton
-				.createMenuItem(((VekapuCommands) getCommands())
-						.getVekapuPreferencesCommand())); 
+		
+		//---------------------------------------------------------
+		// Preferences
+		preferencesMenu = SwingCommandMenu
+		        .createMenu(((VekapuCommands) getCommands())
+				        .getVekapuPreferencesCommand());
+		
+		preferencesMenu.addMenuListener(new PreferencesMenuListener());
+		vekapuMenu.add(preferencesMenu);
+		
+		//---------------------------------------------------------
+		// Coupons
 		vekapuMenu.addSeparator();
 		
 		couponsMenu = SwingCommandMenu
@@ -94,30 +110,38 @@ public class VekapuMainWindow extends SwingMainWindow {
 		
 		couponsMenu.addMenuListener(new CouponsMenuListener());
 		vekapuMenu.add(couponsMenu);
+		
+		//---------------------------------------------------------
+		// Checked
 		vekapuMenu.addSeparator();
 		checkedMenu = SwingCommandMenu
         		.createMenu(((VekapuCommands) getCommands())
         				.getShowCheckedMenuCommand());
 
 		checkedMenu.addMenuListener(new CheckedMenuListener());
+		//---------------------------------------------------------
 		vekapuMenu.add(checkedMenu);
 		
-		
+		//---------------------------------------------------------
 		getJMenuBar().add(vekapuMenu); 
+		//=========================================================
 		JMenu helpMenu = SwingCommandMenu
 				.createMenu(((VekapuCommands) getCommands())
 						.getShowHelpMenuCommand());
 		
+		//---------------------------------------------------------
 		// Homepage
 		helpMenu.add(SwingCommandButton
 				.createMenuItem(((VekapuCommands) getCommands())
 						.getHelpHomePageCommand()));
 		
+		//---------------------------------------------------------
 		helpMenu.addSeparator();
 		// About
 		helpMenu.add(SwingCommandButton
 				.createMenuItem(((VekapuCommands) getCommands())
 						.getHelpAboutCommand()));
+		//---------------------------------------------------------
 		getJMenuBar().add(helpMenu);
 		
 	}
@@ -126,7 +150,52 @@ public class VekapuMainWindow extends SwingMainWindow {
 		return new VekapuCommands();
 	}
 	
+	////// ========================================================================
+	class PreferencesMenuListener implements MenuListener {
+		public void menuSelected(MenuEvent e) {			
+			PreferencesFileActionListener listener = new PreferencesFileActionListener();
 
+			preferencesMenu.removeAll();
+
+			JMenuItem item = new JMenuItem("Vekapu");
+			item.addActionListener(listener);
+			preferencesMenu.add(item);
+
+			preferencesMenu.addSeparator();
+			
+			JMenuItem item2 = new JMenuItem("Loki asetukset");
+			item2.addActionListener(listener);
+			preferencesMenu.add(item2);
+
+			JMenuItem item3 = new JMenuItem("Loki");
+			item3.addActionListener(listener);
+			preferencesMenu.add(item3);
+
+		}
+		public void menuDeselected(MenuEvent e) {};
+		public void menuCanceled(MenuEvent e) {};
+		
+	}
+
+	class PreferencesFileActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			String filename = event.getActionCommand();
+			
+			if (filename == "Vekapu") filename = "vekapu.properties";
+			if (filename == "Loki asetukset") filename = "log4j.properties";
+			if (filename == "Loki") filename = "log" + Constant.getFileSeparator() + "vekapu.log";
+		
+						
+					
+			String fullName = Constant.getUserDir() + Constant.getFileSeparator() + filename;
+			
+			logger.debug("filename : " + fullName);
+			
+			Application.getInstance().openDocument(fullName);
+		}
+	}
+
+	
 	////// ========================================================================
 	class CouponsMenuListener implements MenuListener {
 		public void menuSelected(MenuEvent e) {			
@@ -145,6 +214,8 @@ public class VekapuMainWindow extends SwingMainWindow {
 		public void menuCanceled(MenuEvent e) {};
 		
 	}
+
+	////// ========================================================================
 	class CouponsFileActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			String filename = event.getActionCommand();
@@ -162,6 +233,7 @@ public class VekapuMainWindow extends SwingMainWindow {
 			Application.getInstance().openDocument(fullName);
 		}
 	}
+	
 	////// ========================================================================
 	class CheckedMenuListener implements MenuListener {
 		public void menuSelected(MenuEvent e) {			
@@ -179,6 +251,8 @@ public class VekapuMainWindow extends SwingMainWindow {
 		public void menuDeselected(MenuEvent e) {};
 		public void menuCanceled(MenuEvent e) {};
 	}
+	
+	////// ========================================================================
 	class CheckedFileActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			String filename = event.getActionCommand();
