@@ -75,8 +75,12 @@ public class GameMaster {
 	
 			if (gametype.equals("jokeri")) {
 				numbersVO.addCheckedGame2(game, checker.checkJokeri(numbersVO.getOwnLines(game)));
-			} else {
+			} else if (gametype.equals("lotto")) {
 				numbersVO.addCheckedGame2(game,checker.checkLotto(numbersVO.getOwnLines(game)));
+			} else {
+				// Unknown game
+				logger.error("Unknown game type :" + gametype);
+				throw new VekapuException("Unknown game type :" + gametype);
 			}
 			numbersVO.setGameBest(game, checker.getBestResult());
 			resultVO.addCorrectNumber(game, correctNumVO);
