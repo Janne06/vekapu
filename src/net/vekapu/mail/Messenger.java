@@ -7,7 +7,7 @@
 //
 // Purpose:  Handlin eMail & sms.
 //
-// (c) Copyright J.Ilonen, 2003-2006
+// (c) Copyright J.Ilonen, 2003 =>
 //
 // $Id$
 //
@@ -36,6 +36,7 @@ import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
 import net.vekapu.util.Constant;
 import net.vekapu.util.StoreFile;
+import net.vekapu.util.Version;
 
 import org.apache.log4j.Logger;
 
@@ -268,7 +269,7 @@ public class Messenger {
 			lsInfo.append(Constant.getLineSeparator());
 		}
 		lsInfo.append(Constant.getLineSeparator());
-		lsInfo.append(Constant.getName() + " - " + Constant.getVersionNumber());
+		lsInfo.append(Constant.getName() + " - " + Version.getVersionNumber());
 		lsInfo.append(Constant.getLineSeparator());
 		lsInfo.append(Constant.getUrlHomePage());
 

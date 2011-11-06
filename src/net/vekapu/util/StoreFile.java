@@ -9,7 +9,7 @@
 //
 // Purpose:  Writing & reading files.
 //
-// (c) Copyright J.Ilonen, 2003-2007
+// (c) Copyright J.Ilonen, 2003 =>
 //
 // $Id$
 //
@@ -317,7 +317,7 @@ public class StoreFile {
 			StringBuffer sb = new StringBuffer();
 
 			logger.info("Test StoreFile");
-			sb.append("Kokeilu versio:" + Constant.getVersionNumber()
+			sb.append("Kokeilu versio:" + Version.getVersionNumber()
 					+ Constant.getLineSeparator());
 			sb.append("123");
 

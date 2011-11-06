@@ -9,7 +9,7 @@
 //
 // Purpose:  Vekapu results layout formater.
 //
-// (c) Copyright J.Ilonen, 2007-2011
+// (c) Copyright J.Ilonen, 2007 =>
 //
 // $Id$
 //
@@ -35,6 +35,7 @@ import java.util.List;
 import net.vekapu.game.Checker;
 import net.vekapu.util.Constant;
 import net.vekapu.util.DayHelper;
+import net.vekapu.util.Version;
 
 import org.apache.log4j.Logger;
 
@@ -70,7 +71,7 @@ public class ResultFormater {
 
 		tulos.append(Constant.getName() +
 				" - Veikkaus apuri - versio " +
-				Constant.getVersionNumber());
+				Version.getVersionNumber());
 		tulos.append(NEW_LINE);
 		tulos.append(Constant.getUrlHomePage());
 		tulos.append(NEW_LINE + NEW_LINE);

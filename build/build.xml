@@ -45,7 +45,7 @@
     <property name="java.build.dir" value="./build"/>
     <property name="jar.lib.dir" value="../lib"/>
 
-    <property file="${java.source.dir}/net/vekapu/util/Constant.java"/>
+    <property file="${java.source.dir}/net/vekapu/util/Version.java"/>
 
     <property name="name" value="vekapu"/>
     <property name="build.dir" value="build"/>
@@ -207,7 +207,7 @@
              use="true"
              windowtitle="Vekapu ${versio} - JavaDoc">
         <doctitle><![CDATA[<h1>Vekapu&#169; ${versio}</h1>]]></doctitle>
-        <bottom><![CDATA[<i>Copyright &#169; 2003-2007 Janne Ilonen & Vekapu&#169; team (vekapu@vekapu.net) All Rights Reserved.</i>]]></bottom>
+        <bottom><![CDATA[<i>Copyright &#169; 2003 => Janne Ilonen & Vekapu&#169; team (vekapu@vekapu.net) All Rights Reserved.</i>]]></bottom>
      </javadoc>
   </target>
 </project>
