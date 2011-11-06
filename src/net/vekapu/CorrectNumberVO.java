@@ -9,7 +9,7 @@
 //
 // Purpose:  Transfer/Value object for correct numbers.
 //
-// (c) Copyright J.Ilonen, 2006-2007
+// (c) Copyright J.Ilonen, 2006 =>
 //
 // $Id$
 //
@@ -74,7 +74,7 @@ public class CorrectNumberVO {
 	/**
 	 * @return Returns extraNumber.
 	 */
-	public List getExtraNumber() {
+	public List<Integer> getExtraNumber() {
 		return extraNumber;
 	}
 
@@ -135,13 +135,13 @@ public class CorrectNumberVO {
 	}
 
 	/**
-	 * @return correct numbers at ','-separeted String. For printing.
+	 * @return correct numbers at ','-separated String. For printing.
 	 */
 	public String getCorrectNumbersString() {
 		String rs ="";
 		int i = 0;
 		int count = correctNumber.size();
-		for (Iterator iter = correctNumber.iterator(); iter.hasNext();) {
+		for (Iterator<Integer> iter = correctNumber.iterator(); iter.hasNext();) {
 			Integer element = (Integer) iter.next();
 			rs = rs + element.toString() + (i < (count - 1) ? ", " : "");
 			i++;
@@ -151,13 +151,13 @@ public class CorrectNumberVO {
 	}
 	
 	/**
-	 * @return extra numbers at ','-separeted String. For printing.
+	 * @return extra numbers at ','-separated String. For printing.
 	 */
 	public String getExtraNumbersString() {
 		String rs ="";
 		int i = 0;
 		int count = extraNumber.size();
-		for (Iterator iter = extraNumber.iterator(); iter.hasNext();) {
+		for (Iterator<Integer> iter = extraNumber.iterator(); iter.hasNext();) {
 			Integer element = (Integer) iter.next();
 			rs = rs + element.toString() + (i < (count - 1) ? ", " : "");
 			i++;
