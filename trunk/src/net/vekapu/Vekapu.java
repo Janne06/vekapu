@@ -37,6 +37,7 @@ import net.vekapu.util.DayHelper;
 import net.vekapu.util.SettingsReader;
 import net.vekapu.util.StoreFile;
 import net.vekapu.util.VekapuInfo;
+import net.vekapu.util.Version;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -130,7 +131,7 @@ public class Vekapu {
 
 		try {
 			Vekapu vekapu = new Vekapu(args);
-			logger.info(Constant.getName() + "-core " + Constant.getVersionNumber());
+			logger.info(Constant.getName() + "-core " + Version.getVersionNumber());
 			vekapu.start();
 		} catch (VekapuException v) {
 			if (v.isBugMail()) {

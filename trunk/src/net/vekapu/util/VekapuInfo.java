@@ -9,7 +9,7 @@
 //
 // Purpose:  Informatin about Vekapu..
 //
-// (c) Copyright J.Ilonen, 2006-2007
+// (c) Copyright J.Ilonen, 2006 =>
 //
 // $Id$
 //
@@ -71,7 +71,7 @@ public class VekapuInfo {
 		String NEW_LINE = Constant.getLineSeparator();
 		String rc = NEW_LINE;
 
-		rc += Constant.getName() + " " + Constant.getVersionNumber();
+		rc += Constant.getName() + " " + Version.getVersionNumber();
 		rc += NEW_LINE + NEW_LINE;
 		rc += "Veikkausapuri lotto- ja jokeririven tarkistamiseen.";
 		rc += NEW_LINE + Constant.getUrlHomePage();

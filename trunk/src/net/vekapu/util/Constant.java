@@ -34,13 +34,6 @@ package net.vekapu.util;
  */
 public class Constant {
 	private final static String NAME = "Vekapu";
-
-	/*
-	 Päivitä molemmat (versio & VERSION) numerot AINA SAMOIKSI. 
-	 versio = 2.6.1
-	 */
-	private final static String VERSION = "2.6.1";
-
 	private final static String URL = "http://www.vekapu.net/";
 
 	private final static String EMAIL = "vekapu@vekapu.net";
@@ -49,7 +42,6 @@ public class Constant {
 	private final static String HEADER = "[Vekapu]";
 
 	private final static String FILE_MANUAL = "correctnumbers.properties";
-
 	private final static String LOG4J_CONFIGURE = "log4j.properties";
 
 	//
@@ -59,46 +51,32 @@ public class Constant {
 
 	//
 	private final static String HIT = "X";
-
 	private final static String EXTRA = "O";
-
 	private final static String MISS = "-";
 
 	//
 	private final static String HIT_OPEN = "(";
-
 	private final static String HIT_CLOSE = ")";
-
 	private final static String EXTRA_OPEN = "[";
-
 	private final static String EXTRA_CLOSE = "]";
 
 	// Default file append
 	private final static String BEST_DIR = FILE_SEPARATOR + "best" + FILE_SEPARATOR;
-
 	private final static String BEST_APP = ".txt";
 
 	// Tää eteen niin pelittää näillä etuliite virityksillä
 	private final static String WWW_DIR = "." + FILE_SEPARATOR + "correctnumbers" + FILE_SEPARATOR;
-
 	private final static String WWW_APP = ".html";
-
 	private final static String RESULT_DIR = FILE_SEPARATOR + "checked" + FILE_SEPARATOR;
-
 	private final static String RESULT_APP = ".txt";
 
 	// 
 	private final static String COUPON_DIR = "." + FILE_SEPARATOR + "coupon" + FILE_SEPARATOR;
-
 	private final static String GAME_DIR = "." + FILE_SEPARATOR + "game" + FILE_SEPARATOR;
 
 	
 	public static String getName() {
 		return NAME;
-	}
-
-	public static String getVersionNumber() {
-		return VERSION;
 	}
 
 	public static String getUrlHomePage() {

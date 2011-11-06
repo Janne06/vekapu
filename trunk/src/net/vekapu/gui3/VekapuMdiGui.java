@@ -12,7 +12,7 @@
 // Thanks:   Bernhard Stiftner - Java MDI Application Framework
 //           http://jmdiframework.sourceforge.net/
 //
-//  (c) Copyright J.Ilonen, 2007
+//  (c) Copyright J.Ilonen, 2007=>
 //
 // $Id$
 //
@@ -38,6 +38,7 @@ import net.vekapu.gui3.util.VekapuFileIOModule;
 import net.vekapu.gui3.util.VekapuResources;
 import net.vekapu.util.Constant;
 import net.vekapu.util.SettingsReader;
+import net.vekapu.util.Version;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -73,7 +74,7 @@ public class VekapuMdiGui extends Application {
 	 */
 	public String getName() {
 		// TODO Auto-generated method stub
-		return Constant.getName() + " " + Constant.getVersionNumber();
+		return Constant.getName() + " " + Version.getVersionNumber();
 	} 
 	
 	
@@ -99,7 +100,7 @@ public class VekapuMdiGui extends Application {
 	 */
 	public static void main(String[] args) {
 		PropertyConfigurator.configure(Constant.getLog4JConfigFileName());
-		logger.info(Constant.getName() + " " + Constant.getVersionNumber());
+		logger.info(Constant.getName() + " " + Version.getVersionNumber());
 		logger.info("Argumentien määrä: " + args.length);
 		
 		VekapuMdiGui gui = new VekapuMdiGui();
