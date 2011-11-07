@@ -182,7 +182,7 @@ public class ResultFormater {
 				for (int j = 0; j < lkm; j++) {
 					// Tähän pitää laittaa tiedot osumista
 
-					List tulos = (List) resultVO.getOwnNumbersVO().getCheckedGame(game).get(i);
+					List<String> tulos = (List) resultVO.getOwnNumbersVO().getCheckedGame(game).get(i);
 					String apu = (String) tulos.get(j);
 					
 					List numbers =  (List) resultVO.getOwnNumbersVO().getOwnLines(game).get(i);
