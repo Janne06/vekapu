@@ -7,7 +7,7 @@
 //
 // Purpose:  Transfer/Value Object for numbers & group info.
 //
-// (c) Copyright J.Ilonen, 2006-2007
+// (c) Copyright J.Ilonen, 2006 =>
 //
 // $Id$
 //
@@ -55,10 +55,10 @@ public class OwnNumbersVO {
 	private List<String> checkedGame = new ArrayList<String>();
 
 	private List<String> to = new ArrayList<String>();
-	private List toSms = new ArrayList<String>();
+	private List<String> toSms = new ArrayList<String>();
 
-	private Map<String, List> own = new HashMap<String, List>();
-	private Map<String, List> checkedGame2 = new HashMap<String, List>();
+	private Map<String, List<String>> own = new HashMap<String, List<String>>();
+	private Map<String, List<String>> checkedGame2 = new HashMap<String, List<String>>();
 	private Map<String, String> gameBest = new HashMap <String, String>();
 
 	
@@ -67,7 +67,7 @@ public class OwnNumbersVO {
 	 * @param aGroup
 	 * @param games
 	 */
-	public OwnNumbersVO(String aGroup,List games) {
+	public OwnNumbersVO(String aGroup,List<String> games) {
 		this.group = aGroup;
 		this.games = games;
 	}
@@ -92,7 +92,7 @@ public class OwnNumbersVO {
 	 * What games is in one chesked props file.
 	 * @return <String> List of the groups games
 	 */
-	public List getGames() {
+	public List<String> getGames() {
 		return games;
 	}
 	
@@ -138,28 +138,28 @@ public class OwnNumbersVO {
 	/**
 	 * @return List of email addresses.
 	 */
-	public List getTo() {
+	public List<String> getTo() {
 		return to;
 	}
 
 	/**
 	 * @param to the to to set
 	 */
-	public void setTo(List to) {
+	public void setTo(List<String> to) {
 		this.to = to;
 	}
 
 	/**
 	 * @return List on email addresses for SMS messages.
 	 */
-	public List getToSms() {
+	public List<String> getToSms() {
 		return toSms;
 	}
 
 	/**
 	 * @param toSms the toSms to set
 	 */
-	public void setToSms(List toSms) {
+	public void setToSms(List<String> toSms) {
 		this.toSms = toSms;
 	}
 	
@@ -167,7 +167,7 @@ public class OwnNumbersVO {
 	 * @param game
 	 * @param lines
 	 */
-	public void addOwnLines(String game,List lines) {
+	public void addOwnLines(String game,List<String> lines) {
 		own.put(game, lines);
 	}
 
@@ -220,7 +220,7 @@ public class OwnNumbersVO {
 	
 		for (int i = 0; i < games.size(); i++) {
 			String game = (String) games.get(i);
-			List list = getOwnLines(game);
+			List<String> list = getOwnLines(game);
 			List direction = getOwnLines(game + "_direction");
 			
 			ret += "Game '" + game + "' has '" + list.size()+ "' lines." + NEW_LINE;
