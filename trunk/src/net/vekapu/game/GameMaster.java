@@ -27,6 +27,8 @@
 
 package net.vekapu.game;
 
+import java.util.List;
+
 import net.vekapu.CorrectNumberVO;
 import net.vekapu.OwnNumbersVO;
 import net.vekapu.ResultVO;
@@ -52,6 +54,45 @@ public class GameMaster {
 	public GameMaster(SettingsVO settingsVO) {
 		logger.debug("Haetaan oikeat rivit. abManual = " + settingsVO.isManual());
 		this.settingsVO = settingsVO;
+	}
+
+
+	public ResultVO checkGame(ResultVO resultVO) throws VekapuException {
+//		try {
+			
+			logger.debug(resultVO);
+			
+			List game = resultVO.getOwnNumbersVO().getGames();
+			logger.debug(game);
+			
+			
+			
+			/*
+			CorrectNumberVO correctNumVO = getGameCorrectNumbers(game);	
+			
+			Checker checker = new Checker(correctNumVO);
+	
+			String gametype = PropsReader.getGameType(game);
+			logger.info("game: " + game + " & gametype: " + gametype);
+	
+			if (gametype.equals("jokeri")) {
+				numbersVO.addCheckedGame2(game, checker.checkJokeri(numbersVO.getOwnLines(game)));
+			} else if (gametype.equals("lotto")) {
+				numbersVO.addCheckedGame2(game,checker.checkLotto(numbersVO.getOwnLines(game)));
+			} else {
+				// Unknown game
+				logger.error("Unknown game type :" + gametype);
+				throw new VekapuException("Unknown game type :" + gametype);
+			}
+			numbersVO.setGameBest(game, checker.getBestResult());
+			resultVO.addCorrectNumber(game, correctNumVO);
+			*/
+			return resultVO;
+			/*
+		} catch (VekapuException ve) {
+			logger.error(ve);
+			throw ve;
+		} */
 	}
 
 	/**
