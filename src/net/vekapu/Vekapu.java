@@ -258,11 +258,16 @@ public class Vekapu {
 			logger.info("Tarkistettava porukka: '" + group + "' & kierros: '" + kierros + "'.");
 			logger.debug(settingsVO);
 	
-			OwnNumbersVO numbersVO = new OwnNumbers(group, settingsVO).getOwnNumbers();
+//			OwnNumbersVO numbersVO = new OwnNumbers(group, settingsVO).getOwnNumbers();			
+//			resultVO = new ResultVO(numbersVO);
+
+			resultVO = new ResultVO( new OwnNumbers(group, settingsVO).getOwnNumbers() );			
 			
-			resultVO = new ResultVO(numbersVO);
 			checked = false;
 	
+			// =========================================================
+			// TODO Vissiin näälin pitäis heivata GameMaster:iin.
+			// =========================================================
 			// Mikäli manual == true niin tarkistetaan kaikki
 			// Jos ei ajastettu == tarkistetaan kaikki
 			// Lauantai (ajastettuna) => tarkistetaan lotto ja jokeri
@@ -284,6 +289,10 @@ public class Vekapu {
 				tarkista = true;
 			}
 	
+			// Checking games
+			resultVO = gameMaster.checkGame(resultVO);
+			
+			/* == Jos siirtäs tarkistukset ja niihin liittyvän päättelyn GameMaster-luokkaan.
 			if (tarkista) {
 	
 				miss = false;
@@ -312,6 +321,7 @@ public class Vekapu {
 						
 					}
 				}
+				
 				// Jokerin tarkistua
 				if (numbersVO.isGame("jokeri")) {
 					logger.info("Tarkistetaan jokeri");
@@ -324,28 +334,29 @@ public class Vekapu {
 					checked = true;
 				}
 			}
-	
+	*/
+			
 			// Keskiviikko tai muuten vaan => Vikinglotto
 			if (dayhelper.isWednesday() && settingsVO.isCronJob().booleanValue()) {
 				logger.info("Keskiviikko cronilla == true ==> tarkistetaan "
 						+ "keskiviikon peli (VikingLotto)");
 				tarkista = true;
 			}
-	
+/*	
 			if (tarkista) {
 	
-				if (numbersVO.isGame("viking")) {
+//--				if (numbersVO.isGame("viking")) {
 					logger.info("Tarkistetaan vikinglotto");
 					miss = false;
 					checked = true;
 	
-					resultVO = gameMaster.checkGame("viking",resultVO, numbersVO);
-					parasTulos = numbersVO.getGameBest("viking");
+//--					resultVO = gameMaster.checkGame("viking",resultVO, numbersVO);
+//--					parasTulos = numbersVO.getGameBest("viking");
 	
 					lkmviking++;
 				}
 			}
-	
+*/	
 			if (checked) {
 				logger.info("Porukan '" + group + "' rivejä on tarkistettu.");
 				// Talletetaan parhaat tulokset
@@ -362,21 +373,21 @@ public class Vekapu {
 				StoreFile sf = new StoreFile(dir, group
 						+ Constant.getBestFileExt());
 				String jokeri = "";
-				if (numbersVO.isGame("jokeri"))
-					jokeri = " -" + parasJokeri;
+//				if (numbersVO.isGame("jokeri"))
+//					jokeri = " -" + parasJokeri;
 	
 				sf.store(kierros + " - " + parasTulos + jokeri);
 	
 				// Lähetetään lopuksi loppumisilmoitus mikäli aihetta.
 				// TODO Onx järkee näin ??
-	
+/*	
 				if (dayhelper.isToday(numbersVO.getUntil())
 						|| settingsVO.isTest().booleanValue()) {
 					Messenger.sendEndMail("Lotto", group, numbersVO.getTo(),
 							settingsVO);
 					sf.rename(dayhelper.getYearWeek());
 				}
-	
+*/	
 				// =========================================
 				// Nyt talletetaan kaikki rivit.
 				logger.info("Talleteaan tulokset kierrokselta: "
@@ -414,13 +425,13 @@ public class Vekapu {
 				// Lähetetäänkö sähköpostia ???????
 				if (settingsVO.isEmail().booleanValue()
 						|| settingsVO.isTest().booleanValue()) {
-					sendMail(kierros, numbersVO, parasTulos, parasJokeri);				
+//--					sendMail(kierros, numbersVO, parasTulos, parasJokeri);				
 				}
 	
 				// Lähetetäänkö tekstivietejä ??????????????????
 				if (settingsVO.isSms().booleanValue()
 						|| settingsVO.isTest().booleanValue()) {
-					sendSms(kierros, numbersVO, parasTulos, parasJokeri);
+//--					sendSms(kierros, numbersVO, parasTulos, parasJokeri);
 				}
 			}
 			return resultFile;
