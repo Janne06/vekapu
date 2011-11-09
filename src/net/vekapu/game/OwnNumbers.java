@@ -7,7 +7,7 @@
 //
 // Purpose:  Giving groups lottery numbers & group info.
 //
-// (c) Copyright J.Ilonen, 2003-2007
+// (c) Copyright J.Ilonen, 2003 =>
 //
 // $Id$
 //
@@ -205,9 +205,8 @@ public class OwnNumbers {
 
 			int numero=0;
 			while (toke.hasMoreTokens()) {
-				numero = Integer.parseInt(toke.nextToken().trim());				
+				numero = Integer.parseInt(toke.nextToken().trim());
 				lista.add(String.valueOf(numero));
-				
 			}			
 
 			rivit.add(lista);
@@ -223,18 +222,18 @@ public class OwnNumbers {
 		
 		for (int i = 0; i < lkm; i++) {
 
-			String rivi = properties.getProperty(game + "_" + (i + 1) + "_direction");			
-			if (rivi == null) rivi = ""; 
-						
+			String rivi = properties.getProperty(game + "_" + (i + 1) + "_direction");
+			if (rivi == null) rivi = "";
+
 			StringTokenizer toke = new StringTokenizer(rivi, ",");
 			
 			lista = new ArrayList <String> ();
 
 			String direction = "-";
 			while (toke.hasMoreTokens()) {
-				direction = toke.nextToken().trim();				
+				direction = toke.nextToken().trim();
 				lista.add(direction);
-			}			
+			}
 
 			rivit.add(lista);
 		}
