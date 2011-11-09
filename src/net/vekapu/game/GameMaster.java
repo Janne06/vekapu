@@ -58,81 +58,49 @@ public class GameMaster {
 
 
 	public ResultVO checkGame(ResultVO resultVO) throws VekapuException {
-//		try {
-			
+		try {
+			String gametype = "";
 			logger.debug(resultVO);
+
+			CorrectNumberVO correctNumVO = null;				
+			Checker checker = null;
 			
-			List game = resultVO.getOwnNumbersVO().getGames();
-			logger.debug(game);
+			List games = resultVO.getOwnNumbersVO().getGames();
+			logger.debug(games);
 			
+			for (int i = 0; i < games.size(); i++) {
+				String game = (String) games.get(i);
+				logger.info("game '" + i + "': " + game);
 			
-			
-			/*
-			CorrectNumberVO correctNumVO = getGameCorrectNumbers(game);	
-			
-			Checker checker = new Checker(correctNumVO);
-	
-			String gametype = PropsReader.getGameType(game);
-			logger.info("game: " + game + " & gametype: " + gametype);
-	
-			if (gametype.equals("jokeri")) {
-				numbersVO.addCheckedGame2(game, checker.checkJokeri(numbersVO.getOwnLines(game)));
-			} else if (gametype.equals("lotto")) {
-				numbersVO.addCheckedGame2(game,checker.checkLotto(numbersVO.getOwnLines(game)));
-			} else {
-				// Unknown game
-				logger.error("Unknown game type :" + gametype);
-				throw new VekapuException("Unknown game type :" + gametype);
+				gametype = PropsReader.getGameType(game);
+				logger.info("game: " + game + " & gametype: " + gametype);
+				
+				correctNumVO = getGameCorrectNumbers(game);					
+				checker = new Checker(correctNumVO);
+				
+				if (gametype.equals("lotto")) {
+					resultVO.getOwnNumbersVO().addCheckedGame2(game,checker.checkLotto(resultVO.getOwnNumbersVO().getOwnLines(game)));
+				} else if (gametype.equals("jokeri")) {
+					resultVO.getOwnNumbersVO().addCheckedGame2(game, checker.checkJokeri(resultVO.getOwnNumbersVO().getOwnLines(game)));
+				} else {
+					// Unknown game
+					logger.error("Unknown game type :" + gametype);
+					throw new VekapuException("Unknown game type :" + gametype);
+				}
+				
+				resultVO.getOwnNumbersVO().setGameBest(game, checker.getBestResult());
+				resultVO.addCorrectNumber(game, correctNumVO);
+
 			}
-			numbersVO.setGameBest(game, checker.getBestResult());
-			resultVO.addCorrectNumber(game, correctNumVO);
-			*/
+						
 			return resultVO;
-			/*
+			
 		} catch (VekapuException ve) {
 			logger.error(ve);
 			throw ve;
-		} */
+		} 
 	}
 
-	/**
-	 * Eri pelien tarkistamin hoidetaan tän metodin kautta.
-	 * 
-	 * @param game
-	 * @param resultVO
-	 * @param numbersVO
-	 * @return
-	 * @throws VekapuException
-	 */
-	public ResultVO checkGame(String game, ResultVO resultVO, OwnNumbersVO numbersVO) throws VekapuException {
-		
-		try {
-			CorrectNumberVO correctNumVO = getGameCorrectNumbers(game);	
-			
-			Checker checker = new Checker(correctNumVO);
-	
-			String gametype = PropsReader.getGameType(game);
-			logger.info("game: " + game + " & gametype: " + gametype);
-	
-			if (gametype.equals("jokeri")) {
-				numbersVO.addCheckedGame2(game, checker.checkJokeri(numbersVO.getOwnLines(game)));
-			} else if (gametype.equals("lotto")) {
-				numbersVO.addCheckedGame2(game,checker.checkLotto(numbersVO.getOwnLines(game)));
-			} else {
-				// Unknown game
-				logger.error("Unknown game type :" + gametype);
-				throw new VekapuException("Unknown game type :" + gametype);
-			}
-			numbersVO.setGameBest(game, checker.getBestResult());
-			resultVO.addCorrectNumber(game, correctNumVO);
-			
-			return resultVO;
-			
-		} catch (VekapuException ve) {
-			logger.error(ve);
-			throw ve;
-		}
-	}
 	
 	/**
 	 * 
