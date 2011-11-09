@@ -291,6 +291,7 @@ public class Vekapu {
 	
 			// Checking games
 			resultVO = gameMaster.checkGame(resultVO);
+			checked = true;
 			
 			/* == Jos siirtäs tarkistukset ja niihin liittyvän päättelyn GameMaster-luokkaan.
 			if (tarkista) {
