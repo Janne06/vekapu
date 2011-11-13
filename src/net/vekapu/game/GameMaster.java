@@ -82,8 +82,11 @@ public class GameMaster {
 				checker = new Checker(correctNumVO);
 				
 				if (dayhelper.isExpired(resultVO.getOwnNumbersVO().getUntil())) {
-					Messenger.sendEndMail(game, resultVO.getOwnNumbersVO().getGroup(),
-							resultVO.getOwnNumbersVO().getTo(), settingsVO);
+					
+					if (settingsVO.isEmail()) {
+						Messenger.sendEndMail(game, resultVO.getOwnNumbersVO().getGroup(),
+								resultVO.getOwnNumbersVO().getTo(), settingsVO);
+					} 
 					
 					// Then we throw this to info
 					String msg = "Veikkausporukan '" + resultVO.getOwnNumbersVO().getGroup() + "' peli '" +
