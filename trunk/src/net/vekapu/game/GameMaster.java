@@ -30,10 +30,12 @@ package net.vekapu.game;
 import java.util.List;
 
 import net.vekapu.CorrectNumberVO;
-import net.vekapu.OwnNumbersVO;
 import net.vekapu.ResultVO;
 import net.vekapu.SettingsVO;
 import net.vekapu.VekapuException;
+import net.vekapu.mail.Messenger;
+import net.vekapu.util.Constant;
+import net.vekapu.util.DayHelper;
 import net.vekapu.util.PropsReader;
 
 import org.apache.log4j.Logger;
@@ -62,10 +64,11 @@ public class GameMaster {
 			String gametype = "";
 			logger.debug(resultVO);
 
-			CorrectNumberVO correctNumVO = null;				
+			CorrectNumberVO correctNumVO = null;
 			Checker checker = null;
+			DayHelper dayhelper = new DayHelper();
 			
-			List games = resultVO.getOwnNumbersVO().getGames();
+			List<String> games = resultVO.getOwnNumbersVO().getGames();
 			logger.debug(games);
 			
 			for (int i = 0; i < games.size(); i++) {
@@ -75,10 +78,24 @@ public class GameMaster {
 				gametype = PropsReader.getGameType(game);
 				logger.info("game: " + game + " & gametype: " + gametype);
 				
-				correctNumVO = getGameCorrectNumbers(game);					
+				correctNumVO = getGameCorrectNumbers(game);	
 				checker = new Checker(correctNumVO);
 				
-				if (gametype.equals("lotto")) {
+				if (dayhelper.isExpired(resultVO.getOwnNumbersVO().getUntil())) {
+					Messenger.sendEndMail(game, resultVO.getOwnNumbersVO().getGroup(),
+							resultVO.getOwnNumbersVO().getTo(), settingsVO);
+					
+					// Then we throw this to info
+					String msg = "Veikkausporukan '" + resultVO.getOwnNumbersVO().getGroup() + "' peli '" +
+							game + "' on vanhentunut." + Constant.getLineSeparator() +
+							"Tarkista valikosta 'Vekapu->Kupongit->" + resultVO.getOwnNumbersVO().getGroup() + 
+							"' kohta 'until = '.";
+					
+					logger.warn(msg);
+					throw new VekapuException(msg);
+					
+					
+				} else if (gametype.equals("lotto")) {
 					resultVO.getOwnNumbersVO().addCheckedGame2(game,checker.checkLotto(resultVO.getOwnNumbersVO().getOwnLines(game)));
 				} else if (gametype.equals("jokeri")) {
 					resultVO.getOwnNumbersVO().addCheckedGame2(game, checker.checkJokeri(resultVO.getOwnNumbersVO().getOwnLines(game)));
@@ -112,7 +129,7 @@ public class GameMaster {
 
 		try {
 			CorrectNumber correctNumber = new CorrectNumber(settingsVO,game);
-			CorrectNumberVO correctVO = correctNumber.getCorrectNumbers(game);		
+			CorrectNumberVO correctVO = correctNumber.getCorrectNumbers(game);
 			
 			return correctVO;
 		} catch (VekapuException ve) {
