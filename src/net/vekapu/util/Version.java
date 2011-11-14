@@ -33,13 +33,15 @@ package net.vekapu.util;
 public class Version {
 	/*
 	 Päivitä molemmat (versio & VERSION) numerot AINA SAMOIKSI. 
-	 versio = 2.6.2
+	 versio = 2.7
 	 */
-	private final static String VERSION = "2.6.2";
-
-
+	private final static String VERSION = "2.7";
 	
 
+	/**
+	 * Verapu version number
+	 * @return
+	 */
 	public static String getVersionNumber() {
 		return VERSION;
 	}
