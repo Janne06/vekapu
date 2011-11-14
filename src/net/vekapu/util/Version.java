@@ -39,8 +39,8 @@ public class Version {
 	
 
 	/**
-	 * Verapu version number
-	 * @return
+	 * Vekapu version number
+	 * @return Version number
 	 */
 	public static String getVersionNumber() {
 		return VERSION;
