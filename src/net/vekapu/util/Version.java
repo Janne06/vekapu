@@ -33,9 +33,9 @@ package net.vekapu.util;
 public class Version {
 	/*
 	 Päivitä molemmat (versio & VERSION) numerot AINA SAMOIKSI. 
-	 versio = 2.7
+	 versio = 2.7.1
 	 */
-	private final static String VERSION = "2.7";
+	private final static String VERSION = "2.7.1";
 	
 
 	/**
