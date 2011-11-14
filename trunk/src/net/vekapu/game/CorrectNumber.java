@@ -5,7 +5,7 @@
 // Author:   Janne Ilonen
 // Project:  Vekapu
 //
-// Purpose:  Giving correct lotto numbers.
+// Purpose:  Giving correct lottery numbers.
 //
 // (c) Copyright J.Ilonen, 2003 =>
 //
@@ -26,7 +26,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * Master class off the correct game info (numbers)
+ * Lottery game info. Getting web-page containing correct numbers.
  * 
  * @author janne
  */
@@ -153,7 +153,6 @@ public class CorrectNumber {
 	 *
 	 */
 	protected void lastWeek() {
-		// Pitää tutkia viimeviikon kierrosta
 		setCheckedRound(dayhelper.getYear() + "-" + dayhelper.getLastWeek());
 		setWeek(dayhelper.getLastWeek());
 	}
@@ -169,7 +168,7 @@ public class CorrectNumber {
 		String gameSettings = Constant.getGamePropsDir()+ game + ".properties";
 		gameProps = PropsReader.read(gameSettings);
 		
-		// Asetetaan kierroksen numero mukaan rivien tietoihin.
+		// -------------------------------------------------------------------------------------
 		CorrectNumberVO l_correctNumberVO = new CorrectNumberVO(game,getSettingsVO().getWeek());
 		
 		String oikeat = "";
@@ -180,23 +179,25 @@ public class CorrectNumber {
 			
 			// Tarkistettava kierrros 
 			logger.debug("getSettingsVO().getCorrect() : " + getSettingsVO().getCorrect());
-			if (getSettingsVO().getCorrect().equals("auto")) {	
+			if (getSettingsVO().getCorrect().equals("auto")) {
+				
 				// ===============================================================
-				// Päätellään tarkistettava kierros ja asetetaan se SettingsVO:hon
+				// Deduce checked round
 				// 
 				int day = Integer.valueOf( gameProps.getProperty("day") ).intValue();
 				
-				logger.debug("Weekday: " + day);
+				logger.info("Lottery game day: " + day + " today : " + dayhelper.getWeekDayNumber());
 				
 				if ( day <= dayhelper.getWeekDayNumber()) {
+					logger.info("Current week");
 					currentWeek();
 				} else {
-					// Pitää tutkia viimeviikon kierrosta
+					logger.info("Last week");
 					lastWeek();
 				}
 			}
 			
-			// Asetetaan kierroksen numero mukaan rivien tietoihin.
+			// ---------------------------------------------------------------------------------
 			l_correctNumberVO = new CorrectNumberVO(game,getSettingsVO().getWeek());
 			l_correctNumberVO.setGameProps(gameProps);
 			
@@ -329,7 +330,7 @@ public class CorrectNumber {
 	
 	
 	/**
-	 * Here we get local copy of web page whicts contains correct numbers.
+	 * Here we get local copy of web page which contains correct numbers.
 	 * 
 	 * @param name
 	 *            Local copy name. YYYY-ROUND (year int- round int)
