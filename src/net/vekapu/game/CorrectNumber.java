@@ -7,7 +7,7 @@
 //
 // Purpose:  Giving correct lotto numbers.
 //
-// (c) Copyright J.Ilonen, 2003-2009
+// (c) Copyright J.Ilonen, 2003 =>
 //
 // $Id$
 //
@@ -171,7 +171,6 @@ public class CorrectNumber {
 		
 		// Asetetaan kierroksen numero mukaan rivien tietoihin.
 		CorrectNumberVO l_correctNumberVO = new CorrectNumberVO(game,getSettingsVO().getWeek());
-		l_correctNumberVO.setGameProps(gameProps);
 		
 		String oikeat = "";
 		String lisat = "";
@@ -197,6 +196,10 @@ public class CorrectNumber {
 				}
 			}
 			
+			// Asetetaan kierroksen numero mukaan rivien tietoihin.
+			l_correctNumberVO = new CorrectNumberVO(game,getSettingsVO().getWeek());
+			l_correctNumberVO.setGameProps(gameProps);
+			
 			// Haetaan sivu missä oikeat numrot. 
 			name_txt = getPage(name, gameProps.getProperty("url"));
 			
@@ -216,6 +219,8 @@ public class CorrectNumber {
 				logger.warn(messu);
 				throw new VekapuException(messu);
 			}
+		} else {
+			l_correctNumberVO.setGameProps(gameProps);
 		}
 		
 		if (!settingsVO.isManual()) {
