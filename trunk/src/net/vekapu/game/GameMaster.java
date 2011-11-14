@@ -61,6 +61,35 @@ public class GameMaster {
 
 	public ResultVO checkGame(ResultVO resultVO) throws VekapuException {
 		try {
+			
+			boolean tarkista = false;
+			
+			
+			// Eix sitä lähtökohtaisesti pitäis tarkistaa kaikki ??
+			// Ainoastaan jos on cronitettu ja lähettää meilii niin sillon pitäis tutkii et päivä täsmää ?!!!?!!
+			if (settingsVO.isTest().booleanValue()) {
+				logger.info("test = yes ==> tarkistetaan kaikki");
+				tarkista = true;
+			}
+
+			if (settingsVO.isManual().booleanValue()) {
+				logger.info("manual = yes ==> tarkistetaan kaikki");
+				tarkista = true;
+			}
+
+			if (!settingsVO.isCronJob().booleanValue()) {
+				logger.info("CronJob = no ==> tarkistetaan kaikki");
+				tarkista = true;
+			}
+
+			/*
+			if (dayhelper.isSaturday() && settingsVO.isCronJob().booleanValue()) {
+				logger.info("Lauantai cronilla == true ==> tarkistetaan "
+						+ "lauantain pelit (Lotto & Jokeri)");
+				tarkista = true;
+			}
+*/
+			
 			String gametype = "";
 			logger.debug(resultVO);
 
