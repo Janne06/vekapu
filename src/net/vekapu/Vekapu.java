@@ -71,7 +71,7 @@ public class Vekapu {
 	 */
 	private boolean test = false;
 		
-	// Uusia instanssimuuttujia kun tietyn porukan tarkistus omaan metodiin
+	// 
 	private boolean miss = true;
 	private boolean checked = false;
 
@@ -266,12 +266,12 @@ public class Vekapu {
 			checked = false;
 	
 			// =========================================================
-			// TODO Vissiin näälin pitäis heivata GameMaster:iin.
+			// TODO Vissiin nääkin pitäis heivata GameMaster:iin.
 			// =========================================================
 			// Mikäli manual == true niin tarkistetaan kaikki
 			// Jos ei ajastettu == tarkistetaan kaikki
 			// Lauantai (ajastettuna) => tarkistetaan lotto ja jokeri
-			boolean tarkista = false;
+/*			boolean tarkista = false;
 	
 			if (settingsVO.isTest().booleanValue()) {
 				logger.info("test = yes ==> tarkistetaan kaikki");
@@ -288,76 +288,21 @@ public class Vekapu {
 						+ "lauantain pelit (Lotto & Jokeri)");
 				tarkista = true;
 			}
-	
-			// Checking games
+*/	
+			// ===============================================
+			// Checking every game.
 			resultVO = gameMaster.checkGame(resultVO);
 			checked = true;
 			
-			/* == Jos siirtäs tarkistukset ja niihin liittyvän päättelyn GameMaster-luokkaan.
-			if (tarkista) {
-	
-				miss = false;
-				parasTulos = "";
-	
-				// Onko porukalla Lottorivejä
-				if (numbersVO.isGame("lotto")) {
-					lkmLotto++;
-					checked = true;
-	
-					// Tarkistetaan onko rivi vielä voimassa
-					if (dayhelper.isExpired(numbersVO.getUntil())) {
-						Messenger.sendEndMail("Lotto", group,
-								numbersVO.getTo(), settingsVO);
-						logger.warn("<======== PORUKAN " + group
-								+ " LOTTO ON VANHENTUNUT ========>");
-						//						
-					} else {
-						// Tarkistetaan lotto
-						logger.info("Tarkistetaan lotto");
-						resultVO = gameMaster.checkGame("lotto",resultVO, numbersVO);
-						kierros = settingsVO.getWeek();
-						logger.debug("kierros: " + kierros);
-						
-						parasTulos = numbersVO.getGameBest("lotto");
-						
-					}
-				}
-				
-				// Jokerin tarkistua
-				if (numbersVO.isGame("jokeri")) {
-					logger.info("Tarkistetaan jokeri");
-					resultVO = gameMaster.checkGame("jokeri",resultVO, numbersVO);
-					parasJokeri = " Jokeri '"
-							+ String.valueOf(numbersVO.getGameBest("jokeri"))
-							+ "' kpl";
-	
-					lkmJokeri++;
-					checked = true;
-				}
-			}
-	*/
-			
+/*			Päivän perusteellä päätellään mikä peli tarkistetaan.
+ * 
 			// Keskiviikko tai muuten vaan => Vikinglotto
 			if (dayhelper.isWednesday() && settingsVO.isCronJob().booleanValue()) {
 				logger.info("Keskiviikko cronilla == true ==> tarkistetaan "
 						+ "keskiviikon peli (VikingLotto)");
 				tarkista = true;
 			}
-/*	
-			if (tarkista) {
-	
-//--				if (numbersVO.isGame("viking")) {
-					logger.info("Tarkistetaan vikinglotto");
-					miss = false;
-					checked = true;
-	
-//--					resultVO = gameMaster.checkGame("viking",resultVO, numbersVO);
-//--					parasTulos = numbersVO.getGameBest("viking");
-	
-					lkmviking++;
-				}
-			}
-*/	
+*/
 			if (checked) {
 				logger.info("Porukan '" + group + "' rivejä on tarkistettu.");
 				// Talletetaan parhaat tulokset
@@ -380,7 +325,8 @@ public class Vekapu {
 				sf.store(kierros + " - " + parasTulos + jokeri);
 	
 				// Lähetetään lopuksi loppumisilmoitus mikäli aihetta.
-				// TODO Onx järkee näin ??
+				// TODO Onx järkee näin ?? 
+				// TODO Tarkista onko GameMasterissa ???
 /*	
 				if (dayhelper.isToday(numbersVO.getUntil())
 						|| settingsVO.isTest().booleanValue()) {
@@ -426,13 +372,13 @@ public class Vekapu {
 				// Lähetetäänkö sähköpostia ???????
 				if (settingsVO.isEmail().booleanValue()
 						|| settingsVO.isTest().booleanValue()) {
-//--					sendMail(kierros, numbersVO, parasTulos, parasJokeri);				
+					sendMail(kierros, resultVO.getOwnNumbersVO(), parasTulos, parasJokeri);				
 				}
 	
 				// Lähetetäänkö tekstivietejä ??????????????????
 				if (settingsVO.isSms().booleanValue()
 						|| settingsVO.isTest().booleanValue()) {
-//--					sendSms(kierros, numbersVO, parasTulos, parasJokeri);
+					sendSms(kierros, resultVO.getOwnNumbersVO(), parasTulos, parasJokeri);
 				}
 			}
 			return resultFile;
