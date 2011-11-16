@@ -216,9 +216,11 @@ public class Vekapu {
 		} else {
 			// TODO Lokille tieto siitämitä tarkistettiin.
 			// Let's print to the log what we scheck.
+			/*			
 			logger.info("<===== TARKISTETTU " + lkmLotto  + " LOTTO RIVIA =====>");
 			logger.info("<===== TARKISTETTU " + lkmJokeri + " JOKERI RIVIA =====>");
 			logger.info("<===== TARKISTETTU " + lkmviking + " VIKING LOTTOPORUKAN RIVIT =====>");
+			*/
 		}
 	}
 
@@ -264,6 +266,7 @@ public class Vekapu {
 			resultVO = new ResultVO( new OwnNumbers(group, settingsVO).getOwnNumbers() );			
 			
 			checked = false;
+			miss = false;
 	
 			// =========================================================
 			// TODO Vissiin nääkin pitäis heivata GameMaster:iin.
@@ -293,6 +296,9 @@ public class Vekapu {
 			// Checking every game.
 			resultVO = gameMaster.checkGame(resultVO);
 			checked = true;
+			kierros = settingsVO.getWeek();
+			
+			parasTulos = resultVO.getOwnNumbersVO().getGameBest("lotto");
 			
 /*			Päivän perusteellä päätellään mikä peli tarkistetaan.
  * 
@@ -320,7 +326,8 @@ public class Vekapu {
 						+ Constant.getBestFileExt());
 				String jokeri = "";
 //				if (numbersVO.isGame("jokeri"))
-//					jokeri = " -" + parasJokeri;
+				parasJokeri = resultVO.getOwnNumbersVO().getGameBest("jokeri");
+				if (parasJokeri != null) jokeri = " - " + parasJokeri;
 	
 				sf.store(kierros + " - " + parasTulos + jokeri);
 	
@@ -392,7 +399,8 @@ public class Vekapu {
 	private void sendMail(String kierros,OwnNumbersVO numbersVO, String parasTulos, String parasJokeri) throws VekapuException {
 		
 //		 TODO Porukka mukaan ??
-//		 TODO JOs refaktorois ja jättäis vaan ktsut tänne. Muun kaman vois siirtää muualle.		
+//		 TODO JOs refaktorois ja jättäis vaan kutsut tänne. Muun kaman vois siirtää muualle.	
+
 		String otsikko = "Kierros " + kierros;
 
 		if (numbersVO.isGame("lotto"))
