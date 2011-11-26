@@ -7,7 +7,7 @@
 //
 // Purpose:  Reading settings from vekapu.properties-file to SettingsVO.
 //
-// (c) Copyright J.Ilonen, 2006-2007
+// (c) Copyright J.Ilonen, 2006 =>
 //
 // $Id$
 //
@@ -181,6 +181,9 @@ public class SettingsReader  {
 		// Jos postipalvelimena oletus 'localhost' niin nollataan asetus
 		if (settingsVO.getMailServer().equals("localhost"))
 			settingsVO.setMailServer("");
+
+		settingsVO.setPassWord(properties.getProperty("password", ""));
+		settingsVO.setPort(properties.getProperty("port", ""));
 
 		settingsVO.setProxyHost(properties.getProperty("proxyHost", ""));
 		settingsVO.setProxyPort(properties.getProperty("proxyPort", ""));
