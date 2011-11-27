@@ -5,7 +5,7 @@
 // Author:   Janne Ilonen
 // Project:  Vekapu
 //
-// Purpose:  Handlin eMail & sms.
+// Purpose:  Handling eMail & sms.
 //
 // (c) Copyright J.Ilonen, 2003 =>
 //
@@ -306,7 +306,7 @@ public class Messenger {
 	}
 
 	/**
-	 * Caling the real mail senging class.
+	 * Calling the real mail sending class.
 	 * 
 	 * @param header
 	 * @param group
@@ -317,6 +317,7 @@ public class Messenger {
 	 */
 	private static void sendMail(String header, String group, String[] to,
 			String text, SettingsVO settingsVO) throws VekapuException {
+		
 		// if there is no email
 		if (to[0].equalsIgnoreCase(Constant.getEmptyAddress()))
 			return;
@@ -333,8 +334,13 @@ public class Messenger {
 		} else {
 			try {
 				SendMail sm = new SendMail(settingsVO.getMailServer());
-				sm.postMail(to, header, text, settingsVO.getFrom(), 
+				
+				if (settingsVO.isMailAuth()) {
+					sm.postAuthMail(to, header, text, settingsVO);
+				} else {
+					sm.postMail(to, header, text, settingsVO.getFrom(), 
 						settingsVO.getReplyAddress());
+				}
 
 				logger.debug("Viestit lähetetty osoitteisiin:");
 				for (int i = 0; i < to.length; i++) {
@@ -344,6 +350,7 @@ public class Messenger {
 				// TODO: handle exception
 				String msg = "Meilin lähetys ei onnaa. Oiskohan säädöissä parantamista ??";
 				logger.warn(msg);
+				logger.warn(settingsVO);
 				throw new VekapuException(msg,me);
 				
 			} catch (Exception e) {

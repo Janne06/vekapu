@@ -47,13 +47,14 @@ public class SettingsVO {
 	private Boolean newPage  = Boolean.FALSE;
 	private Boolean sms  = Boolean.FALSE;
 	private Boolean test  = Boolean.FALSE;
+	private Boolean mailAuth  = Boolean.FALSE;
 	
 	private String admin = "";
 	private String from = "";
 	private String replyAddress = "";
 	private String mailServer = "";
-	private String passWord = "";
-	private String port = "";
+	private String mailPassWord = "";
+	private String mailPort = "";
 	private Integer groupCount = new Integer(0);
 	private String[] groupName = null;
 	
@@ -159,20 +160,28 @@ public class SettingsVO {
 		this.mailServer = aMailServer;
 	}
 
-	public String getPassWord() {
-		return passWord;
+	public String getMailPassWord() {
+		return mailPassWord;
 	}
 
-	public void setPassWord(String aPassWord) {
-		this.passWord = aPassWord;
+	public void setMailPassWord(String aPassWord) {
+		this.mailPassWord = aPassWord;
 	}
 	
-	public String getPort() {
-		return port;
+	public String getMailPort() {
+		return mailPort;
 	}
 
-	public void setPort(String aPort) {
-		this.port = aPort;
+	public void setMailPort(String aPort) {
+		this.mailPort = aPort;
+	}
+	
+	public Boolean isMailAuth() {
+		return mailAuth;
+	}
+
+	public void setMailAuth(Boolean aMailAuth) {
+		this.mailAuth = aMailAuth;
 	}
 	
 	public Boolean isManual() {
@@ -248,8 +257,8 @@ public class SettingsVO {
 	}
 
 	/**
-	 * Possible values: "" (empty string) / auto => checkin latest results or 
-	 * givin checked year and round in format YYYY-ROUND (integet-integer).
+	 * Possible values: "" (empty string) / auto => checking latest results or 
+	 * giving checked year and round in format YYYY-ROUND (integer-integer).
 	 * 
 	 * @return Returns the correct.
 	 */
@@ -259,7 +268,7 @@ public class SettingsVO {
 	
 	
 	/**
-	 * @return the weeknumber WW
+	 * @return the week number WW
 	 */
 	public String getWeek() {
 		return week;
@@ -299,12 +308,13 @@ public class SettingsVO {
 		"isNewPage()       = '" + isNewPage() + "'" + NEW_LINE +
 		"isSms()           = '" + isSms() + "'" + NEW_LINE +
 		"isTest()          = '" + isTest() + "'" + NEW_LINE +
+		"isMailAuth()      = '" + isMailAuth() + "'" + NEW_LINE +
 		"getAdmin()        = '" + getAdmin() + "'" + NEW_LINE +
 		"getFrom()         = '" + getFrom() + "'" + NEW_LINE +
 		"getReplyAddress() = '" + getReplyAddress() + "'" + NEW_LINE +
 		"getMailServer()   = '" + getMailServer() + "'" + NEW_LINE +
-		"getPassWord()     = '" + (getPassWord() == "" ? "EMPTY" : "******") + "'" + NEW_LINE +
-		"getPort()         = '" + getPort() + "'" + NEW_LINE +
+		"getPassWord()     = '" + (getMailPassWord() == "" ? "EMPTY" : "******") + "'" + NEW_LINE +
+		"getPort()         = '" + getMailPort() + "'" + NEW_LINE +
 		"getGroupCount()   = '" + getGroupCount() + "'" + NEW_LINE;
 
 		for (int i = 1; i <= getGroupCount().intValue(); i++) {

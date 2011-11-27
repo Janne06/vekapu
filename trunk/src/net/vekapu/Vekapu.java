@@ -326,7 +326,7 @@ public class Vekapu {
 						+ Constant.getBestFileExt());
 				String jokeri = "";
 //				if (numbersVO.isGame("jokeri"))
-				parasJokeri = resultVO.getOwnNumbersVO().getGameBest("jokeri");
+//				parasJokeri = resultVO.getOwnNumbersVO().getGameBest("jokeri");
 				if (parasJokeri != null) jokeri = " - " + parasJokeri;
 	
 				sf.store(kierros + " - " + parasTulos + jokeri);
@@ -406,8 +406,8 @@ public class Vekapu {
 		if (numbersVO.isGame("lotto"))
 			otsikko += " Paras lotto " + parasTulos;
 
-		if (numbersVO.isGame("jokeri"))
-			otsikko += " Paras" + parasJokeri;
+//		if (numbersVO.isGame("jokeri"))
+//			otsikko += " Paras" + parasJokeri;
 
 		logger.debug("Otsikko: " + otsikko);
 
