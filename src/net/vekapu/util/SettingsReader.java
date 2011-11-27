@@ -171,19 +171,25 @@ public class SettingsReader  {
 
 		settingsVO.setSms(Boolean.valueOf(rc));
 		
+		rc = false;
+		String auth = properties.getProperty("mail.auth", "");
+		if (auth.equalsIgnoreCase("yes"))
+			rc = true;
+
+		settingsVO.setMailAuth(Boolean.valueOf(rc));
 		
 		settingsVO.setAdmin(properties.getProperty("admin", Constant.getDefaultEMail()));
 		settingsVO.setFrom(properties.getProperty("from", Constant.getDefaultEMail()));
 		settingsVO.setGroupDir(properties.getProperty("groupDir", "."));
 		settingsVO.setGroupInfo(properties.getProperty("info_group", ""));
-		settingsVO.setMailServer(properties.getProperty("mailserver", ""));
+		settingsVO.setMailServer(properties.getProperty("mail.server", ""));
 
 		// Jos postipalvelimena oletus 'localhost' niin nollataan asetus
 		if (settingsVO.getMailServer().equals("localhost"))
 			settingsVO.setMailServer("");
 
-		settingsVO.setPassWord(properties.getProperty("password", ""));
-		settingsVO.setPort(properties.getProperty("port", ""));
+		settingsVO.setMailPassWord(properties.getProperty("mail.password", ""));
+		settingsVO.setMailPort(properties.getProperty("mail.port", ""));
 
 		settingsVO.setProxyHost(properties.getProperty("proxyHost", ""));
 		settingsVO.setProxyPort(properties.getProperty("proxyPort", ""));
