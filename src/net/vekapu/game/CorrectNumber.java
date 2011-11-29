@@ -50,7 +50,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 /**
- * Gettin correct numbers of the game.
+ * Getting correct numbers of the game.
  * 
  * @author janne
  * 
@@ -61,7 +61,7 @@ public class CorrectNumber {
 	private SettingsVO settingsVO = null;
 
 	/*
-	 * Kuluvan päivän hahmotus => mikä kierrokselle numeroksi ?
+	 * What day is it ? => What week ??
 	 */
 	protected DayHelper dayhelper = new DayHelper();
 	
@@ -140,7 +140,7 @@ public class CorrectNumber {
 	}
 
 	/**
-	 * 
+	 * What is current week number ??
 	 *
 	 */
 	protected void currentWeek() {
@@ -177,7 +177,7 @@ public class CorrectNumber {
 		///////////////////////////////////////////////////////////////////////////////////////
 		if (!settingsVO.isManual()) {
 			
-			// Tarkistettava kierrros 
+			// Checked week 
 			logger.debug("getSettingsVO().getCorrect() : " + getSettingsVO().getCorrect());
 			if (getSettingsVO().getCorrect().equals("auto")) {
 				
@@ -186,7 +186,8 @@ public class CorrectNumber {
 				// 
 				int day = Integer.valueOf( gameProps.getProperty("day") ).intValue();
 				
-				logger.info("Lottery game day: " + day + " today : " + dayhelper.getWeekDayNumber());
+				logger.info("Lottery game day: " + day + " today : " + dayhelper.getWeekDayNumber() + 
+						" so next log line is telling what week is corect (current/last):");
 				
 				if ( day <= dayhelper.getWeekDayNumber()) {
 					logger.info("Current week");
@@ -283,8 +284,8 @@ public class CorrectNumber {
 			l_correctNumberVO.setDate(manual.getArg("info_" + game));
 		}
 	
-		logger.debug("oikeat: " + oikeat);
-		logger.debug("lisat: " + lisat);
+		logger.info("oikeat: " + oikeat);
+		logger.info("lisat: " + lisat);
 		
 		String delimeter = ",";
 		if (oikeat.indexOf(delimeter) < 0) delimeter = " ";
@@ -294,8 +295,9 @@ public class CorrectNumber {
 			toke = new StringTokenizer(oikeat, delimeter);
 		} catch (Exception e) {
 			logger.error(e);
-			String messu = "TextiTV:n sivut on varmaankin muuttuneet ?? Ongelmia pelissä: " + game;
-			throw new VekapuException(messu,e);
+			String msg = "TextiTV:n sivut on varmaankin muuttuneet ?? Ongelmia pelissä: " + game;
+			logger.error(msg);
+			throw new VekapuException(msg,e);
 		}
 				
 		Integer number = null;
@@ -306,8 +308,8 @@ public class CorrectNumber {
 			}
 		} catch (Exception e) {
 			logger.error(e);
-			String messu = "TextiTV:n sivut on varmaankin muuttuneet ?? Ongelmia pelissä: " + game;
-			throw new VekapuException(messu,e);
+			String msg = "TextiTV:n sivut on varmaankin muuttuneet ?? Ongelmia pelissä: " + game;
+			throw new VekapuException(msg,e);
 		}
 		
 		delimeter = ",";
