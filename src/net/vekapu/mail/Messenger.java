@@ -29,6 +29,7 @@ package net.vekapu.mail;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import javax.mail.MessagingException;
 
@@ -86,6 +87,10 @@ public class Messenger {
 		String lsOtsikko = Constant.getEmailHeaderPrefix() + " " + group + " "
 				+ otsikko;
 
+		// if there is no email
+		if (to[0].equalsIgnoreCase(Constant.getEmptyAddress()))
+			return;
+				
 		sendMail(lsOtsikko, group, to, tulos, settingsVO);
 
 		logger.info("Sähköposti - Porukan '" + group + "' lottotarkistus "
@@ -333,9 +338,26 @@ public class Messenger {
 			logger.debug("Mail text : " + text);
 		} else {
 			try {
-				SendMail sm = new SendMail(settingsVO.getMailServer());
 				
+				logger.debug("System.getProperties() : " + System.getProperties().toString());
+				
+				SendMail sm = new SendMail(settingsVO.getMailServer());
+
+				// TODO ===============================================================
+				// TODO testiä varten olemassa. Poista 
+				// TODO ===============================================================
+				if (settingsVO.isSms()) {
+					
+					Properties systemSettings = System.getProperties();
+					systemSettings.put("proxySet", String.valueOf(settingsVO.isProxySet()));
+					systemSettings.put("http.proxyHost", settingsVO.getProxyHost());
+					systemSettings.put("http.proxyPort", settingsVO.getProxyPort());				
+				}
+				// TODO ===============================================================
+					
 				if (settingsVO.isMailAuth()) {
+					
+					logger.debug("System.getProperties() : " + System.getProperties().toString());
 					sm.postAuthMail(to, header, text, settingsVO);
 				} else {
 					sm.postMail(to, header, text, settingsVO.getFrom(), 
@@ -351,10 +373,14 @@ public class Messenger {
 				String msg = "Meilin lähetys ei onnaa. Oiskohan säädöissä parantamista ??";
 				logger.warn(msg);
 				logger.warn(settingsVO);
+				logger.warn(System.getProperties().toString());
 				throw new VekapuException(msg,me);
 				
 			} catch (Exception e) {
-				logger.error("Virhe postituksessa", e);
+				String msg = "Virhe postituksessa";
+				logger.error(msg, e);
+				logger.error(settingsVO);
+				logger.error(System.getProperties().toString());
 				throw new VekapuException(e);
 			}
 		}
