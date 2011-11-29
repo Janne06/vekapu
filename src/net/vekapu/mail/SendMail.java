@@ -45,6 +45,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
+
 import net.vekapu.SettingsVO;
 
 /**
@@ -52,6 +54,7 @@ import net.vekapu.SettingsVO;
  * 
  */
 public class SendMail {
+	private static Logger logger = Logger.getLogger(Messenger.class);
 	private String mailHost;
 
 	/**
@@ -155,7 +158,9 @@ public class SendMail {
         props.put("mail.smtp.socketFactory.fallback", "false"); 
         props.setProperty("mail.smtp.quitwait", "false");
 	    
-
+        logger.debug("props : " + props.toString());
+        logger.debug("System.getProperties() : " + System.getProperties().toString());
+        
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
  
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -181,7 +186,7 @@ public class SendMail {
 		msg.setRecipients(Message.RecipientType.TO, addressTo);
 
 		// Optional: You can also set your custom headers in the Email if you
-		// Avoiding autorepley.
+		// Avoiding auto reply.
 		msg.addHeader("Precedence", "bulk");
 
 		// Setting the Subject and Content Type
