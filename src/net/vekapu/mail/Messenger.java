@@ -343,18 +343,6 @@ public class Messenger {
 				
 				SendMail sm = new SendMail(settingsVO.getMailServer());
 
-				// TODO ===============================================================
-				// TODO testiä varten olemassa. Poista 
-				// TODO ===============================================================
-				if (settingsVO.isSms()) {
-					
-					Properties systemSettings = System.getProperties();
-					systemSettings.put("proxySet", String.valueOf(settingsVO.isProxySet()));
-					systemSettings.put("http.proxyHost", settingsVO.getProxyHost());
-					systemSettings.put("http.proxyPort", settingsVO.getProxyPort());				
-				}
-				// TODO ===============================================================
-					
 				if (settingsVO.isMailAuth()) {
 					
 					logger.debug("System.getProperties() : " + System.getProperties().toString());
