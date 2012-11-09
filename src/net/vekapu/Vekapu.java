@@ -334,9 +334,11 @@ public class Vekapu {
 				// Lähetetään lopuksi loppumisilmoitus mikäli aihetta.
 				// TODO Onx järkee näin ?? 
 				// TODO Tarkista onko GameMasterissa ???
-/*	
-				if (dayhelper.isToday(numbersVO.getUntil())
+/*
+				if (dayhelper.isLastRound(numbersVO.getUntil())
 						|| settingsVO.isTest().booleanValue()) {
+					
+					logger.info("This was last week when game is valid.")
 					Messenger.sendEndMail("Lotto", group, numbersVO.getTo(),
 							settingsVO);
 					sf.rename(dayhelper.getYearWeek());
