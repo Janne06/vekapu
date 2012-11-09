@@ -110,24 +110,8 @@ public class GameMaster {
 				correctNumVO = getGameCorrectNumbers(game);	
 				checker = new Checker(correctNumVO);
 				
-				if (dayhelper.isExpired(resultVO.getOwnNumbersVO().getUntil())) {
-					
-					if (settingsVO.isEmail()) {
-						Messenger.sendEndMail(game, resultVO.getOwnNumbersVO().getGroup(),
-								resultVO.getOwnNumbersVO().getTo(), settingsVO);
-					} 
-					
-					// Then we throw this to info
-					String msg = "Veikkausporukan '" + resultVO.getOwnNumbersVO().getGroup() + "' peli '" +
-							game + "' on vanhentunut." + Constant.getLineSeparator() +
-							"Tarkista valikosta 'Vekapu->Kupongit->" + resultVO.getOwnNumbersVO().getGroup() + 
-							"' kohta 'until = '.";
-					
-					logger.warn(msg);
-					throw new VekapuException(msg);
-					
-					
-				} else if (gametype.equals("lotto")) {
+//				if (dayhelper.isExpired(resultVO.getOwnNumbersVO().getUntil())) {
+				if (gametype.equals("lotto")) {
 					resultVO.getOwnNumbersVO().addCheckedGame2(game,checker.checkLotto(resultVO.getOwnNumbersVO().getOwnLines(game)));
 				} else if (gametype.equals("jokeri")) {
 					resultVO.getOwnNumbersVO().addCheckedGame2(game, checker.checkJokeri(resultVO.getOwnNumbersVO().getOwnLines(game)));
@@ -140,13 +124,36 @@ public class GameMaster {
 				resultVO.getOwnNumbersVO().setGameBest(game, checker.getBestResult());
 				resultVO.addCorrectNumber(game, correctNumVO);
 
+
+				if (dayhelper.isLastRound(resultVO.getOwnNumbersVO().getUntil())) {
+					logger.debug("Vanhentunutta meininkii");
+					
+
+					if (settingsVO.isEmail()) {
+						Messenger.sendEndMail(game, resultVO.getOwnNumbersVO().getGroup(),
+								resultVO.getOwnNumbersVO().getTo(), settingsVO);
+					} 
+
+					// Then we throw this to info
+					String msg = "Veikkausporukan '" + resultVO.getOwnNumbersVO().getGroup() + "' peli '" +
+							game + "' on vanhentunut." + Constant.getLineSeparator() +
+							"Tarkista valikosta 'Vekapu->Kupongit->" + resultVO.getOwnNumbersVO().getGroup() + 
+							"' kohta 'until = '.";
+					
+					logger.warn(msg);
+//					throw new VekapuException(msg);
+//					}
+				
+					
+				}
 			}
 						
 			return resultVO;
 			
-		} catch (VekapuException ve) {
-			logger.error(ve);
-			throw ve;
+		} catch (Exception e) {
+			logger.error(e);
+			throw new VekapuException(e);
+//			throw ve;
 		} 
 	}
 
