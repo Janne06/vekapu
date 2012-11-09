@@ -7,7 +7,7 @@
 //
 // Purpose:  Determinating what is day of the week.
 //
-// (c) Copyright J.Ilonen, 2003-2007
+// (c) Copyright J.Ilonen, 2003 =>
 //
 // $Id$
 //
@@ -48,9 +48,7 @@ public class DayHelper {
 	static Logger logger = Logger.getLogger(DayHelper.class);
 
 	private int week = 0;
-
 	private int year = 0;
-
 	private int day = 0;
 
 	/**
@@ -161,6 +159,42 @@ public class DayHelper {
 			throw new VekapuException(pe);
 		}
 		return expired;
+	}
+
+	public boolean isLastRound(String aDate) throws VekapuException {
+		boolean lastRound = false;
+		try {
+
+			String DATE_FORMAT = "dd.MM.yyyy";
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+
+			Date date = sdf.parse(aDate);
+
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			cal.add(Calendar.DATE, -6);
+
+			logger.debug(cal.toString());
+			logger.debug("Date: " + aDate + ", date -6 days: " + cal.getTime());
+			
+			Calendar calToday = Calendar.getInstance();
+
+			if (cal.before(calToday)) {
+				lastRound = true;
+			}
+			
+			//TODO Duunaa kuntoon !!!!!!
+			if (cal.after(calToday)) {
+				lastRound = false;
+			}
+			
+		} catch (ParseException pe) {
+			// Error with date
+			logger.error("Virhe päiväyksen kanssa !!", pe);
+			// TODO Poikkeus kuntoon
+			throw new VekapuException(pe);
+		}
+		return lastRound;
 	}
 
 	/**
