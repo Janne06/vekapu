@@ -83,6 +83,17 @@ public class ResultFormater {
 			tulos.append(NEW_LINE + NEW_LINE);
 		}
 
+		DayHelper dayhelper = new DayHelper();
+		try {
+			if (dayhelper.isLastRound(resultVO.getOwnNumbersVO().getUntil())) {
+				tulos.append("==== RIVI ON VIIMEISTÄ KIERROSTA VOIMASSA !!! =====");
+				tulos.append(NEW_LINE);			
+			}
+		} catch (VekapuException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return tulos.toString();
 	}
 	
