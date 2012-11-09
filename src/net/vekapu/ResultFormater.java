@@ -86,8 +86,14 @@ public class ResultFormater {
 		DayHelper dayhelper = new DayHelper();
 		try {
 			if (dayhelper.isLastRound(resultVO.getOwnNumbersVO().getUntil())) {
-				tulos.append("==== RIVI ON VIIMEISTÄ KIERROSTA VOIMASSA !!! =====");
-				tulos.append(NEW_LINE);			
+                tulos.append("===================================================");
+                tulos.append(NEW_LINE);
+                tulos.append("==== RIVI ON VIIMEISTÄ KIERROSTA VOIMASSA !!! =====");
+                tulos.append(NEW_LINE);
+                tulos.append("Varmista osallistumisesi uusille kierroksille.");
+                tulos.append(NEW_LINE);
+                tulos.append("===================================================");
+                tulos.append(NEW_LINE);
 			}
 		} catch (VekapuException e) {
 			// TODO Auto-generated catch block
