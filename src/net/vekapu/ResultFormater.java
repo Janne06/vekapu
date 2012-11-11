@@ -90,7 +90,7 @@ public class ResultFormater {
                 tulos.append(NEW_LINE);
                 tulos.append("==== RIVI ON VIIMEISTÄ KIERROSTA VOIMASSA !!! =====");
                 tulos.append(NEW_LINE);
-                tulos.append("Varmista osallistumisesi uusille kierroksille.");
+                tulos.append("== Varmista osallistumisesi uusille kierroksille ==");
                 tulos.append(NEW_LINE);
                 tulos.append("===================================================");
                 tulos.append(NEW_LINE);
