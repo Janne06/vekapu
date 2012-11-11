@@ -29,11 +29,12 @@ package net.vekapu.util;
 
 /**
  * Project version number.
- *  */
-public class Version {
+ */
+
+ public class Version {
 	/*
 	 Päivitä molemmat (versio & VERSION) numerot AINA SAMOIKSI. 
-	 versio = 2.8.2
+	 versio = 2.10
 	 */
 	private final static String VERSION = "2.10";
 	
