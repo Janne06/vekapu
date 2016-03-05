@@ -1,0 +1,10 @@
+# UKK - Usein kysytyt kysymykset #
+
+  * K: Arpooko Vekapu lottonumerot ?
+  * V: Ei arvo. Ellet osaa itse valita 7 numeroa niin unohda koko veikkaaminen.
+
+  * K: Miksi en voita lotossa ?
+  * V: Niinpä niin. Siinäpä vasta kysymys. Eräs vastaus asiaan löytyy [täältä](http://www.cs.tut.fi/~empii/matikka/lotto.html).
+
+$Rev$ $Date$
+$URL$

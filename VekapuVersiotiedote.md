@@ -1,0 +1,77 @@
+# Vekapu versiotiedote #
+
+## Kehitys versio ##
+
+**Kehitys version 2.5.2 parannuksia**
+
+  * lottoplus mukaan tarkistuksiin
+
+## Vekapu 2.5.1 ##
+Päivitetty 27.08.09
+
+  * Korjattu [Issue #3](https://code.google.com/p/vekapu/issues/detail?id=#3) - eli manuaali moodissa huomioidaan eri pelien tulokset.
+
+## Vekapu 2.5 ##
+Päivitetty 14.07.09
+
+  * Muuttuneet textiTV:n sivujaot kohalleen.
+  * Pientä parannusta virheenkäsittelyyn.
+  * Olipas tossa pitkään taukoa välissä.
+
+## Vekapu 2.2 ##
+Päivitetty 29.11.07
+
+  * Lisänumeroiden tarkistus lotossa kohdalleen.
+  * Oikeiden numeroiden käsin syöttö tiedostoon `./correctnumbers/correctnumbers.properties`. Eli nyt voi tarkistaa myös muiden kierrosten tuloksia kuin TextiTV:n sivuilla olevat. [Issue 3](http://code.google.com/p/vekapu/issues/detail?id=3).
+
+## Vekapu 2.1 ##
+Päivitetty 2.11.07
+
+_**HUOM** Jos omat rivisi ovat vanhemmalla versiolla niin ne täytyy nyt asettaa uudelleen !!!_
+
+  * Texti TV:n sivut on muuttunu (Jokeri & viikkari)
+  * Sisäinen Java otetutus geneerisempään muotoon jotta uusien pelien lisääminen onnistuu parametrisoinnilla.
+  * Omat rivit pitää nyt nimetä tyyliin `pelinnimi_n` misä `n` on juokseva numero. Esim. `lotto_1 = 1,2,3,4,5,6,7`
+  * Jokerin tarkistussuunta määritellään parametrilla: `jokeri_n_direction=a,b`
+  * Tiedot tarkistettavista peleistä `./game` hakemistoon omiin pelikohtaisiin `.properties` -tiedostoihin. Jokohan nyt sain tästä parametriohjatun tarkistuksen ?
+
+## Vekapu 2.0 ##
+Julkaistu 28.3.07
+
+  * Koko MDI-kehikko on nyt käännetty suomeksi.
+  * Ohje-valikkoon on lisätty kohta kotisivu joka avaa Vekapun nettisivun oletusselaimessa. Tähän löyty valmis pohja [BrowserLauncher2](http://browserlaunch2.sourceforge.net/index.shtml).
+
+## Vekapu 2.0rc1 ##
+Julkaistu 10.3.07
+
+Vihdoinkin voin julkaista MDI-käyttöliittymällä varustetun Vekapun.
+
+  * Muutoksia omien numeroiden/tietojen asetuksiin:
+    * Muutettu entinen `asti` => `until`
+    * Lisätty asetus `game` missä pitää kertoa tarkastettava(t) peli(t)
+    * Poistettu lottoporukka kohtainen `storeresuts` asetus. Nyt tarkastetut tulokset talletetaan jokakerta.
+
+  * Nyt tuntuu toi Bernhardin tekemä MDI kehys toimivan. Kohtapuoleen vois ehkä julkaista version 2.0 (Toi numero on varattu MDI-Gui:lle, eli sitä ootellessa.)
+
+  * Siirsin lähdekoodin kehitys SVN Googlen code houstaukseen 20.02.2007. KoodiTakomon  	tilanne ollu aika hiljainen.
+
+  * Tuli mieleen että tässä välissä (n. 3 vuotta) vois olla joku tehny jonkun MDI Gui:n mallin. Löyty tämmönen Bernhard Stiftnerin tekemä [Java MDI Application Framework](http://jmdiframework.sourceforge.net/). Tää vaikuttaa aikas lupaavalta. Mun mielestä MDI on ainoa oikea sovelluksen olemus joten yritän tehdä tältäpohjalta softaa eteenpäin.
+
+  * Kaivoin vanhan MDI-GUI paketin esiin ja yritän sovittaa sitä mukaan. Mainittu versiotiedotteessa Vekapu 1.2.0 (julkaistu 24.2.04) mutta sitten sen kehitys unohtui vähäksiaikaa. (Ei tästä taida olla mihkän, mutta jätän lähdekoodin roikkumaan mukaan ainakin vähäks aikaa.)
+  * Ajastettuna (`cronjob = yes`) keskiviikon tarkisus meni ohi. Nyt korjattu.
+  * Pelkän Jokerin-rivin tarkistus kuntoon.
+  * Hakemiston erottinmerkki haetaan ajonaikaisesti (Winkkari / Linux erot). Ja siitähän se soppa syntyi. Tulee aikas paljon ihmeteltävää. Vielä kun yritää samalla muuttaa tekstitystä UTF-8 muotoon.
+  * Lisätty asetuksiin mahdollisuus yhden rivin tarkistmisen. Siis jos on määritelty useita porukoita niin tietyn porukan rivit
+voitarkistaa asettamalla tähän halutun porukan nimi: `check_group = lotto`
+  * `vekapu.properties` asetustiedostoa jäsennelty ja kommentointia lisätty. Pitäisköhän toi filu jakaan kahteen osaan ?? 1. vekapun yleissäädöt & 2. tiedot lottoporukoista
+
+
+## Tiedetyt ongelmat ##
+
+  * Finsklandian kielinen MDI-GUI on vielä kesken.
+
+
+---
+
+
+[Versiotiedotteet 1.7 ja vanhemmat](VersioTiedote17.md)

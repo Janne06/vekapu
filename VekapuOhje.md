@@ -1,0 +1,48 @@
+# Ohjeita Vekapun käyttöön #
+
+## Vaatimukset ##
+
+  * Version 2.0 MDI-Gui tarttee [JRE 1.5 eli Java 5:den](http://java.com).
+  * Nettiyhteys olis kiva. (Nykyäänhän se on kyllä jo kaikilla käytössä)
+
+## Asennus ##
+Pura tiedosto johonkin kansioon (esim. Winzipillä) ja käynnistä kansiossa oleva `gui2.bat`(graafinen ulkoasu).
+
+## Yleiset asetukset ##
+
+Vekapun asetuksia säädetään tiedostossa  `vekapu.properties`.
+MDI-Gui:lla valikosta **Vekapu** löytyy kaikki oleellinen. Mikäli nettiyhteys muodostetaan proxy:n kauta on proxy määriteltävä myös **Vekapu => Asetukset** näytöllä:
+  * proxySet = true
+  * proxyHost = cache
+  * proxyPort = 80
+
+
+## Omat lottonumerot ##
+
+Omat lottonumerot määritetän hakemistossa 'coupon' olevissa tiedostoissa. Oletuksena sieltä löytyy tiedostot: `lotto.properties`, `jokeri.properties` ja `viking.properties`.
+Nämä näkyvät myös MDI-Gui:n valikossa: **Vekapu => Kupongit**
+
+Muokkaa esim `lotto.properties` tiedostoon omat rivisi ja talleta se vaikka nimellä `oma.properties`.
+
+Nyt tämä nimi (tässä oma), on lisättä `vekapu.properties` tiedostoon. Eli valitse valikosta **Vekapu => Asetukset** ja laita sinne arvot:
+  * group\_count = 1
+  * group\_1 = oma
+
+Nyt valikossa **Vekapu => Tarkistetut** (ja kupongit) pitäisi näkyä vain valinta **oma**.
+
+Valitsemalla **Vekapu => Tarkistetut** saat tarkistetua viimeisimän kierroksen tulokset.
+
+Mikäli yrität tarkistaa tuloksia arvontapäivänä, niin homa toimii vasta sen jälkeen kun Yle on päivittänyt nettisivuilleen oikean rivin. Eli esim. loton voi tarkistaa lauantaina noin klo 21.
+
+## Lisäpiirteitä ##
+
+Vekapulla on mahdollista lähettää s-postia tarkistetuista riveistä. Tämä kätevää, etenkin silloin kun
+Vekapu on asennettu pyörimään ajastetuna (crontab).
+
+
+
+
+
+
+
+

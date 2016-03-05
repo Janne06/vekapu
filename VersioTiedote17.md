@@ -1,0 +1,215 @@
+Tästä alespäin on tiedot kopioitu tänne muualta (Kooditakomo & nettisivu).
+Eli nää tiedot on jo julkaistu aikaisemmin jossain muualla.
+
+## Vekapu 1.7.4 ##
+Julkaistu 16.12.06
+
+Sama kuin edellinen 1.7.3.
+Nyt pitäisi toimia myös Winkkari ympäristössä.
+
+Edellinen toimii kyllä Linuxissa, mutta winkkarissa tuli häikkää (joku hämärä merkistö ongelma)
+
+Käänsin nyt paketit winkkarissa.
+Ehkä Linux myllyn Eclipsen asetuksissa on jotain häikkää ??
+
+
+## Vekapu 1.7.3 ##
+Julkaistu 12.12.06
+
+Korjattu bugit:
+
+Oikeanrivin haku netistä.
+Sivuston kopion nimen loppuun tuli ylimääräinen '-' merkki ennen .html loppua.
+
+Manuaali tarkistus toimii. Jokerin kanssa oli ongelmia.
+
+Vanhan rivin tarkistus 'correct' parametrilla toimii.
+Kunhan kopioi oikeista sivuista on omalla koneella.
+
+Viikkarin tarkistuksen lisätty arvonta kierros & päivä.
+
+
+## Tiedetyt ongelmat ##
+
+`./best` hakenistoon talletetut tiedot kierroksen parhaista tuloksista ei tallennu oikein.
+
+## Vekapu 1.7.2 ##
+Julkaistu 7.12.06
+
+Jokerin tarkistus samaan tyyliin kuin loton.
+
+Sovelluksen sisäinen rakenne oliomaiseksi, palvelu pohjaiseksi. Nyt jatkokehittämisen pitäisi olla helpompaa.
+
+
+## Vekapu 1.5.11 ##
+Julkaistu 12.4.06
+
+TextiTV:n sivut on muuttunu.
+Pitää parsia oikearivi erilailla kuin ennen.
+
+## Vekapu 1.5.10 ##
+Julkaistu 13.3.06
+
+Refaktoroinnin seurauksena koodiin jäi pari bugia. Nyt ne pitäis olla poistettu.
+
+## Vekapu 1.5.9 ##
+Julkaistu 10.3.06
+
+Vekapu toimii nyt JDK 1.3 tai uudemmilla. Eipähän tarvii päivitellä jdk:ta ainakaan tän softan takia.
+
+Muut muutokset lähinnä refaktorointia.
+
+
+## Vekapu 1.5.8. ##
+Julkaistu 24.2.06
+
+- Jokeritarkistus korjattu textitv:n sivu muutosten mukaiseksi.
+- Isoista ongelmista meiliä jos meili asetukset päällä.
+
+Kierroksen parhaitten tulosten talletus ./best - hakemistoon toimivaksi. Meilaus (& muut toimet) vain kun rivi ontarkistettu.
+
+Jokeritulos kohdalleen meilin otsikkoon.
+
+Vekapu.java toiminta jaettu peli kohtaisiin toiminta luokkiin, mitkä periytetty samanta kantaluokasta. Paketoidaan lähdekoodi omaan hakemistoon.
+Sisäisiä muutoksia (koodissa), joidenka ei pitäisi vaikuttaa Vekapun toimintaan.
+
+## Vekapu 1.5.5 ##
+Julkaistu 30.10.05.
+
+## Vekapu 1.5.2 ##
+Julkaistu 29.10.05.
+
+Uusi bugi päivitys.
+
+## Vekapu 1.5.1 ##
+Julkaistu 26.9.05
+  * Kehitysversioiden numerointi keskeltä parittomaksi.
+
+  * Mallirivit nimetty pelin mukaan.
+  * Mallirivien kattavuutta parannettu
+  * Mallirivit & hakemistot lotto & vikiglotto riveille serveri totetutukseen
+
+  * vekapu.bat:tiin pause loppuun.
+  * Ant:in build:i scriptiä siistitty.
+
+### Korjatut bugit ###
+
+  * [Bug #16](https://code.google.com/p/vekapu/issues/detail?id=16) Viikkonumero korjattu lisäämällä propsiin korjaus arvo.
+  * [Bug #15](https://code.google.com/p/vekapu/issues/detail?id=15) Lisäarvonnan ongelma.
+  * [Bug #14](https://code.google.com/p/vekapu/issues/detail?id=14) Jos nettisivuston haku pielessä niin heiteään poikkeus.
+  * Nollataa Jokerin paras -laskuri uudelle porukalle.
+
+http://kooditakomo.cs.tut.fi/tracker/index.php?group_id=36&atid=177
+
+## Vekapu 1.3.1 ##
+Julkaistu 30.6.05
+
+Lottorivien tarkistusohjelmasta (Vekapu) on nyt julkaistu versio 1.3.1.
+Toiminnallisesti nyt julkaistu versio on sama kuin versio 1.2.0.
+
+Seuraavat ominaisuudet on muutettu:
+  * Oletuksen tulostetaan tarkistettu rivi näytölle.
+  * Tiedostojen paketointi oman urlin mukaan (www.vekapu.net).
+  * Log4j mukaan käyttöön.
+  * Lähdekoodi & sovelluskehitys nyt KoodiTakomon Subversionissa. Aiemmin oman linuxin CVS.
+
+Vekapu 1.3.0 on julkaistu projektin Subversioniin.
+
+Versiossa 1.3.1 ainoana todellisena erona on vekapu.propereties tiedoston asetus:
+konsolille = yes
+
+Tämän ansiosta tarkastetut rivit tulostuvat oletuksena näytölle. En tägää SVN:ään tämän muutoksen takia omaa haaraa.
+
+
+## Vekapu 1.2.1 ##
+Julkaistu 10.6.05
+
+Lottorivien tarkistusohjelma Vekapu on uudelleen julkaissut version 1.2.0. Alkuperäinen julkaisu päivä oli jo 24.2.04.
+
+
+## Vekapu 1.2.0 ##
+Julkaistu 24.2.04
+
+- Lisätty alihakemistot:
+  * best           - tiedot kierroksen parhaasta tuloksesta
+  * coupon         - tarkistettavat kupongit
+  * checked        - tarkistetut rivit
+  * correctnumbers - kopiot tekstiTV:n sivuista / käsin syötetyt numerot
+  * log            - loki-tiedosto
+  * lib            - tarvittavat `*.jar` tiedostot
+- Lisätty attribuutti `storeresult = yes/no` porukan asetustiedostoon.
+> > Talleteaanko tulokset `./checked` hakemistoon. Oletus no.
+- Lisätty `'info_group'` attribuutti vekapu.properties tiedostoon.
+> > Lähettää tiedotuksen osallistumisesta lottoon (email & sms).
+> > Testaa ko osoitteiden oikeellisuuden.
+- Lisätty `'replyto'` attribuutti `vekapu.properties` tiedostoon.
+- Lisätty tarkistusaika mukaan viestiin.
+
+
+> Muuta:
+- Jakelupaketti kasataan Ant `build.xml` scriptillä.
+- GUI:n kehitys aloitettu.
+
+
+## Vekapu 1.1.3 ##
+Julkaistu 8.8.03
+
+- Talletetaan porukan parastulos xxx\_best.txt tiedostoon.
+> Tämä lähetetään loppumisilmoituksen mukana porukan jäsenille.
+- Loppumisilmoituksen tarkistus ja lähetys siirretty tulosten tarkastamisen jälkeen.
+- Uudelleennimetään xxx\_best.txt.yyyy-ww (vuosi-viiko) loppuiseksi kun rivi loppuu.
+- Tutkitaan Lotto-sivuilta myös merkkijonoa KIERR0S (nollalla) koska yle käyttää sitä.
+
+
+## Vekapu 1.1.2 ##
+Julkaistu 13.7.03
+
+- Lisätty asetuksiin parametrit debug ja cronjob.
+
+
+## Vekapu 1.1.1 ##
+Julkaistu 2.5.03
+
+- Korjattu bugi vikigloton tarkistettavasta kierroksesta.
+
+
+## Vekapu 1.1.0 ##
+Julkaistu 27.4.03
+
+- Tarkistaa Jokerin ja Viking-Loton.
+- Lähettää ilmoituksen (s-posti) kun rivi on viimeistä kertaa voimassa.
+
+
+## Vekapu 1.0.0 ##
+Julkaistu 13.12.02
+
+- Hakee oikean rivin netistä.
+- Lähettää tekstiviestinä parhaan tuloksen.
+
+
+## Vekapu 0.3.1 ##
+Julkaistu 12.12.02
+
+- Sähköpostin otsikkoon parastulos.
+- Mukana tieto mihin asti rivi on voimassa.
+
+
+## Vekapu 0.3.0 ##
+Julkaistu 28.11.02
+
+- Usean lottoporukan tuki.
+- Mikäli haluat nähdä tarkistetut rivit konsolilla niin anna
+> käynnistysparametriksi 'print'.
+
+> HUOMIO!!!
+> `*.properties` tiedostot on muutettu. Vanhat `*.properties` tiedostot
+> eivät enää toimi, vaan ne on korvattava uusilla tiedostoilla.
+
+
+## Vekapu 0.2.0 ##
+Julkaistu 26.11.02
+
+- Tarkastetun rivin postitus lottoporukan jäsenille.
+
+
+
